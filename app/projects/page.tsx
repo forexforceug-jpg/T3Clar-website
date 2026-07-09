@@ -118,7 +118,7 @@ export default function ProjectsPage() {
                 OUR PROJECTS
               </span>
               
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] mt-4 tracking-tight">
+              <h1 className="text-6xl md:text-7xl lg:text-7xl font-black leading-[0.95] mt-4 tracking-tight">
                 <span className="text-[#0F172A] block">Real Projects.</span>
                 <span className="text-[#2563EB] block">Real Impact.</span>
               </h1>

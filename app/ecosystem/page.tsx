@@ -108,18 +108,15 @@ export default function EcosystemPage() {
               OUR ECOSYSTEM
             </span>
             
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] mt-4 tracking-tight">
-              <span className="text-[#0F172A] block">Connected</span>
-              <span className="text-[#0F172A] block">Platforms.</span>
-              <span className="text-[#2563EB] block">Stronger</span>
-              <span className="text-[#2563EB] block">Together.</span>
-            </h1>
+            <h2 className="text-6xl md:text-7xl lg:text-7xl font-black leading-[1] mt-4 tracking-tight">
+              <span className="text-[#0F172A] block">Connected Platforms.</span>
+              <span className="text-[#2563EB] block">Stronger Together</span>
+            </h2>
             
             <p className="text-gray-600 text-lg leading-relaxed mt-8 max-w-xl">
               We are building a connected technology ecosystem that simplifies everyday life, 
               empowers businesses and transforms how Jinja moves, shops, grows and connects.
             </p>
-            
             <Link
               href="#platforms"
               className="inline-flex items-center gap-2 mt-8 px-8 py-4 border-2 border-[#2563EB] text-[#2563EB] 

@@ -43,9 +43,8 @@ export default function ContactPage() {
               </span>
               
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mt-4 tracking-tight">
-                Let&apos;s build something{' '}
-                <span className="text-[#2563EB]">amazing</span>
-                {' '}together.
+                Let&apos;s build something
+                
               </h1>
               
               <p className="text-gray-600 text-lg leading-relaxed mt-6 max-w-lg">

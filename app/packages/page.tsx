@@ -175,9 +175,8 @@ export default function PackagesPage() {
                 OUR PACKAGES
               </span>
               
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] mt-4 tracking-tight">
-                Website Packages<br />
-                Built for{' '}
+              <h1 className="text-5xl md:text-6xl lg:text-6xl font-black leading-[1.05] mt-4 tracking-tight">
+                Website Packages Built for <br />
                 <span className="text-[#2563EB]">Every Stage</span>
               </h1>
               
