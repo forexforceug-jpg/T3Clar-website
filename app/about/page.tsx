@@ -1,6 +1,8 @@
+'use client'
 import PageHero from '@/components/PageHero'
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { Lightbulb, Shield, Users, Car, ShoppingBag, Building2, Heart, CreditCard, UserCheck } from 'lucide-react'
 
 export default function AboutPage() {
@@ -50,70 +52,198 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ============ OUR STORY SECTION ============ */}
-      <section className="py-24 md:py-32 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* ============ OUR SOLUTIONS - HONEYCOMB SECTION ============ */}
+      <section className="relative py-24 md:py-32 px-4 bg-white overflow-hidden">
+        
+        {/* Ambient background glows */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-blue-50/30 via-purple-50/15 to-transparent rounded-full blur-[150px]" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-50/20 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-purple-50/15 rounded-full blur-[100px]" />
+        
+        {/* Dotted grid */}
+        <div className="absolute inset-0 opacity-[0.02]">
+          <div className="h-full w-full bg-[radial-gradient(circle,#2563EB_1px,transparent_1px)] bg-[size:25px_25px]" />
+        </div>
+
+        {/* Curved lines at bottom */}
+        <svg className="absolute bottom-0 left-0 w-72 h-32 opacity-[0.06]" viewBox="0 0 250 100">
+          <path d="M-20 70 Q40 10 100 50 Q160 90 220 20" stroke="#2563EB" strokeWidth="1" fill="none" />
+          <path d="M-10 85 Q50 30 110 65 Q170 95 240 40" stroke="#7C3AED" strokeWidth="0.5" fill="none" />
+        </svg>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             
-            {/* Left - Story Text */}
+            {/* ============ LEFT - CONTENT AREA ============ */}
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
-                  OUR STORY
+              {/* Label */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full mb-6">
+                <div className="w-2 h-2 bg-[#2563EB] rounded-full" />
+                <span className="text-[#2563EB] text-xs font-bold tracking-[0.2em] uppercase">
+                  OUR SOLUTIONS
                 </span>
-                <div className="flex-1 h-px bg-blue-100" />
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] leading-tight">
-                Solving{' '}
-                <span className="text-[#2563EB]">real problems</span>
-                {' '}with powerful technology.
+              {/* Headline */}
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-[#0F172A] leading-[1.05]">
+                Solutions designed<br />
+                to solve today's{' '}
+                <span className="text-[#2563EB]">challenges</span>
               </h2>
               
-              <p className="text-gray-600 leading-relaxed mt-6">
-                T3Clar was founded on a simple belief: technology should solve real problems 
-                and create real impact. We saw the challenges businesses in Jinja faced—outdated 
-                systems, disconnected services, and limited access to quality digital solutions.
+              {/* Description */}
+              <p className="text-gray-500 leading-relaxed mt-6 max-w-md">
+                We help businesses innovate, automate and grow through tailored solutions 
+                built using modern technology and industry best practices.
               </p>
               
-              <p className="text-gray-600 leading-relaxed mt-4">
-                We are passionate about building reliable systems, beautiful experiences and 
-                smart solutions that help businesses, organizations and communities thrive in 
-                the digital age. Every project we take on is driven by purpose, precision and 
-                a commitment to excellence.
-              </p>
-              
-              {/* Signature */}
-              <div className="mt-8">
-                <span className="text-[#2563EB] text-2xl font-['Brush_Script_MT',cursive] italic">
-                  T3Clar Team
-                </span>
+              {/* CTA Button */}
+              <Link
+                href="/services"
+                className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 border-2 border-[#2563EB]/20 text-[#2563EB] 
+                         rounded-full font-semibold hover:border-[#2563EB] hover:bg-[#2563EB] hover:text-white 
+                         transition-all duration-300"
+              >
+                Explore all solutions →
+              </Link>
+
+              {/* Stats */}
+              <div className="flex flex-wrap items-center gap-6 mt-12 pt-8 border-t border-gray-100">
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2">
+                      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                      <polyline points="17 6 23 6 23 12" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xl font-black text-[#2563EB]">150+</div>
+                    <div className="text-xs text-gray-400">Projects delivered successfully</div>
+                  </div>
+                </div>
+                
+                <div className="w-px h-10 bg-gray-200 hidden sm:block" />
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xl font-black text-[#2563EB]">98%</div>
+                    <div className="text-xs text-gray-400">Client satisfaction rate</div>
+                  </div>
+                </div>
+                
+                <div className="w-px h-10 bg-gray-200 hidden sm:block" />
+                
+                <div className="flex items-start gap-3">
+                  <div className="w-9 h-9 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="2" y1="12" x2="22" y2="12" />
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <div className="text-xl font-black text-[#2563EB]">30+</div>
+                    <div className="text-xs text-gray-400">Industries we serve</div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Right - Office Photo */}
-            <div className="relative h-[450px] rounded-3xl overflow-hidden">
-              <img
-                src="/jinja-cityscape.jpg"
-                alt="T3Clar modern office"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/40 to-transparent" />
+            {/* ============ RIGHT - HONEYCOMB NETWORK ============ */}
+            <div className="relative h-[550px] lg:h-[600px]">
               
-              {/* T3Clar logo on wall */}
-              <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 bg-[#2563EB] rounded flex items-center justify-center">
-                    <span className="text-white font-bold text-xs">T</span>
+              {/* Background hex grid */}
+              <svg className="absolute inset-0 w-full h-full opacity-[0.04]" viewBox="0 0 500 550" preserveAspectRatio="xMidYMid meet">
+                <path d="M250 30 L330 72 L330 156 L250 198 L170 156 L170 72 Z" fill="none" stroke="#2563EB" strokeWidth="1.5" />
+                <path d="M170 156 L250 198 L250 282 L170 324 L90 282 L90 198 Z" fill="none" stroke="#7C3AED" strokeWidth="1" />
+                <path d="M330 156 L410 198 L410 282 L330 324 L250 282 L250 198 Z" fill="none" stroke="#2563EB" strokeWidth="1" />
+                <path d="M90 282 L170 324 L170 408 L90 450 L10 408 L10 324 Z" fill="none" stroke="#7C3AED" strokeWidth="0.8" />
+                <path d="M410 282 L490 324 L490 408 L410 450 L330 408 L330 324 Z" fill="none" stroke="#2563EB" strokeWidth="0.8" />
+                {/* Glowing nodes */}
+                {[[250,72],[330,156],[250,282],[170,156],[170,324],[330,324]].map(([cx,cy], i) => (
+                  <circle key={i} cx={cx} cy={cy} r="2" fill="#2563EB" opacity="0.3">
+                    <animate attributeName="opacity" values="0.3;0.6;0.3" dur="3s" repeatCount="indefinite" begin={`${i*0.4}s`} />
+                  </circle>
+                ))}
+              </svg>
+
+              {/* Center - T3Clar Photo Hexagon */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                <div className="relative w-[180px] h-[210px]">
+                  <div className="absolute -inset-4 bg-blue-100/20 rounded-full blur-2xl" />
+                  <div className="relative w-full h-full overflow-hidden"
+                       style={{
+                         clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
+                       }}>
+                    <img
+                      src="/It-soln2.jpeg"
+                      alt="T3Clar technology building"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F172A]/30 to-transparent" />
+                    
+                    {/* T3Clar badge on photo */}
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 
+                                  flex items-center gap-2 shadow-lg">
+                      <div className="w-6 h-6 bg-[#2563EB] rounded-md flex items-center justify-center">
+                        <span className="text-white font-bold text-[10px]">T</span>
+                      </div>
+                      <span className="text-[#0F172A] font-bold text-xs">T3CLAR</span>
+                    </div>
                   </div>
-                  <span className="text-[#0F172A] font-bold text-sm">T3Clar</span>
                 </div>
               </div>
+
+              {/* Service hexagons around center */}
+              {[
+                { title: 'AI & Automation', desc: 'Intelligent automation streamlines processes and reduces operational costs.', icon: '🤖', top: '0%', left: '50%', transform: 'translate(-50%, 0)' },
+                { title: 'Cloud Solutions', desc: 'Scalable, secure and reliable cloud infrastructure tailored to your business.', icon: '☁️', top: '28%', left: '5%', transform: 'translate(0, -50%)' },
+                { title: 'Cybersecurity', desc: 'Enterprise-grade security solutions to protect your digital assets.', icon: '🛡️', top: '28%', right: '5%', transform: 'translate(0, -50%)' },
+                { title: 'Custom Development', desc: 'Custom software solutions designed for unique business needs.', icon: '💻', top: '72%', left: '8%', transform: 'translate(0, -50%)' },
+                { title: 'Data & Analytics', desc: 'Turn data into actionable insights that drive smarter decisions and growth.', icon: '📊', top: '72%', right: '8%', transform: 'translate(0, -50%)' },
+              ].map((service, i) => (
+                <div
+                  key={service.title}
+                  className="absolute group z-10"
+                  style={{
+                    top: service.top,
+                    left: service.left,
+                    right: service.right,
+                    transform: service.transform,
+                  }}
+                >
+                  <div className="w-[155px] h-[175px] flex flex-col items-center justify-center text-center p-4
+                                bg-white/85 backdrop-blur-sm rounded-3xl
+                                shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-blue-100/30
+                                hover:shadow-[0_16px_45px_rgba(37,99,235,0.08)] hover:border-blue-200/50 
+                                transition-all duration-300">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full 
+                                  flex items-center justify-center mb-3">
+                      <span className="text-lg">{service.icon}</span>
+                    </div>
+                    <h3 className="text-xs font-bold text-[#0F172A] mb-1">{service.title}</h3>
+                    <p className="text-[10px] text-gray-400 leading-relaxed">{service.desc}</p>
+                    <div className="w-5 h-0.5 bg-[#2563EB]/25 rounded-full mt-2.5" />
+                  </div>
+                  
+                  {/* Connection node */}
+                  <div className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#2563EB]/30 rounded-full shadow-[0_0_6px_rgba(37,99,235,0.3)]"
+                       style={{ right: i < 2 ? '-8px' : 'auto', left: i >= 2 ? '-8px' : 'auto' }} />
+                </div>
+              ))}
+
             </div>
           </div>
         </div>
       </section>
-
       {/* ============ OUR VISION SECTION ============ */}
       <section className="py-24 md:py-32 px-4">
         <div className="max-w-7xl mx-auto">

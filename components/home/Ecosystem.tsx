@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Hexagon, Car, ShoppingBag, TrendingUp, Building2, Zap } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 const platforms = [
   {
@@ -7,112 +10,323 @@ const platforms = [
     nameParts: { colored: 'X', white: 'Ride' },
     description: 'Smart transportation for a moving city.',
     image: '/jinja-cityscape.jpg',
-    overlay: 'from-blue-900/60 to-transparent',
     color: '#2563EB',
+    icon: Car,
+    tag: 'Transport',
+    angle: -72,
+    distance: 42,
   },
   {
     name: 'ShopIt',
     nameParts: { colored: 'Shop', white: 'It' },
     description: 'Shop more. We deliver.',
     image: '/jinja-cityscape.jpg',
-    overlay: 'from-green-900/60 to-transparent',
     color: '#10B981',
+    icon: ShoppingBag,
+    tag: 'Commerce',
+    angle: -30,
+    distance: 44,
   },
   {
     name: 'Clexarly',
     nameParts: { colored: 'Clex', white: 'arly' },
     description: 'Digital growth & business solutions.',
     image: '/jinja-cityscape.jpg',
-    overlay: 'from-purple-900/60 to-transparent',
     color: '#8B5CF6',
+    icon: TrendingUp,
+    tag: 'Business',
+    angle: 15,
+    distance: 43,
+  },
+  {
+    name: 'Lotina',
+    nameParts: { colored: 'Lo', white: 'tina' },
+    description: 'Investment & strategic growth partner.',
+    image: '/jinja-cityscape.jpg',
+    color: '#7C3AED',
+    icon: Building2,
+    tag: 'Investment',
+    angle: 55,
+    distance: 44,
+  },
+  {
+    name: 'Future',
+    nameParts: { colored: 'Fu', white: 'ture' },
+    description: 'Next-generation platforms coming soon.',
+    image: '/jinja-cityscape.jpg',
+    color: '#F59E0B',
+    icon: Zap,
+    tag: 'Coming Soon',
+    angle: 100,
+    distance: 42,
   },
 ]
 
+const orbitalNodes = Array.from({ length: 16 }, (_, i) => ({
+  angle: i * 22.5,
+  distance: 48,
+}))
+
 export default function Ecosystem() {
   return (
-    <section className="py-24 md:py-32 px-4 bg-white">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
+      
+      {/* ============ AMBIENT BACKGROUND ============ */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] 
+                    bg-gradient-to-br from-blue-50/40 via-purple-50/20 to-transparent rounded-full blur-[150px]" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-50/20 rounded-full blur-[120px]" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-50/15 rounded-full blur-[100px]" />
+      
+      {/* Dotted grid */}
+      <div className="absolute inset-0 opacity-[0.02]">
+        <div className="h-full w-full bg-[radial-gradient(circle,#2563EB_1px,transparent_1px)] bg-[size:30px_30px]" />
+      </div>
+
+      {/* Geometric frames */}
+      <div className="absolute top-16 left-12 w-20 h-20 border border-blue-100/30 rounded-full" />
+      <div className="absolute bottom-20 right-10 w-16 h-16 border border-purple-100/20 rounded-2xl rotate-12" />
+
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
-          <div>
+        {/* ============ SECTION HEADER ============ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-8"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full mb-4">
+            <div className="w-1.5 h-1.5 bg-[#2563EB] rounded-full animate-pulse" />
             <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
               OUR ECOSYSTEM
             </span>
-            <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] leading-tight mt-4">
-              Connected platforms.{' '}
-              <span className="text-[#2563EB]">Stronger together.</span>
-            </h2>
+            <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full animate-pulse" />
           </div>
+          
+          <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] leading-tight max-w-2xl mx-auto">
+            Connected platforms.{' '}
+            <span className="relative">
+              <span className="text-[#2563EB]">Stronger together.</span>
+              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 100 6" preserveAspectRatio="none">
+                <path d="M0 3 Q25 0 50 3 Q75 6 100 3" stroke="#2563EB" strokeWidth="2" fill="none" opacity="0.3" />
+              </svg>
+            </span>
+          </h2>
+        </motion.div>
+
+        {/* ============ PARTNERSHIP BADGE ============ */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex justify-center mb-4"
+        >
+          <div className="inline-flex items-center gap-3 px-5 py-2 bg-white/50 backdrop-blur-sm rounded-2xl 
+                        border border-gray-100/30 shadow-[0_4px_16px_rgba(0,0,0,0.02)]">
+            <span className="text-[11px] font-bold text-[#7C3AED]">LOTINA INVESTMENTS</span>
+            <span className="text-sm text-gray-300">×</span>
+            <span className="text-[11px] font-bold text-[#2563EB]">T3CLAR</span>
+          </div>
+        </motion.div>
+
+        {/* ============ ORBITAL ECOSYSTEM VISUALIZATION ============ */}
+        <div className="relative h-[550px] md:h-[650px]">
+          
+          {/* ===== CONCENTRIC ORBITAL RINGS ===== */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            {/* Outer decorative rings */}
+            <svg width="520" height="520" viewBox="0 0 520 520" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <circle cx="260" cy="260" r="250" fill="none" stroke="#2563EB" strokeWidth="0.5" opacity="0.12" />
+              <circle cx="260" cy="260" r="220" fill="none" stroke="#7C3AED" strokeWidth="0.5" opacity="0.08" strokeDasharray="8,12" />
+              <circle cx="260" cy="260" r="190" fill="none" stroke="#2563EB" strokeWidth="0.5" opacity="0.15" />
+            </svg>
+          </div>
+
+          {/* ===== ORBITAL NODES (glowing dots) ===== */}
+          {orbitalNodes.map((node, i) => {
+            const angleRad = (node.angle * Math.PI) / 180
+            const cx = 50 + node.distance * Math.sin(angleRad)
+            const cy = 50 - node.distance * Math.cos(angleRad)
+            
+            return (
+              <motion.div
+                key={i}
+                animate={{ 
+                  opacity: [0.2, 0.6, 0.2],
+                  scale: [0.8, 1.2, 0.8],
+                }}
+                transition={{ 
+                  duration: 3 + (i % 4), 
+                  repeat: Infinity, 
+                  delay: i * 0.4,
+                  ease: "easeInOut" 
+                }}
+                className="absolute w-1.5 h-1.5 bg-[#2563EB]/50 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.3)]"
+                style={{ left: `${cx}%`, top: `${cy}%` }}
+              />
+            )
+          })}
+
+          {/* ===== CENTRAL HUB - T3CLAR ===== */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30"
+          >
+            <div className="relative">
+              {/* Outer pulse ring */}
+              <motion.div
+                animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.05, 0.2] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -inset-10 rounded-full bg-blue-100/40"
+              />
+              
+              {/* Inner pulse */}
+              <motion.div
+                animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.1, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute -inset-6 rounded-full bg-blue-100/50"
+              />
+              
+              {/* Main hub */}
+              <div className="relative w-24 h-24 md:w-28 md:h-28 bg-gradient-to-br from-white via-white to-blue-50/80 
+                           rounded-[28px] shadow-[0_20px_60px_rgba(37,99,235,0.1),0_0_0_1px_rgba(37,99,235,0.06)]
+                           flex items-center justify-center backdrop-blur-sm">
+                <div className="text-center">
+                  <Hexagon size={30} className="text-[#2563EB] mx-auto" />
+                  <span className="text-[9px] font-black text-[#0F172A] mt-0.5 block tracking-wider">T3CLAR</span>
+                </div>
+                
+                {/* Orbiting dot around hub */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  className="absolute -top-1 -right-1 w-3 h-3"
+                  style={{ transformOrigin: '-16px -16px' }}
+                >
+                  <div className="w-1.5 h-1.5 bg-[#2563EB] rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" />
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ===== CONNECTION LINES (SVG) ===== */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+            {platforms.map((platform, i) => {
+              const angleRad = (platform.angle * Math.PI) / 180
+              const x2 = 400 + (platform.distance / 50) * 380 * Math.sin(angleRad)
+              const y2 = 300 - (platform.distance / 50) * 380 * Math.cos(angleRad)
+              
+              return (
+                <line
+                  key={i}
+                  x1="400"
+                  y1="300"
+                  x2={x2}
+                  y2={y2}
+                  stroke={`${platform.color}30`}
+                  strokeWidth="1"
+                  strokeDasharray="4,6"
+                  opacity="0.4"
+                />
+              )
+            })}
+          </svg>
+
+          {/* ===== PLATFORM ORBITING IMAGES ===== */}
+          {platforms.map((platform, index) => {
+            const angleRad = (platform.angle * Math.PI) / 180
+            const x = 50 + platform.distance * Math.sin(angleRad)
+            const y = 50 - platform.distance * Math.cos(angleRad)
+            
+            return (
+              <motion.div
+                key={platform.name}
+                initial={{ opacity: 0, scale: 0 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 + index * 0.12, ease: "easeOut" }}
+                className="absolute group cursor-pointer z-20"
+                style={{ 
+                  left: `${x}%`, 
+                  top: `${y}%`, 
+                  transform: 'translate(-50%, -50%)' 
+                }}
+              >
+                {/* Orbital ring around each platform */}
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20 + index * 5, repeat: Infinity, ease: "linear" }}
+                  className="absolute -inset-3 rounded-full border border-blue-100/30"
+                />
+
+                {/* Platform image - no borders */}
+                <div className="relative w-[140px] h-[90px] md:w-[170px] md:h-[110px] rounded-2xl overflow-hidden
+                             shadow-[0_12px_40px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]
+                             transition-all duration-500 group-hover:scale-110">
+                  <img
+                    src={platform.image}
+                    alt={platform.name}
+                    className="w-full h-full object-cover"
+                  />
+                  
+                  {/* Subtle gradient for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  
+                  {/* Platform name on image */}
+                  <div className="absolute bottom-0 left-0 right-0 p-2.5">
+                    <div className="flex items-center gap-1.5">
+                      <platform.icon size={12} style={{ color: platform.color }} />
+                      <span className="text-xs font-bold" style={{ color: platform.color }}>
+                        {platform.nameParts.colored}
+                      </span>
+                      <span className="text-xs font-bold text-white">
+                        {platform.nameParts.white}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Glow dot below */}
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
+                     style={{ backgroundColor: `${platform.color}40`, boxShadow: `0 0 8px ${platform.color}30` }} />
+              </motion.div>
+            )
+          })}
+
+        </div>
+
+        {/* ============ BOTTOM ============ */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.8 }}
+          className="text-center mt-4"
+        >
           <Link
             href="/ecosystem"
-            className="text-[#2563EB] font-semibold hover:gap-2 transition-all inline-flex items-center gap-1 shrink-0"
+            className="group inline-flex items-center gap-2 text-[#2563EB] font-semibold 
+                     px-6 py-3 rounded-full border-2 border-[#2563EB]/20 
+                     hover:border-[#2563EB] hover:bg-[#2563EB] hover:text-white 
+                     transition-all duration-300"
           >
-            Explore The Ecosystem →
+            Explore The Full Ecosystem
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
           </Link>
-        </div>
-
-        {/* Strategic Partnership Banner */}
-        <div className="bg-gradient-to-r from-[#F5F3FF] via-white to-[#EFF6FF] rounded-3xl p-6 md:p-8 mb-10 border border-gray-100">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8 text-center">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-[#7C3AED]/10 rounded-xl flex items-center justify-center">
-                <span className="text-xl font-black text-[#7C3AED]">L</span>
-              </div>
-              <span className="text-[#7C3AED] font-bold text-sm md:text-base">LOTINA INVESTMENTS</span>
-            </div>
-            <span className="text-xl text-gray-300">×</span>
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-[#2563EB]/10 rounded-xl flex items-center justify-center">
-                <span className="text-xl font-black text-[#2563EB]">T</span>
-              </div>
-              <span className="text-[#2563EB] font-bold text-sm md:text-base">T3CLAR</span>
-            </div>
-          </div>
-          <p className="text-center text-gray-500 text-sm mt-4 max-w-xl mx-auto">
-            Investment meets innovation. Together, we power a connected digital ecosystem.
+          
+          <p className="text-gray-400 text-xs mt-6">
+            Powered by{' '}
+            <span className="text-[#7C3AED] font-semibold">Lotina Investments</span>
+            {' '}×{' '}
+            <span className="text-[#2563EB] font-semibold">T3Clar</span>
+            {' '}strategic technology partnership
           </p>
-        </div>
+        </motion.div>
 
-        {/* Platform Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {platforms.map((platform) => (
-            <div key={platform.name} className="group cursor-pointer relative">
-              <div className="relative h-72 rounded-3xl overflow-hidden">
-                <img
-                  src={platform.image}
-                  alt={platform.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className={`absolute inset-0 bg-gradient-to-t ${platform.overlay}`} />
-                
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-2xl font-bold">
-                    <span style={{ color: platform.color }}>{platform.nameParts.colored}</span>
-                    <span className="text-white">{platform.nameParts.white}</span>
-                  </h3>
-                  <p className="text-white/80 text-sm mt-1">{platform.description}</p>
-                </div>
-
-                {/* Arrow button */}
-                <div className="absolute bottom-6 right-6 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full 
-                              flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ArrowRight size={16} className="text-white" />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom note */}
-        <p className="text-center text-gray-400 text-xs mt-8">
-          Powered by{' '}
-          <span className="text-[#7C3AED] font-semibold">Lotina Investments</span>
-          {' '}×{' '}
-          <span className="text-[#2563EB] font-semibold">T3Clar</span>
-          {' '}strategic technology partnership
-        </p>
       </div>
     </section>
   )
