@@ -9,6 +9,20 @@ const stats = [
   { icon: Handshake, number: '10+', label: 'Industries' },
   { icon: Globe, number: '3', label: 'Countries' },
 ]
+const partnerLogos = [
+  { name: 'MTN', image: '/T3Clarlogo.png' },
+  { name: 'Stanbic Bank', image: '/T3Clarlogo.png' },
+  { name: 'Flutterwave', image: '/T3Clarlogo.png' },
+  { name: 'AWS', image: '/T3Clarlogo.png' },
+  { name: 'Huawei', image: '/T3Clarlogo.png' },
+  { name: 'Andela', image: '/T3Clarlogo.png' },
+  { name: 'MTN', image: '/T3Clarlogo.png' },
+  { name: 'Stanbic Bank', image: '/T3Clarlogo.png' },
+  { name: 'Flutterwave', image: '/T3Clarlogo.png' },
+  { name: 'AWS', image: '/T3Clarlogo.png' },
+  { name: 'Huawei', image: '/T3Clarlogo.png' },
+  { name: 'Andela', image: '/T3Clarlogo.png' },
+]
 
 const industries = [
   { icon: Code, title: 'Technology', description: 'Innovating the future with cutting-edge solutions.' },
@@ -19,7 +33,7 @@ const industries = [
   { icon: Car, title: 'Transportation', description: 'Creating intelligent mobility and connected transport solutions.' },
 ]
 
-const partnerLogos = ['MTN', 'Stanbic Bank', 'Flutterwave', 'AWS', 'Huawei', 'Andela']
+
 
 const benefits = [
   'Access to innovative solutions and technologies',
@@ -303,8 +317,9 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* ============ PARTNER LOGOS ============ */}
-      <section className="py-16 px-4 bg-white">
+           {/* ============ PARTNER LOGOS - AUTO SCROLLING ============ */}
+            {/* ============ PARTNER LOGOS - AUTO SCROLLING ============ */}
+      <section className="py-16 px-4 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
@@ -315,13 +330,30 @@ export default function PartnersPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-10">
-            {partnerLogos.map((logo) => (
-              <div key={logo} className="h-24 bg-white border border-gray-100 rounded-2xl flex items-center justify-center
-                                         hover:border-[#2563EB]/30 hover:shadow-lg transition-all">
-                <span className="text-gray-400 font-bold text-lg">{logo}</span>
-              </div>
-            ))}
+          {/* Auto-scrolling logos */}
+          <div className="relative mb-10">
+            {/* Gradient fades */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-r from-transparent to-white z-10 pointer-events-none" />
+            
+            {/* Scrolling track */}
+            <div className="flex animate-scroll" style={{ width: 'max-content' }}>
+              {partnerLogos.map((logo, index) => (
+                <div
+                  key={`${logo.name}-${index}`}
+                  className="flex flex-col items-center justify-center gap-2 h-28 w-44 shrink-0 mx-4
+                           bg-white border border-gray-100 rounded-2xl p-4
+                           hover:border-[#2563EB]/30 hover:shadow-lg transition-all"
+                >
+                  <img
+                    src={logo.image}
+                    alt={logo.name}
+                    className="h-10 w-auto object-contain"
+                  />
+                  <span className="text-xs font-semibold text-gray-500">{logo.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="text-center">
