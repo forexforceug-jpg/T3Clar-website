@@ -4,18 +4,18 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { 
   Car, ShoppingBag, TrendingUp, Layout, Shield, Cloud,
-  Box, Users, Code, Smartphone, Globe, CreditCard, Server,
-  Grid3X3, ArrowRight, ChevronDown
+  Box, Users, Code, Smartphone, Globe, Server,
+  Grid3X3, ArrowRight, ChevronDown, Lightbulb
 } from 'lucide-react'
 
 const categories = [
-  { label: 'All Projects', icon: Grid3X3, active: true },
-  { label: 'Mobile Apps', icon: Smartphone, active: false },
-  { label: 'Web Applications', icon: Globe, active: false },
-  { label: 'E-commerce', icon: ShoppingBag, active: false },
-  { label: 'Systems & Platforms', icon: Server, active: false },
-  { label: 'Infrastructure', icon: Cloud, active: false },
-  { label: 'Inovation Labs', icon: Cloud, active: false },
+  { label: 'All Projects', icon: Grid3X3 },
+  { label: 'Mobile Apps', icon: Smartphone },
+  { label: 'Web Applications', icon: Globe },
+  { label: 'E-commerce', icon: ShoppingBag },
+  { label: 'Systems & Platforms', icon: Server },
+  { label: 'Infrastructure', icon: Cloud },
+  { label: 'Innovation Labs', icon: Lightbulb },
 ]
 
 const projects = [
@@ -30,18 +30,20 @@ const projects = [
     icon: Car,
     iconBg: 'bg-blue-100',
     iconColor: 'text-blue-600',
+    image: '/MS.jpg',
   },
   {
     title: 'ShopIt',
     coloredPart: 'Shop',
     whitePart: 'It',
     color: '#10B981',
-    category: 'MOBILE APP',
+    category: 'E-COMMERCE',
     subtitle: 'Shopping & Delivery Ecosystem',
     description: 'An all-in-one marketplace for restaurants, pharmacies, shops and local businesses offering fast, reliable and secure deliveries.',
     icon: ShoppingBag,
     iconBg: 'bg-green-100',
     iconColor: 'text-green-600',
+    image: '/shopit.png',
   },
   {
     title: 'Clexarly',
@@ -54,6 +56,7 @@ const projects = [
     icon: TrendingUp,
     iconBg: 'bg-purple-100',
     iconColor: 'text-purple-600',
+    image: '/clxry.png',
   },
   {
     title: 'Business Management System',
@@ -63,6 +66,7 @@ const projects = [
     icon: Layout,
     iconBg: 'bg-blue-100',
     iconColor: 'text-blue-600',
+    image: '/SoftwareDevelopment.jpg',
   },
   {
     title: 'Payment Gateway Integration',
@@ -72,6 +76,7 @@ const projects = [
     icon: Shield,
     iconBg: 'bg-blue-100',
     iconColor: 'text-blue-600',
+    image: '/CloudInfrastructure.webp',
   },
   {
     title: 'Cloud Infrastructure',
@@ -81,6 +86,7 @@ const projects = [
     icon: Cloud,
     iconBg: 'bg-blue-100',
     iconColor: 'text-blue-600',
+    image: '/It-soln2.jpeg',
   },
 ]
 
@@ -93,6 +99,10 @@ const stats = [
 export default function ProjectsPage() {
   const [activeCategory, setActiveCategory] = useState('All Projects')
 
+  const filteredProjects = activeCategory === 'All Projects' 
+    ? projects 
+    : projects.filter(p => p.category === activeCategory.toUpperCase().replace(' ', ' '))
+
   return (
     <>
       {/* ============ HERO SECTION ============ */}
@@ -100,10 +110,10 @@ export default function ProjectsPage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
           <img
-            src="/jinja-cityscape.jpg"
+            src="/projectshero.jpg"
             alt="Jinja bridge"
             className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 1 }}
+            style={{ opacity: 0.4 }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 via-50% to-white/5" />
           <div className="absolute left-0 top-0 bottom-0 w-[55%] bg-gradient-to-r from-white/90 to-transparent" />
@@ -189,14 +199,14 @@ export default function ProjectsPage() {
       <section className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
+            {filteredProjects.map((project) => (
               <div key={project.title} className="group bg-white rounded-2xl border border-gray-100 overflow-hidden 
                                                  hover:shadow-xl hover:border-[#2563EB]/20 transition-all duration-300">
                 
                 {/* Image */}
                 <div className="relative h-56 overflow-hidden">
                   <img
-                    src="/jinja-cityscape.jpg"
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -261,19 +271,16 @@ export default function ProjectsPage() {
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="relative rounded-3xl overflow-hidden">
-            {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#0F172A] via-[#1E3A5F] to-[#0F172A]" />
             
-            {/* Right side cityscape */}
             <div className="absolute right-0 top-0 bottom-0 w-1/2">
               <img
-                src="/jinja-cityscape.jpg"
+                src="/SoftwareDevelopment.jpg"
                 alt="Jinja night"
                 className="w-full h-full object-cover opacity-20"
               />
             </div>
 
-            {/* Digital arcs */}
             <svg className="absolute right-0 top-0 w-1/2 h-full opacity-30" viewBox="0 0 400 300">
               <path d="M 50 200 Q 200 50 350 150" stroke="#60A5FA" strokeWidth="1" fill="none" />
               <path d="M 0 250 Q 150 100 400 180" stroke="#2563EB" strokeWidth="0.8" fill="none" strokeDasharray="6,4" />
@@ -282,7 +289,6 @@ export default function ProjectsPage() {
               <circle cx="350" cy="200" r="5" fill="#60A5FA" />
             </svg>
 
-            {/* Content */}
             <div className="relative z-10 p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="max-w-lg">
                 <span className="text-white/70 text-xs font-bold tracking-[0.25em] uppercase">

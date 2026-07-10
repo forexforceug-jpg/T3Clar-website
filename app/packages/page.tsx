@@ -156,7 +156,7 @@ export default function PackagesPage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
           <img
-            src="/jinja-cityscape.jpg"
+            src="/Cloud Solutions.jpg"
             alt="Technology showcase"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 1 }}
@@ -208,11 +208,15 @@ export default function PackagesPage() {
               </div>
             </div>
 
-            {/* Right - Device Mockup */}
+                       {/* Right - Device Mockup */}
             <div className="relative h-[400px] bg-gradient-to-br from-[#F0F4FF] to-[#E8EEFF] rounded-3xl flex items-center justify-center">
               <div className="text-center">
-                <div className="w-48 h-32 bg-white rounded-2xl shadow-xl mx-auto mb-4 flex items-center justify-center border border-gray-100">
-                  <span className="text-[#2563EB] font-black text-lg">T3Clar</span>
+                <div className="w-48 h-32 bg-white rounded-2xl shadow-xl mx-auto mb-4 flex items-center justify-center border border-gray-100 p-4">
+                  <img
+                    src="/t3logo.png"
+                    alt="T3Clar"
+                    className="max-w-full max-h-full object-contain"
+                  />
                 </div>
                 <div className="text-sm font-bold text-[#0F172A]">Solutions that drive growth</div>
               </div>

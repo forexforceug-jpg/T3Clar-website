@@ -69,7 +69,7 @@ export default function CareersPage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
           <img
-            src="/jinja-cityscape.jpg"
+            src="/nilebridge.png"
             alt="T3Clar modern office"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 1 }}
@@ -308,7 +308,7 @@ export default function CareersPage() {
               {/* Center - Photo */}
               <div className="relative h-64 rounded-2xl overflow-hidden">
                 <img
-                  src="/jinja-cityscape.jpg"
+                  src="/team.jpg"
                   alt="T3Clar team"
                   className="w-full h-full object-cover"
                 />

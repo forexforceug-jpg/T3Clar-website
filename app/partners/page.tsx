@@ -151,15 +151,13 @@ export default function PartnersPage() {
                     {/* Image */}
                     <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-6">
                       <img
-                        src="/jinja-cityscape.jpg"
+                        src="/lotina.png"
                         alt="Lotina Investments"
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#7C3AED]/80 to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4">
-                        <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-                          <span className="text-3xl font-black text-[#7C3AED]">L</span>
-                        </div>
+                        
                       </div>
                     </div>
                     
@@ -189,15 +187,13 @@ export default function PartnersPage() {
                     {/* Image */}
                     <div className="relative w-full h-48 rounded-2xl overflow-hidden mb-6">
                       <img
-                        src="/jinja-cityscape.jpg"
+                        src="/t3logo.png"
                         alt="T3Clar"
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#2563EB]/80 to-transparent" />
                       <div className="absolute bottom-4 left-4 right-4">
-                        <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center mx-auto shadow-lg">
-                          <span className="text-3xl font-black text-[#2563EB]">T</span>
-                        </div>
+                    
                       </div>
                     </div>
                     
