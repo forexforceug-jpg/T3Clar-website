@@ -348,67 +348,115 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ============ OUR MISSION SECTION ============ */}
-      <section className="py-24 md:py-32 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-4 gap-12">
+            {/* ============ OUR MISSION SECTION ============ */}
+      <section className="relative py-24 md:py-32 px-4 bg-[#F9FAFB] overflow-hidden">
+        
+        {/* Subtle ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-blue-50/50 to-transparent rounded-full blur-[100px]" />
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
+              OUR MISSION
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mt-4 max-w-2xl mx-auto leading-tight">
+              Creating technology that{' '}
+              <span className="text-[#2563EB]">empowers.</span>
+            </h2>
+            <p className="text-gray-500 mt-4 max-w-xl mx-auto">
+              Our mission is to design, develop and deliver innovative digital solutions 
+              that empower businesses, improve services and create lasting value for communities.
+            </p>
+          </div>
+
+          {/* Mission Cards */}
+          <div className="grid md:grid-cols-3 gap-8">
             
-            {/* Left - Mission Text */}
-            <div>
-              <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
-                OUR MISSION
-              </span>
-              <h2 className="text-3xl md:text-4xl font-black text-[#0F172A] leading-tight mt-4">
-                Creating technology that{' '}
-                <span className="text-[#2563EB]">empowers.</span>
-              </h2>
-              <p className="text-gray-600 leading-relaxed mt-4 text-sm">
-                Our mission is to design, develop and deliver innovative digital solutions 
-                that empower businesses, improve services and create lasting value for communities.
+            {/* Innovate */}
+            <div className="group relative bg-white rounded-3xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] 
+                          border border-gray-100 hover:shadow-[0_12px_40px_rgba(37,99,235,0.06)] 
+                          hover:border-blue-100 transition-all duration-500">
+              {/* Number */}
+              <div className="text-6xl font-black text-gray-50 absolute top-6 right-8 group-hover:text-blue-50 transition-colors duration-500">
+                01
+              </div>
+              
+              {/* Icon */}
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl flex items-center justify-center mb-6
+                            group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-200/50 transition-all duration-300">
+                <Lightbulb size={24} className="text-[#2563EB]" />
+              </div>
+              
+              {/* Content */}
+              <h3 className="text-xl font-bold text-[#0F172A] mb-3">Innovate</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                We embrace creativity and innovation to build smart solutions that solve 
+                real-world challenges with fresh thinking and cutting-edge technology.
               </p>
+              
+              {/* Bottom accent */}
+              <div className="w-0 h-0.5 bg-[#2563EB] rounded-full mt-6 group-hover:w-12 transition-all duration-500" />
             </div>
 
-            {/* Divider */}
-            <div className="hidden lg:block w-px bg-gray-200" />
-
-            {/* Principles */}
-            <div className="lg:col-span-2 grid sm:grid-cols-3 gap-8">
+            {/* Deliver */}
+            <div className="group relative bg-white rounded-3xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] 
+                          border border-gray-100 hover:shadow-[0_12px_40px_rgba(37,99,235,0.06)] 
+                          hover:border-blue-100 transition-all duration-500">
+              {/* Number */}
+              <div className="text-6xl font-black text-gray-50 absolute top-6 right-8 group-hover:text-blue-50 transition-colors duration-500">
+                02
+              </div>
               
-              {/* Innovate */}
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-full border-2 border-[#2563EB]/30 flex items-center justify-center">
-                  <Lightbulb size={24} className="text-[#2563EB]" />
-                </div>
-                <h3 className="text-lg font-bold text-[#0F172A] mt-4">Innovate</h3>
-                <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-                  We embrace creativity and innovation to build smart solutions that solve 
-                  real-world challenges.
-                </p>
+              {/* Icon */}
+              <div className="w-14 h-14 bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl flex items-center justify-center mb-6
+                            group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-emerald-200/50 transition-all duration-300">
+                <Shield size={24} className="text-[#10B981]" />
               </div>
+              
+              {/* Content */}
+              <h3 className="text-xl font-bold text-[#0F172A] mb-3">Deliver</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                We are committed to quality, reliability and excellence in every product we build, 
+                ensuring our solutions exceed expectations.
+              </p>
+              
+              {/* Bottom accent */}
+              <div className="w-0 h-0.5 bg-[#10B981] rounded-full mt-6 group-hover:w-12 transition-all duration-500" />
+            </div>
 
-              {/* Deliver */}
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-full border-2 border-[#2563EB]/30 flex items-center justify-center">
-                  <Shield size={24} className="text-[#2563EB]" />
-                </div>
-                <h3 className="text-lg font-bold text-[#0F172A] mt-4">Deliver</h3>
-                <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-                  We are committed to quality, reliability and excellence in every product we build.
-                </p>
+            {/* Empower */}
+            <div className="group relative bg-white rounded-3xl p-8 md:p-10 shadow-[0_4px_20px_rgba(0,0,0,0.02)] 
+                          border border-gray-100 hover:shadow-[0_12px_40px_rgba(37,99,235,0.06)] 
+                          hover:border-blue-100 transition-all duration-500">
+              {/* Number */}
+              <div className="text-6xl font-black text-gray-50 absolute top-6 right-8 group-hover:text-purple-50 transition-colors duration-500">
+                03
               </div>
-
-              {/* Empower */}
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-full border-2 border-[#2563EB]/30 flex items-center justify-center">
-                  <UserCheck size={24} className="text-[#2563EB]" />
-                </div>
-                <h3 className="text-lg font-bold text-[#0F172A] mt-4">Empower</h3>
-                <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-                  We empower businesses and communities through technology and knowledge.
-                </p>
+              
+              {/* Icon */}
+              <div className="w-14 h-14 bg-gradient-to-br from-purple-50 to-violet-100 rounded-2xl flex items-center justify-center mb-6
+                            group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-violet-200/50 transition-all duration-300">
+                <UserCheck size={24} className="text-[#7C3AED]" />
               </div>
+              
+              {/* Content */}
+              <h3 className="text-xl font-bold text-[#0F172A] mb-3">Empower</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">
+                We empower businesses and communities through technology and knowledge, 
+                creating lasting impact that drives growth and transformation.
+              </p>
+              
+              {/* Bottom accent */}
+              <div className="w-0 h-0.5 bg-[#7C3AED] rounded-full mt-6 group-hover:w-12 transition-all duration-500" />
             </div>
           </div>
+
+          {/* Bottom subtle text */}
+          <p className="text-center text-gray-400 text-xs mt-12">
+            Built on trust. Driven by purpose. Delivered with excellence.
+          </p>
         </div>
       </section>
 

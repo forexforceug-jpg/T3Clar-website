@@ -15,6 +15,7 @@ const categories = [
   { label: 'E-commerce', icon: ShoppingBag, active: false },
   { label: 'Systems & Platforms', icon: Server, active: false },
   { label: 'Infrastructure', icon: Cloud, active: false },
+  { label: 'Inovation Labs', icon: Cloud, active: false },
 ]
 
 const projects = [
