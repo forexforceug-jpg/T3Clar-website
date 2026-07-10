@@ -187,13 +187,7 @@ export default function WhatWeDo() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="flex justify-center mt-12"
         >
-          <div className="flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-blue-50/80 to-purple-50/80 
-                        rounded-full border border-blue-100/30">
-            <Sparkles size={14} className="text-[#2563EB]" />
-            <span className="text-xs text-gray-500 font-medium">
-              Powered by cutting-edge technology
-            </span>
-          </div>
+          
         </motion.div>
 
       </div>

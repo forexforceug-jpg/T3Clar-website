@@ -46,10 +46,10 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
             <Image
-              src="/T3Clarlogo.png"
+              src="/t3logo.png"
               alt="T3Clar Logo"
-              width={36}
-              height={36}
+              width={65}
+              height={65}
               className="rounded-lg"
             />
             <div>

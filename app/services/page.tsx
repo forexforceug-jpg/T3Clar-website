@@ -10,61 +10,61 @@ const services = [
     icon: Code,
     title: 'Custom Software Development',
     description: 'We create robust, scalable and secure software solutions tailored to your business needs.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Custom Software Development.jpg',
   },
   {
     icon: Smartphone,
     title: 'Mobile App Development',
     description: 'High-performance mobile applications for Android and iOS platforms built with modern frameworks.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Mobile App Development.jpeg',
   },
   {
     icon: Globe,
     title: 'Website Design & Development',
     description: 'Modern, responsive and fast websites that create a lasting impression and drive results.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Website Design & Development.jpg',
   },
   {
     icon: Layout,
     title: 'Business Management Systems',
     description: 'Smart systems that streamline operations, improve efficiency and drive growth.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Business Management Systems.jpg',
   },
   {
     icon: ShoppingBag,
     title: 'E-commerce Solutions',
     description: 'End-to-end e-commerce platforms designed to help you sell more and reach further.',
-    image: '/jinja-cityscape.jpg',
+    image: '/E-commerce Solutions.webp',
   },
   {
     icon: Cloud,
     title: 'Cloud Solutions',
     description: 'Secure, reliable and scalable cloud infrastructure to power your business applications.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Cloud Solutions.jpg',
   },
   {
     icon: CreditCard,
     title: 'Payment Integration Systems',
     description: 'Safe and seamless payment gateways integrated into your digital platforms.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Payment Integration Systems.jpg',
   },
   {
     icon: Settings,
     title: 'Automation Solutions',
     description: 'Smart automation that reduces manual processes and automates your workflows.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Automation Solutions.jpg',
   },
   {
     icon: Rocket,
     title: 'UI/UX Design',
     description: 'User-centered designs that create beautiful experiences and drive engagement.',
-    image: '/jinja-cityscape.jpg',
+    image: '/UI/UX Design.jpg',
   },
   {
     icon: Users,
     title: 'Technology Consulting',
     description: 'Expert guidance to help you make the right technology decisions for your business.',
-    image: '/jinja-cityscape.jpg',
+    image: '/Technology Consulting.png',
   },
 ]
 
@@ -83,7 +83,7 @@ export default function ServicesPage() {
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
           <img
-            src="/jinja-cityscape.jpg"
+            src="/heroimage.jpg"
             alt="Modern technology office"
             className="absolute inset-0 w-full h-full object-cover"
             style={{ opacity: 1 }}

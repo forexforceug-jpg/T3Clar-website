@@ -12,7 +12,7 @@ export default function Hero() {
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-white" />
         <img
-          src="/jinja-cityscape.jpg"
+          src="/nilebridge.png"
           alt="Jinja Nile bridge at sunset"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ opacity: 1 }}

@@ -31,7 +31,7 @@ const platforms = [
     name: 'Clexarly',
     nameParts: { colored: 'Clex', white: 'arly' },
     description: 'Digital growth & business solutions.',
-    image: '/jinja-cityscape.jpg',
+    image: '/clxry.png',
     color: '#8B5CF6',
     icon: TrendingUp,
     tag: 'Business',
@@ -42,7 +42,7 @@ const platforms = [
     name: 'Lotina',
     nameParts: { colored: 'Lo', white: 'tina' },
     description: 'Investment & strategic growth partner.',
-    image: '/jinja-cityscape.jpg',
+    image: '/lotina.png',
     color: '#7C3AED',
     icon: Building2,
     tag: 'Investment',
@@ -96,11 +96,11 @@ export default function Ecosystem() {
           className="text-center mb-8"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-full mb-4">
-            <div className="w-1.5 h-1.5 bg-[#2563EB] rounded-full animate-pulse" />
+            <div className="w-1.5 h-1.5 bg-[#2563EB] rounded-full" />
             <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
               OUR ECOSYSTEM
             </span>
-            <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full animate-pulse" />
+            <div className="w-1.5 h-1.5 bg-[#7C3AED] rounded-full" />
           </div>
           
           <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] leading-tight max-w-2xl mx-auto">
@@ -135,7 +135,6 @@ export default function Ecosystem() {
           
           {/* ===== CONCENTRIC ORBITAL RINGS ===== */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            {/* Outer decorative rings */}
             <svg width="520" height="520" viewBox="0 0 520 520" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               <circle cx="260" cy="260" r="250" fill="none" stroke="#2563EB" strokeWidth="0.5" opacity="0.12" />
               <circle cx="260" cy="260" r="220" fill="none" stroke="#7C3AED" strokeWidth="0.5" opacity="0.08" strokeDasharray="8,12" />
@@ -146,8 +145,8 @@ export default function Ecosystem() {
           {/* ===== ORBITAL NODES (glowing dots) ===== */}
           {orbitalNodes.map((node, i) => {
             const angleRad = (node.angle * Math.PI) / 180
-            const cx = 50 + node.distance * Math.sin(angleRad)
-            const cy = 50 - node.distance * Math.cos(angleRad)
+            const cx = Math.round(50 + node.distance * Math.sin(angleRad))
+            const cy = Math.round(50 - node.distance * Math.cos(angleRad))
             
             return (
               <motion.div
@@ -177,21 +176,16 @@ export default function Ecosystem() {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30"
           >
             <div className="relative">
-              {/* Outer pulse ring */}
               <motion.div
                 animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.05, 0.2] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -inset-10 rounded-full bg-blue-100/40"
               />
-              
-              {/* Inner pulse */}
               <motion.div
                 animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.1, 0.3] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                 className="absolute -inset-6 rounded-full bg-blue-100/50"
               />
-              
-              {/* Main hub */}
               <div className="relative w-24 h-24 md:w-28 md:h-28 bg-gradient-to-br from-white via-white to-blue-50/80 
                            rounded-[28px] shadow-[0_20px_60px_rgba(37,99,235,0.1),0_0_0_1px_rgba(37,99,235,0.06)]
                            flex items-center justify-center backdrop-blur-sm">
@@ -199,8 +193,6 @@ export default function Ecosystem() {
                   <Hexagon size={30} className="text-[#2563EB] mx-auto" />
                   <span className="text-[9px] font-black text-[#0F172A] mt-0.5 block tracking-wider">T3CLAR</span>
                 </div>
-                
-                {/* Orbiting dot around hub */}
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -217,8 +209,8 @@ export default function Ecosystem() {
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
             {platforms.map((platform, i) => {
               const angleRad = (platform.angle * Math.PI) / 180
-              const x2 = 400 + (platform.distance / 50) * 380 * Math.sin(angleRad)
-              const y2 = 300 - (platform.distance / 50) * 380 * Math.cos(angleRad)
+              const x2 = Math.round(400 + (platform.distance / 50) * 380 * Math.sin(angleRad))
+              const y2 = Math.round(300 - (platform.distance / 50) * 380 * Math.cos(angleRad))
               
               return (
                 <line
@@ -239,8 +231,8 @@ export default function Ecosystem() {
           {/* ===== PLATFORM ORBITING IMAGES ===== */}
           {platforms.map((platform, index) => {
             const angleRad = (platform.angle * Math.PI) / 180
-            const x = 50 + platform.distance * Math.sin(angleRad)
-            const y = 50 - platform.distance * Math.cos(angleRad)
+            const x = Math.round(50 + platform.distance * Math.sin(angleRad))
+            const y = Math.round(50 - platform.distance * Math.cos(angleRad))
             
             return (
               <motion.div
@@ -256,14 +248,12 @@ export default function Ecosystem() {
                   transform: 'translate(-50%, -50%)' 
                 }}
               >
-                {/* Orbital ring around each platform */}
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20 + index * 5, repeat: Infinity, ease: "linear" }}
                   className="absolute -inset-3 rounded-full border border-blue-100/30"
                 />
 
-                {/* Platform image - no borders */}
                 <div className="relative w-[140px] h-[90px] md:w-[170px] md:h-[110px] rounded-2xl overflow-hidden
                              shadow-[0_12px_40px_rgba(0,0,0,0.08)] group-hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]
                              transition-all duration-500 group-hover:scale-110">
@@ -272,11 +262,7 @@ export default function Ecosystem() {
                     alt={platform.name}
                     className="w-full h-full object-cover"
                   />
-                  
-                  {/* Subtle gradient for text readability */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  
-                  {/* Platform name on image */}
                   <div className="absolute bottom-0 left-0 right-0 p-2.5">
                     <div className="flex items-center gap-1.5">
                       <platform.icon size={12} style={{ color: platform.color }} />
@@ -290,7 +276,6 @@ export default function Ecosystem() {
                   </div>
                 </div>
 
-                {/* Glow dot below */}
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
                      style={{ backgroundColor: `${platform.color}40`, boxShadow: `0 0 8px ${platform.color}30` }} />
               </motion.div>

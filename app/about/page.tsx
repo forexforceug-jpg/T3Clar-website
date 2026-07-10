@@ -468,7 +468,7 @@ export default function AboutPage() {
             {/* Left - Team Photo */}
             <div className="relative h-[500px] rounded-l-3xl overflow-hidden">
               <img
-                src="/jinja-cityscape.jpg"
+                src="/team.jpg"
                 alt="T3Clar team collaboration"
                 className="w-full h-full object-cover"
               />
