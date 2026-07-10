@@ -226,40 +226,23 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ============ MAP + OFFICE ============ */}
+            {/* ============ MAP + OFFICE ============ */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8">
             
-            {/* Left - Map */}
-            <div className="relative h-[400px] bg-gradient-to-br from-[#F0F4FF] to-[#E8EEFF] rounded-3xl overflow-hidden p-8">
-              {/* Simplified map illustration */}
-              <div className="relative w-full h-full">
-                {/* Water */}
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-100/50 rounded-l-full" />
-                {/* Land */}
-                <div className="absolute inset-0 bg-green-50/50 rounded-3xl" style={{ clipPath: 'polygon(0 0, 70% 0, 65% 100%, 0 100%)' }} />
-                
-                {/* Roads */}
-                <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-300" />
-                <div className="absolute top-1/4 left-1/3 w-1 h-1/2 bg-gray-300" />
-                
-                {/* Bridge label */}
-                <div className="absolute top-1/3 right-16 text-[10px] font-bold text-gray-500">Jinja Bridge</div>
-                <div className="absolute bottom-1/4 left-8 text-[10px] font-bold text-gray-500">Source of the Nile</div>
-                <div className="absolute top-1/4 left-12 text-[10px] font-bold text-gray-500">Jinja Golf Club</div>
-                
-                {/* T3Clar Pin */}
-                <div className="absolute top-[45%] left-[40%]">
-                  <div className="w-8 h-8 bg-[#2563EB] rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
-                    <span className="text-white font-bold text-xs">T</span>
-                  </div>
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-[#2563EB] rounded-b-full" />
-                  <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap">
-                    <span className="text-xs font-bold text-[#2563EB]">T3Clar</span>
-                  </div>
-                </div>
-              </div>
+            {/* Left - Google Maps */}
+            <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15958.819565566479!2d33.202611600000004!3d0.4320401!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sug!4v1783693589646!5m2!1sen!2sug"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title="T3Clar Office Location"
+              />
             </div>
 
             {/* Right - Office Card */}
@@ -312,40 +295,6 @@ export default function ContactPage() {
                   <div className="w-6 h-20 bg-[#0F172A] rounded-t" />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ NEWSLETTER BANNER ============ */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="bg-gradient-to-r from-[#2563EB] via-[#6366F1] to-[#E0E7FF] rounded-3xl p-10 md:p-14 
-                        flex flex-col md:flex-row items-center justify-between gap-8">
-            
-            <div className="flex items-center gap-5">
-              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shrink-0">
-                <Mail size={28} className="text-[#2563EB]" />
-              </div>
-              <div>
-                <h2 className="text-2xl md:text-3xl font-black text-white">
-                  Stay connected with T3Clar
-                </h2>
-                <p className="text-blue-100 mt-1">
-                  Subscribe to our newsletter for the latest updates, insights and digital trends.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-2 w-full md:w-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 md:w-64 px-5 py-3.5 bg-white rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-white/50"
-              />
-              <button className="px-6 py-3.5 bg-[#2563EB] text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition-colors">
-                Subscribe →
-              </button>
             </div>
           </div>
         </div>
