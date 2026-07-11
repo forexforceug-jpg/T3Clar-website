@@ -54,10 +54,7 @@ export default function Navbar() {
             />
             <div>
               <span className="font-bold text-lg leading-none text-gray-900">
-                T<span className="text-[#2563EB]">3</span>Clar
-              </span>
-              <span className="text-[10px] text-gray-500 tracking-wider uppercase block">
-                Building Jinja&apos;s Digital Future
+                <span className="text-[#2563EB]">Building Digital Future</span>
               </span>
             </div>
           </Link>
