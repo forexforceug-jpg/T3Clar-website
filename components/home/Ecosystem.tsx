@@ -5,13 +5,13 @@ import { ArrowRight, Car, ShoppingBag, TrendingUp, Building2, Zap, School } from
 import { motion } from 'framer-motion'
 
 const platforms = [
-  { name: 'XRide',      nameParts: { colored: 'X',    white: 'Ride'    }, image: '/jinja-cityscape.jpg', color: '#2563EB', icon: Car,         tag: 'Transport',  angle: -90     },
+  { name: 'XRide',      nameParts: { colored: 'X',    white: 'Ride'    }, image: '/XR.png', color: '#2563EB', icon: Car,         tag: 'Transport',  angle: -90     },
   { name: 'Munolink',   nameParts: { colored: 'M',    white: 'unolink' }, image: '/muno.png',           color: '#77AFE4', icon: ShoppingBag, tag: 'Commerce',   angle: -38.57  },
   { name: 'GripShule',  nameParts: { colored: 'Grip', white: 'Shule'   }, image: '/gripshule.png',      color: '#10B981', icon: School,      tag: 'Education',  angle: 12.86   },
   { name: 'ShopIt',     nameParts: { colored: 'Shop', white: 'It'      }, image: '/shopit.jpg',         color: '#10B981', icon: ShoppingBag, tag: 'Commerce',   angle: 64.29   },
   { name: 'Clexarly',   nameParts: { colored: 'Clex', white: 'arly'    }, image: '/clxry.png',          color: '#8B5CF6', icon: TrendingUp,  tag: 'Business',   angle: 115.71  },
   { name: 'Lotina',     nameParts: { colored: 'Lo',   white: 'tina'    }, image: '/lotina.png',         color: '#7C3AED', icon: Building2,   tag: 'Investment', angle: 167.14  },
-  { name: 'Future',     nameParts: { colored: 'Fu',   white: 'ture'    }, image: '/It-soln2.jpeg',      color: '#F59E0B', icon: Zap,         tag: 'Coming Soon', angle: 218.57 },
+  { name: 'Fork & Go',     nameParts: { colored: 'Fork ',   white: '& Go'    }, image: '/Fork and Go.png',      color: '#F59E0B', icon: Zap,         tag: 'Delivery', angle: 218.57 },
 ]
 
 const orbitalNodes = Array.from({ length: 24 }, (_, i) => i * 15)

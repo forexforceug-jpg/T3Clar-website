@@ -450,39 +450,39 @@ export default function ProjectsPage() {
             </motion.div>
           </div>
 
-          {/* ───── STICKY FILTER BAR ───── */}
-          <div className="sticky top-14 md:top-16 z-30 -mx-4 px-4 py-4 bg-[#F4F1EA]/95 backdrop-blur-md border-b border-[#0A0F1F]/15 mb-16">
-            <div className="flex flex-wrap gap-x-6 gap-y-3">
-              {categories.map((cat, i) => {
-                const isActive = activeCategory === cat.key
-                const count = cat.key === 'all'
-                  ? projects.length
-                  : projects.filter((p) => p.code === cat.key).length
-                return (
-                  <motion.button
-                    key={cat.key}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.05 }}
-                    onClick={() => setActiveCategory(cat.key)}
-                    className={`group inline-flex items-baseline gap-2 text-xs font-mono tracking-[0.25em] uppercase transition-all duration-300 pb-1 border-b-2 ${
-                      isActive
-                        ? 'text-[#0A0F1F] border-[#0EA5E9]'
-                        : 'text-[#0A0F1F]/40 border-transparent hover:text-[#0A0F1F]'
-                    }`}
-                  >
-                    {cat.label}
-                    <span className={`text-[9px] tabular-nums transition-colors ${
-                      isActive ? 'text-[#0EA5E9]' : 'text-[#0A0F1F]/30'
-                    }`}>
-                      {String(count).padStart(2, '0')}
-                    </span>
-                  </motion.button>
-                )
-              })}
-            </div>
-          </div>
+          {/* ───── STICKY FILTER BAR — attached to navbar ───── */}
+<div className="sticky top-14 md:top-16 z-40 -mx-4 px-4 bg-[#F4F1EA]/95 backdrop-blur-md border-b border-[#0A0F1F]/15 mb-16">
+  <div className="py-4 flex flex-wrap gap-x-6 gap-y-3">
+    {categories.map((cat, i) => {
+      const isActive = activeCategory === cat.key
+      const count = cat.key === 'all'
+        ? projects.length
+        : projects.filter((p) => p.code === cat.key).length
+      return (
+        <motion.button
+          key={cat.key}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: i * 0.05 }}
+          onClick={() => setActiveCategory(cat.key)}
+          className={`group inline-flex items-baseline gap-2 text-xs font-mono tracking-[0.25em] uppercase transition-all duration-300 pb-1 border-b-2 ${
+            isActive
+              ? 'text-[#0A0F1F] border-[#0EA5E9]'
+              : 'text-[#0A0F1F]/40 border-transparent hover:text-[#0A0F1F]'
+          }`}
+        >
+          {cat.label}
+          <span className={`text-[9px] tabular-nums transition-colors ${
+            isActive ? 'text-[#0EA5E9]' : 'text-[#0A0F1F]/30'
+          }`}>
+            {String(count).padStart(2, '0')}
+          </span>
+        </motion.button>
+      )
+    })}
+  </div>
+</div>
 
           {/* Projects — editorial rows */}
           <AnimatePresence mode="wait">
