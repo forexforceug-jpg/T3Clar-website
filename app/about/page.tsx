@@ -523,7 +523,7 @@ export default function AboutPage() {
       <section className="bg-[#F4F2ED] border-y border-[#0F1419]/15 py-8 overflow-hidden">
         <div className="max-w-[1400px] mx-auto px-4 mb-5 flex items-center justify-between">
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
-            // Trusted systems · 10 partners
+            // Trusted systems · 10+ partners
           </span>
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#65A30D] flex items-center gap-2">
             <motion.span
@@ -554,122 +554,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* ============================================================
-          § 01 — SERVICES
-          ============================================================ */}
-      <section className="py-24 md:py-32 px-4 bg-[#FBF9F5]">
-        <div className="max-w-[1400px] mx-auto">
-
-          <SpecHeader section="§ 01" title="Services" meta="09 modules · all online" />
-
-          <div className="grid grid-cols-12 gap-6 md:gap-10 mb-20 items-end">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="col-span-12 md:col-span-7"
-            >
-              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5">
-                // Nine disciplines, one studio
-              </p>
-              <h2 className="leading-[0.95] tracking-[-0.03em]">
-                <span className="block text-[1.75rem] md:text-[2.5rem] font-light text-[#0F1419]/50">
-                  Everything you need
-                </span>
-                <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0F1419]/75">
-                  to ship &amp; scale.
-                </span>
-              </h2>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="col-span-12 md:col-span-5 md:pl-8 md:border-l border-[#0F1419]/15"
-            >
-              <p className="text-base leading-[1.75] text-[#0F1419]/70">
-                From AI to video, from cloud to design — nine technical
-                modules that plug into your stack.
-              </p>
-            </motion.div>
-          </div>
-
-          <div className="border-t border-[#0F1419]/20">
-            {services.map((service, i) => (
-              <motion.article
-                key={service.code}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.5, delay: i * 0.03 }}
-                className="group border-b border-[#0F1419]/15 grid grid-cols-12 gap-4 md:gap-6 py-8 md:py-10 items-center hover:bg-[#0EA5E9]/[0.03] transition-colors duration-500"
-              >
-                <div className="col-span-12 md:col-span-1">
-                  <span className="text-[10px] font-mono tracking-[0.25em] text-[#0EA5E9]">
-                    {service.code}
-                  </span>
-                </div>
-
-                <div className="col-span-12 md:col-span-4">
-                  <h3 className="text-xl md:text-2xl font-bold tracking-[-0.01em] text-[#0F1419] mb-3 group-hover:text-[#0EA5E9] transition-colors">
-                    {service.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {service.stack.map((s, si) => (
-                      <motion.span
-                        key={s}
-                        initial={{ opacity: 0, y: 5 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 + si * 0.05 }}
-                        className="text-[9px] font-mono tracking-wider uppercase text-[#0F1419]/60 border border-[#0F1419]/20 px-1.5 py-0.5 group-hover:border-[#0EA5E9]/40 transition-colors"
-                      >
-                        {s}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="col-span-12 md:col-span-4">
-                  <p className="text-base leading-[1.7] text-[#0F1419]/70">
-                    {service.description}
-                  </p>
-                </div>
-
-                <div className="col-span-12 md:col-span-3 flex items-center gap-4">
-                  <div className="relative flex-1 aspect-[16/10] overflow-hidden border border-[#0F1419]/15">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover grayscale-[55%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-[800ms]"
-                    />
-                    <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9]/80 transition-colors duration-500" />
-                    <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#0EA5E9]/0 group-hover:border-[#0EA5E9]/80 transition-colors duration-500" />
-                  </div>
-                  <ArrowUpRight
-                    size={18}
-                    className="text-[#0F1419]/30 group-hover:text-[#0EA5E9] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all shrink-0"
-                  />
-                </div>
-              </motion.article>
-            ))}
-          </div>
-
-          <div className="mt-10 flex items-center justify-between flex-wrap gap-4">
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
-              // End of module list
-            </span>
-            <Link href="/services" className="group text-xs font-mono tracking-[0.25em] uppercase text-[#0F1419] border-b border-[#0F1419] pb-1 hover:border-[#0EA5E9] hover:text-[#0EA5E9] transition-all inline-flex items-center gap-2">
-              <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-              See full catalogue
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ============================================================
           § 02 — PARTNERSHIP
           ============================================================ */}
@@ -678,7 +562,7 @@ export default function AboutPage() {
 
           <SpecHeader section="§ 02" title="Strategic Partnership" meta="Lotina × T3Clar · Since 2023" />
 
-          <div className="grid grid-cols-12 gap-6 md:gap-10 mb-16 items-end">
+          <div className="grid grid-cols-12 gap-2 md:gap-10 mb-16 items-end">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1209,121 +1093,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* ============================================================
-          § 06 — APPROACH
-          ============================================================ */}
-      <section className="py-24 md:py-32 px-4 bg-[#F4F2ED]">
-        <div className="max-w-[1400px] mx-auto">
-
-          <SpecHeader section="§ 06" title="Approach" meta="03 phases · iterative" />
-
-          <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.7 }}
-              className="col-span-12 md:col-span-6"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden border border-[#0F1419]/15">
-                <ParallaxImage
-                  src="/It-soln2.jpeg"
-                  alt="T3Clar approach"
-                  className="w-full h-full"
-                  range={40}
-                />
-                <div className="absolute top-4 left-4 text-[9px] font-mono tracking-[0.3em] uppercase text-[#0F1419] bg-[#FBF9F5]/85 backdrop-blur-sm px-2 py-1">
-                  IMG-06
-                </div>
-                <div className="absolute bottom-4 right-4 text-[9px] font-mono tracking-[0.3em] uppercase text-[#0F1419] bg-[#FBF9F5]/85 backdrop-blur-sm px-2 py-1">
-                  F.06 / STU
-                </div>
-              </div>
-              <div className="mt-3 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
-                <span>Method, not magic</span>
-                <span>Jinja · UG</span>
-              </div>
-            </motion.div>
-
-            <div className="col-span-12 md:col-span-6 md:pt-6">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5"
-              >
-                // Sequenced delivery
-              </motion.p>
-
-              <motion.h2
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="leading-[0.95] tracking-[-0.03em] mb-8"
-              >
-                <span className="block text-[1.5rem] md:text-[2.25rem] font-light text-[#0F1419]/50">
-                  People. Process.
-                </span>
-                <span className="block text-[2rem] md:text-[3rem] font-black text-[#0F1419]/75">
-                  Then technology.
-                </span>
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="text-base leading-[1.8] text-[#0F1419]/70 mb-10 max-w-lg"
-              >
-                We combine the right people, efficient processes and modern
-                technology to build solutions that are scalable, secure and future-ready.
-              </motion.p>
-
-              <ProcessAccordion />
-
-              <div className="mt-12 pt-8 border-t border-[#0F1419]/15 grid grid-cols-2 gap-10">
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-3">
-                    METRIC-01
-                  </div>
-                  <div className="text-4xl md:text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
-                    <Counter target={98} suffix="%" />
-                  </div>
-                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/50 mt-3">
-                    Client satisfaction
-                  </div>
-                </motion.div>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-3">
-                    METRIC-02
-                  </div>
-                  <div className="text-4xl md:text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
-                    <Counter target={4.9} />
-                  </div>
-                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/50 mt-3">
-                    Average rating
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ============================================================
           § 07 — TESTIMONIAL
           ============================================================ */}
