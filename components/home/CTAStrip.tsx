@@ -1,43 +1,88 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export default function CTAStrip() {
   return (
-    <section className="py-12 px-4 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="relative rounded-[32px] overflow-hidden bg-gradient-to-r from-[#EEF2FF] via-[#F5F3FF] to-[#E0E7FF] px-8 py-8 md:px-12 md:py-10">
-          {/* Decorative orbs */}
-          <div className="absolute top-0 left-0 w-40 h-40 bg-blue-200/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-200/30 rounded-full blur-3xl" />
+    <section className="py-32 px-4 bg-[#F4F1EA]">
+      <div className="max-w-4xl mx-auto text-center">
 
-          {/* Faint grid */}
-          <div
-            className="absolute inset-0 opacity-[0.05]"
-            style={{
-              backgroundImage: `linear-gradient(#2563EB 1px, transparent 1px), linear-gradient(90deg, #2563EB 1px, transparent 1px)`,
-              backgroundSize: '40px 40px',
-            }}
-          />
+        <motion.span
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-[10px] font-mono tracking-[0.4em] uppercase text-[#B45309] inline-block mb-8"
+        >
+          § 05 · Correspondence
+        </motion.span>
 
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <div className="text-[10px] text-[#2563EB] font-bold tracking-[0.25em] uppercase mb-2">
-                Ready when you are
-              </div>
-              <h3 className="text-2xl md:text-3xl font-black text-[#0F172A]">
-                Let&apos;s build something remarkable.
-              </h3>
-            </div>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-[-0.03em] text-[#0A0F1F] mb-10"
+        >
+          Ready to
+          <br />
+          <em className="not-italic font-black text-[#0EA5E9]">start?</em>
+        </motion.h2>
 
-            <Link
-              href="/contact"
-              className="group inline-flex items-center gap-2 px-7 py-4 bg-[#2563EB] text-white rounded-full font-bold hover:bg-blue-700 transition-all duration-300 shadow-[0_10px_30px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.4)] hover:-translate-y-0.5 shrink-0"
-            >
-              Start Your Project
-              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="text-lg leading-[1.8] text-[#1A1F2E]/60 max-w-xl mx-auto mb-12"
+          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+        >
+          If you have a project in mind — or just want to talk through an idea — write to us.
+          Every message is read by a real person, and we reply within a day.
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="flex flex-wrap items-center justify-center gap-6 mb-16"
+        >
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-3 text-sm font-medium text-white bg-[#0A0F1F] px-8 py-4 hover:bg-[#0EA5E9] transition-all duration-300"
+          >
+            Start a project
+            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <a
+            href="mailto:hello@t3clar.com"
+            className="text-sm font-medium text-[#0A0F1F] border-b-2 border-[#0A0F1F] pb-1 hover:text-[#B45309] hover:border-[#B45309] transition-all"
+          >
+            hello@t3clar.com
+          </a>
+        </motion.div>
+
+        {/* Bottom row of details */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="pt-10 border-t border-[#1A1F2E]/10 flex items-center justify-center flex-wrap gap-10 text-[10px] font-mono tracking-[0.3em] uppercase text-[#1A1F2E]/50"
+        >
+          <span className="flex items-center gap-2">
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-1.5 h-1.5 rounded-full bg-[#65A30D]"
+            />
+            Available for new work
+          </span>
+          <span>Jinja · Uganda</span>
+          <span>Est. 2021</span>
+        </motion.div>
       </div>
     </section>
   )

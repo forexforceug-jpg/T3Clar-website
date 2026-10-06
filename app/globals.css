@@ -1,73 +1,75 @@
 @import "tailwindcss";
 
-* {
-  scroll-behavior: smooth;
+@theme {
+  --color-ink: #0B1220;
+  --color-ink-soft: #1F2937;
+  --color-body: #334155;
+  --color-body-muted: #64748B;
+  --color-muted: #94A3B8;
+  --color-accent: #1D4ED8;
+  --color-live: #10B981;
 }
+
+* { scroll-behavior: smooth; }
 
 body {
   background-color: #FFFFFF;
-  color: #111827;
+  color: #334155;
   font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.card {
-  background-color: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: 16px;
-  transition: all 0.2s ease;
+/* Editorial utilities */
+.editorial-title {
+  color: #0B1220;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
 }
-
-.card:hover {
-  border-color: #4A9EFF;
-  box-shadow: 0 4px 24px rgba(74, 158, 255, 0.1);
-  transform: translateY(-2px);
+.editorial-accent { color: #1D4ED8; }
+.editorial-body {
+  font-family: Georgia, "Times New Roman", serif;
+  color: #334155;
+  line-height: 1.7;
 }
-
-.section-padding {
-  padding: 5rem 1rem;
+.editorial-mono {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #94A3B8;
 }
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding: 8rem 2rem;
-  }
+.editorial-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed rgba(148, 163, 184, 0.5);
+  margin-bottom: 4rem;
 }
-
-.container-max {
-  max-width: 1280px;
-  margin: 0 auto;
+.rule-h { height: 1px; background-color: rgba(148, 163, 184, 0.4); }
+.link-underline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #0B1220;
+  border-bottom: 2px solid rgba(11, 18, 32, 0.2);
+  padding-bottom: 0.25rem;
+  transition: all 0.3s ease;
 }
-
-/* Blue accent for light theme */
-.accent-text {
-  color: #2563EB;
+.link-underline:hover {
+  color: #1D4ED8;
+  border-bottom-color: #1D4ED8;
 }
-
-.accent-bg {
-  background-color: #2563EB;
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
 }
-
-.accent-border {
-  border-color: #2563EB;
-}
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll 25s linear infinite;
-}
-
-.animate-scroll:hover {
-  animation-play-state: paused;
-}
-/* app/globals.css — add these keyframes */
-
 @keyframes orbit-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -76,24 +78,33 @@ body {
   from { transform: rotate(360deg); }
   to { transform: rotate(0deg); }
 }
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-33.333%); }
 }
-@keyframes float-y {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
-@keyframes drift {
-  0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(20px, -15px); }
-  66% { transform: translate(-15px, 20px); }
+@keyframes orbit-spin-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
 }
 @keyframes pulse-ring {
   0% { transform: scale(0.9); opacity: 0.6; }
   100% { transform: scale(1.6); opacity: 0; }
 }
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
+
+/* Animations */
+@keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.animate-scroll { animation: scroll 25s linear infinite; }
+.animate-scroll:hover { animation-play-state: paused; }
+@keyframes orbit-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes orbit-spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+@keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
+@keyframes float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes pulse-ring { 0% { transform: scale(0.9); opacity: 0.6; } 100% { transform: scale(1.6); opacity: 0; } }

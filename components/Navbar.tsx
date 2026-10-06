@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowUpRight } from 'lucide-react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const navItems = [
   { label: 'Home', href: '/' },
-  { label: 'About Us', href: '/about' },
+  { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
   { label: 'Projects', href: '/projects' },
   { label: 'Contact', href: '/contact' },
@@ -20,99 +21,138 @@ export default function Navbar() {
   const pathname = usePathname()
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 80)
-    }
-    
-    setScrolled(false)
-    
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [pathname])
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-md' 
-        : 'bg-transparent border-b border-transparent shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16">
-          
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5">
-            <Image
-              src="/t3logo.png"
-              alt="T3Clar Logo"
-              width={65}
-              height={65}
-              className="rounded-lg"
-            />
-          </Link>
+    <>
+      {/* Fixed nav — h-14 on mobile, h-16 on desktop (56 / 64 px) */}
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 h-14 md:h-16 transition-all duration-300 ${
+          scrolled
+            ? 'bg-[#F7F3EB]/90 backdrop-blur-md border-b border-[#0A0F1F]/10'
+            : 'bg-transparent border-b border-transparent'
+        }`}
+      >
+        <div className="max-w-[1440px] mx-auto h-full px-4 md:px-8 lg:px-10">
+          <div className="flex items-center justify-between h-full">
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navItems.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                  pathname === item.href
-                    ? 'text-[#2563EB] bg-blue-50'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100/50'
-                }`}
-              >
-                {item.label}
-                {pathname === item.href && (
-                  <div className="h-0.5 bg-[#2563EB] mt-0.5 rounded-full" />
-                )}
-              </Link>
-            ))}
-            <Link
-              href="/contact"
-              className="ml-2 px-5 py-2 bg-[#2563EB] text-white rounded-full text-sm font-semibold 
-                       hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20"
-            >
-              Let&apos;s Talk →
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0">
+                <Image
+                  src="/t3logo.png"
+                  alt="T3Clar"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-[13px] md:text-sm font-black tracking-[-0.02em] text-[#0A0F1F]">
+                  T3Clar
+                </span>
+                <span className="text-[8px] md:text-[9px] font-mono tracking-[0.25em] uppercase text-[#0A0F1F]/50 mt-0.5">
+                  Studio
+                </span>
+              </div>
             </Link>
-          </div>
 
-          {/* Mobile toggle */}
-          <button 
-            className="lg:hidden p-2 rounded-lg text-gray-700" 
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navItems.map((item) => {
+                const active = pathname === item.href
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`relative px-3 py-2 text-[13px] font-medium transition-colors ${
+                      active ? 'text-[#0A0F1F]' : 'text-[#0A0F1F]/60 hover:text-[#0A0F1F]'
+                    }`}
+                  >
+                    {item.label}
+                    {active && (
+                      <motion.span
+                        layoutId="nav-underline"
+                        className="absolute left-3 right-3 -bottom-px h-px bg-[#0A0F1F]"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                  </Link>
+                )
+              })}
+
+              <Link
+                href="/contact"
+                className="group ml-4 inline-flex items-center gap-2 text-[13px] font-medium text-[#F7F3EB] bg-[#0A0F1F] px-4 py-2 hover:bg-[#0EA5E9] transition-colors duration-300"
+              >
+                Let&apos;s talk
+                <ArrowUpRight
+                  size={12}
+                  className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                />
+              </Link>
+            </div>
+
+            {/* Mobile Toggle */}
+            <button
+              className="lg:hidden p-2 text-[#0A0F1F] -mr-2"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
+      </nav>
 
-        {/* Mobile Menu */}
+      {/* Mobile Menu — rendered outside the nav so it doesn't get clipped */}
+      <AnimatePresence>
         {mobileOpen && (
-          <div className="lg:hidden bg-white py-4 space-y-1 rounded-b-2xl shadow-lg border-t border-gray-100">
-            {navItems.map((item) => (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden fixed top-14 left-0 right-0 z-40 bg-[#F7F3EB] border-b border-[#0A0F1F]/10 shadow-[0_8px_30px_rgba(10,15,31,0.06)]"
+          >
+            <div className="max-w-[1440px] mx-auto px-4 py-4 space-y-1">
+              {navItems.map((item, i) => {
+                const active = pathname === item.href
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className={`flex items-baseline gap-4 px-2 py-3 text-base font-medium border-b border-[#0A0F1F]/8 last:border-b-0 ${
+                      active ? 'text-[#0A0F1F]' : 'text-[#0A0F1F]/60'
+                    }`}
+                  >
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#0A0F1F]/30">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {item.label}
+                  </Link>
+                )
+              })}
+
               <Link
-                key={item.label}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={`block px-4 py-2 rounded-lg text-sm font-medium ${
-                  pathname === item.href
-                    ? 'text-[#2563EB] bg-blue-50'
-                    : 'text-gray-600 hover:bg-gray-50'
-                }`}
+                href="/contact"
+                className="group mt-3 inline-flex items-center justify-between w-full text-sm font-medium text-[#F7F3EB] bg-[#0A0F1F] px-5 py-3.5"
               >
-                {item.label}
+                Start a project
+                <ArrowUpRight size={14} />
               </Link>
-            ))}
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="block text-center mt-2 mx-4 px-5 py-2.5 bg-[#2563EB] text-white rounded-full text-sm font-semibold"
-            >
-              Let&apos;s Talk
-            </Link>
-          </div>
+            </div>
+          </motion.div>
         )}
-      </div>
-    </nav>
+      </AnimatePresence>
+    </>
   )
 }

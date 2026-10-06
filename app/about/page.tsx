@@ -2,26 +2,12 @@
 
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
-import {
-  Building2, Handshake, Globe, Code, TrendingUp, ShoppingCart,
-  Heart, GraduationCap, Car, Check, Quote, ArrowRight, Users,
-  Sparkles, Lightbulb, Shield, UserCheck, Play, CreditCard,
-  ShoppingBag, Rocket, Layers, Cpu, Cloud, BarChart3, Lock,
-  Smartphone, ChevronRight, Plus, Minus, MapPin, Award,
-  Video,
-  Edit
-} from 'lucide-react'
+import { Plus, Minus, ArrowUpRight, ArrowRight } from 'lucide-react'
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'framer-motion'
 
 /* ============================================================
    DATA
    ============================================================ */
-
-const stats = [
-  { icon: Building2, number: '25+', label: 'Partners' },
-  { icon: Handshake, number: '10+', label: 'Industries' },
-  { icon: Globe, number: '3', label: 'Countries' },
-  { icon: Rocket, number: '150+', label: 'Projects' },
-]
 
 const partnerLogos = [
   { name: 'XRide', image: '/ttlogo.png' },
@@ -30,144 +16,209 @@ const partnerLogos = [
   { name: 'Lotina Investments', image: '/lotina.png' },
   { name: 'GoViral', image: '/goviral.ico' },
   { name: 'Fork & Go', image: '/Fork and Go.png' },
-    { name: 'LowKey FX', image: '/logoTp.png' },
+  { name: 'LowKey FX', image: '/logoTp.png' },
   { name: 'Meddy Furniture', image: '/meddy.png' },
   { name: 'Munolink', image: '/muno.png' },
   { name: 'GripShule', image: '/gripshule.png' },
 ]
 
+const services = [
+  { code: 'SVC-01', title: 'AI & Automation', description: 'Intelligent systems that learn and adapt to your business.', image: '/SoftwareDevelopment.jpg', stack: ['Python', 'TensorFlow', 'OpenAI'] },
+  { code: 'SVC-02', title: 'Cloud Solutions', description: 'Scalable, secure infrastructure built for growth.', image: '/CloudInfrastructure.webp', stack: ['AWS', 'GCP', 'Kubernetes'] },
+  { code: 'SVC-03', title: 'Cybersecurity', description: 'Enterprise-grade protection for your digital assets.', image: '/It-soln2.jpeg', stack: ['SOC 2', 'ISO 27001', 'Zero-Trust'] },
+  { code: 'SVC-04', title: 'Custom Development', description: 'Tailored software engineered around your workflows.', image: '/44.jpg', stack: ['TypeScript', 'Go', 'Postgres'] },
+  { code: 'SVC-05', title: 'Data & Analytics', description: 'Turning raw data into decisions that drive growth.', image: '/jinja-cityscape.jpg', stack: ['dbt', 'Looker', 'BigQuery'] },
+  { code: 'SVC-06', title: 'Mobile Experiences', description: 'Beautiful, performant apps for iOS and Android.', image: '/MS.jpg', stack: ['React Native', 'Swift', 'Kotlin'] },
+  { code: 'SVC-07', title: 'Architectural Design', description: 'Functional and beautiful architectural design work.', image: '/images.jpg', stack: ['AutoCAD', 'Revit', 'SketchUp'] },
+  { code: 'SVC-08', title: 'Graphics Design', description: 'Brand systems and visual identity that endure.', image: '/66.png', stack: ['Figma', 'Illustrator', 'Blender'] },
+  { code: 'SVC-09', title: 'Video Editing', description: 'Story-driven video production and post-production.', image: '/77.webp', stack: ['Premiere', 'After Effects', 'DaVinci'] },
+]
+
 const industries = [
-  { icon: Code, title: 'Technology', description: 'Innovating the future with cutting-edge solutions.', color: '#2563EB', image: '/SoftwareDevelopment.jpg' },
-  { icon: TrendingUp, title: 'Finance', description: 'Driving financial inclusion and digital growth.', color: '#10B981', image: '/99.webp' },
-  { icon: ShoppingCart, title: 'Retail & E-commerce', description: 'Empowering businesses, enhancing customer experiences.', color: '#F59E0B', image: '/10.webp' },
-  { icon: Heart, title: 'Healthcare', description: 'Leveraging technology for better health outcomes.', color: '#EF4444', image: '/Healthcare.jpg' },
-  { icon: GraduationCap, title: 'Education', description: 'Building smart systems for learning and innovation.', color: '#8B5CF6', image: '/44.jpg' },
-  { icon: Car, title: 'Transportation', description: 'Creating intelligent mobility and connected transport.', color: '#06B6D4', image: '/11.jpg' },
+  { code: 'IND-01', title: 'Technology', headline: 'Where we were born', description: 'Innovating the future with cutting-edge solutions.', image: '/SoftwareDevelopment.jpg', signals: ['SaaS', 'Platforms', 'APIs'] },
+  { code: 'IND-02', title: 'Finance', headline: 'Money that moves', description: 'Driving financial inclusion and digital growth.', image: '/99.webp', signals: ['Payments', 'Lending', 'Wallet'] },
+  { code: 'IND-03', title: 'Retail', headline: 'Commerce reimagined', description: 'Empowering businesses, enhancing customer experiences.', image: '/10.webp', signals: ['POS', 'Delivery', 'Inventory'] },
+  { code: 'IND-04', title: 'Healthcare', headline: 'Care at a distance', description: 'Leveraging technology for better health outcomes.', image: '/Healthcare.jpg', signals: ['Telehealth', 'Records', 'Labs'] },
+  { code: 'IND-05', title: 'Education', headline: 'Learning, unbound', description: 'Building smart systems for learning and innovation.', image: '/44.jpg', signals: ['LMS', 'Assessment', 'Content'] },
+  { code: 'IND-06', title: 'Transport', headline: 'Cities in motion', description: 'Creating intelligent mobility and connected transport.', image: '/11.jpg', signals: ['Ride-hail', 'Fleet', 'Routing'] },
 ]
 
 const benefits = [
-  'Access to innovative solutions and technologies',
-  'Collaborate on impactful projects',
-  'Expand your market reach',
-  'Grow your brand with T3Clar',
-  'Dedicated partner support',
+  { code: 'BEN-01', text: 'Access to innovative solutions and technologies' },
+  { code: 'BEN-02', text: 'Collaborate on impactful projects' },
+  { code: 'BEN-03', text: 'Expand your market reach' },
+  { code: 'BEN-04', text: 'Grow your brand with T3Clar' },
+  { code: 'BEN-05', text: 'Dedicated partner support' },
 ]
 
 const opportunities = [
-  { icon: Code, title: 'Technology Partnerships', description: 'Co-develop solutions and integrate technologies.', image: '/SoftwareDevelopment.jpg' },
-  { icon: Handshake, title: 'Strategic Alliances', description: 'Work together on initiatives that drive transformative change.', image: '/88.jpg' },
-  { icon: Users, title: 'Referral Partnerships', description: 'Refer and grow together through mutual opportunities.', image: '/jinja-cityscape.jpg' },
-  { icon: TrendingUp, title: 'Investment Partnerships', description: 'Invest in ideas, solutions and the future.', image: '/99.webp' },
-]
-
-const services = [
-  { icon: Cpu, title: 'AI & Automation', description: 'Intelligent systems that learn and adapt to your business.', color: '#2563EB', image: '/SoftwareDevelopment.jpg' },
-  { icon: Cloud, title: 'Cloud Solutions', description: 'Scalable, secure infrastructure built for growth.', color: '#06B6D4', image: '/CloudInfrastructure.webp' },
-  { icon: Lock, title: 'Cybersecurity', description: 'Enterprise-grade protection for your digital assets.', color: '#EF4444', image: '/It-soln2.jpeg' },
-  { icon: Code, title: 'Custom Development', description: 'Tailored software engineered around your workflows.', color: '#8B5CF6', image: '/44.jpg' },
-  { icon: BarChart3, title: 'Data & Analytics', description: 'Turning raw data into decisions that drive growth.', color: '#10B981', image: '/jinja-cityscape.jpg' },
-  { icon: Smartphone, title: 'Mobile Experiences', description: 'Beautiful, performant apps for iOS, Android.', color: '#F59E0B', image: '/MS.jpg' },
-  { icon: Edit, title: 'Architectural Design', description: 'Beautiful, performant architectural designs.', color: '#56a2d4', image: '/images.jpg' },
-  { icon: Edit, title: 'Graphics Design', description: 'Beautiful, performant Graphics designs.', color: '#38b91e', image: '/66.png' },
-  { icon: Video, title: 'Video Editing', description: 'Beautiful, performant video editing services.', color: '#d4b756', image: '/77.webp' },
-
-]
-
-const ecosystemPlatforms = [
-  { name: 'XRide', desc: 'Smart transportation for a moving world.', img: '/jinja-cityscape.jpg', color: '#2563EB', tag: 'Mobility', logo: '/T3Clarlogo.png' },
-  { name: 'ShopIt', desc: 'A local marketplace at your fingertips.', img: '/MS.jpg', color: '#10B981', tag: 'Commerce', logo: '/T3Clarlogo.png' },
-  { name: 'Clexarly', desc: 'Data and insights that drive growth.', img: '/SoftwareDevelopment.jpg', color: '#8B5CF6', tag: 'Analytics', logo: '/T3Clarlogo.png' },
-  { name: 'Lotina Investments', desc: 'Investing in innovation and the future.', img: '/lotina.png', color: '#F59E0B', tag: 'Capital', logo: '/lotina.png' },
-  { name: 'Cloud Infrastructure', desc: 'Secure, scalable and always available.', img: '/CloudInfrastructure.webp', color: '#06B6D4', tag: 'Infrastructure', logo: '/T3Clarlogo.png' },
+  { code: 'PTN-01', title: 'Technology Partnerships', description: 'Co-develop solutions and integrate technologies.', image: '/SoftwareDevelopment.jpg' },
+  { code: 'PTN-02', title: 'Strategic Alliances', description: 'Work together on initiatives that drive transformative change.', image: '/88.jpg' },
+  { code: 'PTN-03', title: 'Referral Partnerships', description: 'Refer and grow together through mutual opportunities.', image: '/jinja-cityscape.jpg' },
+  { code: 'PTN-04', title: 'Investment Partnerships', description: 'Invest in ideas, solutions and the future.', image: '/99.webp' },
 ]
 
 const missionPillars = [
-  {
-    number: '01',
-    icon: Lightbulb,
-    title: 'Innovate',
-    description: 'We embrace creativity and innovation to build smart solutions that solve real-world challenges with fresh thinking and cutting-edge technology.',
-    color: '#2563EB',
-    gradient: 'from-blue-500 to-indigo-600',
-    image: '/SoftwareDevelopment.jpg',
-  },
-  {
-    number: '02',
-    icon: Shield,
-    title: 'Deliver',
-    description: 'We are committed to quality, reliability and excellence in every product we build, ensuring our solutions exceed expectations.',
-    color: '#10B981',
-    gradient: 'from-emerald-500 to-teal-600',
-    image: '/It-soln2.jpeg',
-  },
-  {
-    number: '03',
-    icon: UserCheck,
-    title: 'Empower',
-    description: 'We empower businesses and communities through technology and knowledge, creating lasting impact that drives growth and transformation.',
-    color: '#8B5CF6',
-    gradient: 'from-violet-500 to-purple-600',
-    image: '/44.jpg',
-  },
+  { code: 'MSN-01', title: 'Innovate', description: 'We embrace creativity and innovation to build smart solutions that solve real-world challenges with fresh thinking and cutting-edge technology.' },
+  { code: 'MSN-02', title: 'Deliver', description: 'We are committed to quality, reliability and excellence in every product we build, ensuring our solutions exceed expectations.' },
+  { code: 'MSN-03', title: 'Empower', description: 'We empower businesses and communities through technology and knowledge, creating lasting impact that drives growth and transformation.' },
 ]
 
-const ecosystemNodes = [
-  { icon: Car, label: 'Transport', color: '#06B6D4', image: '/jinja-cityscape.jpg' },
-  { icon: ShoppingBag, label: 'Shopping', color: '#10B981', image: '/MS.jpg' },
-  { icon: Building2, label: 'Business', color: '#8B5CF6', image: '/It-soln2.jpeg' },
-  { icon: Heart, label: 'Healthcare', color: '#EF4444', image: '/team.jpg' },
-  { icon: CreditCard, label: 'Payments', color: '#F59E0B', image: '/SoftwareDevelopment.jpg' },
-  { icon: Users, label: 'Community', color: '#2563EB', image: '/jinja-cityscape.jpg' },
-  
+const processSteps = [
+  { code: 'PHS-01', title: 'Discovery & Strategy', description: 'We start by understanding your business, your users and your goals — then map out a clear path forward.' },
+  { code: 'PHS-02', title: 'Design & Engineering', description: 'Our team designs and builds with precision, using modern tools and proven methodologies.' },
+  { code: 'PHS-03', title: 'Launch & Scale', description: 'We deploy, monitor and iterate — ensuring your solution grows with your business.' },
+]
+
+const stats = [
+  { code: 'ST-01', number: 100, suffix: '+', label: 'Clients served' },
+  { code: 'ST-02', number: 150, suffix: '+', label: 'Projects delivered' },
+  { code: 'ST-03', number: 7, suffix: '', label: 'Live platforms' },
+  { code: 'ST-04', number: 99.9, suffix: '%', label: 'Uptime' },
 ]
 
 /* ============================================================
-   HOOKS
+   ANIMATED SPEC HEADER
    ============================================================ */
 
-function useInView(threshold = 0.15) {
-  const ref = useRef<HTMLDivElement>(null)
-  const [inView, setInView] = useState(false)
+function SpecHeader({
+  section,
+  title,
+  meta,
+}: {
+  section: string
+  title: string
+  meta: string
+}) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const [hex, setHex] = useState('00')
+
+  // Animate hex value on view
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true) }, { threshold })
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [threshold])
-  return { ref, inView }
+    if (!inView) return
+    let frame = 0
+    const target = Math.floor(Math.random() * 255)
+    const id = setInterval(() => {
+      frame += 1
+      const current = Math.floor((target / 20) * frame)
+      setHex(Math.min(current, target).toString(16).padStart(2, '0').toUpperCase())
+      if (frame >= 20) clearInterval(id)
+    }, 30)
+    return () => clearInterval(id)
+  }, [inView])
+
+  return (
+    <div ref={ref} className="border-t-2 border-[#0F1419]/20 mb-16">
+      <div className="flex items-center justify-between flex-wrap gap-4 py-3 border-b border-[#0F1419]/15">
+        <div className="flex items-center gap-6">
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.4 }}
+            className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]"
+          >
+            {section}
+          </motion.span>
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 hidden sm:inline"
+          >
+            {title}
+          </motion.span>
+        </div>
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40"
+        >
+          {meta}
+        </motion.span>
+      </div>
+
+      {/* Tick marks that draw in one by one */}
+      <div className="flex items-center justify-between py-1.5 border-b border-[#0F1419]/15">
+        <div className="flex gap-1">
+          {[...Array(12)].map((_, i) => (
+            <motion.span
+              key={i}
+              initial={{ scaleY: 0 }}
+              animate={inView ? { scaleY: 1 } : {}}
+              transition={{ duration: 0.3, delay: i * 0.03 }}
+              className="w-px h-2 bg-[#0EA5E9]/40 origin-bottom"
+            />
+          ))}
+        </div>
+        <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 tabular-nums">
+          0x{hex}
+        </span>
+      </div>
+    </div>
+  )
 }
 
-function useCountUp(target: number, inView: boolean, duration = 1800) {
+/* ============================================================
+   ANIMATED COUNTER — counts up when in view
+   ============================================================ */
+
+function Counter({ target, suffix = '', duration = 1800 }: { target: number; suffix?: string; duration?: number }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-80px' })
   const [count, setCount] = useState(0)
+  const isDecimal = !Number.isInteger(target)
+
   useEffect(() => {
     if (!inView) return
     let start = 0
     const step = target / (duration / 16)
-    const timer = setInterval(() => {
+    const id = setInterval(() => {
       start += step
-      if (start >= target) { setCount(target); clearInterval(timer) }
-      else setCount(Math.floor(start))
+      if (start >= target) {
+        setCount(target)
+        clearInterval(id)
+      } else {
+        setCount(start)
+      }
     }, 16)
-    return () => clearInterval(timer)
+    return () => clearInterval(id)
   }, [inView, target, duration])
-  return count
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {isDecimal ? count.toFixed(1) : Math.floor(count)}
+      {suffix}
+    </span>
+  )
 }
 
 /* ============================================================
-   COMPONENTS
+   MAGNETIC CARD — subtle parallax on mouse move
    ============================================================ */
 
-function Reveal({ children, delay = 0, className = '' }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const { ref, inView } = useInView()
+function MagneticCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [offset, setOffset] = useState({ x: 0, y: 0 })
+
+  const handleMove = (e: React.MouseEvent) => {
+    if (!ref.current) return
+    const rect = ref.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left - rect.width / 2) / 15
+    const y = (e.clientY - rect.top - rect.height / 2) / 15
+    setOffset({ x, y })
+  }
+
   return (
     <div
       ref={ref}
+      onMouseMove={handleMove}
+      onMouseLeave={() => setOffset({ x: 0, y: 0 })}
       className={className}
       style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(40px)',
-        transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}s, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}s`,
+        transform: `translate(${offset.x}px, ${offset.y}px)`,
+        transition: offset.x === 0 && offset.y === 0 ? 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)' : 'transform 0.15s ease-out',
       }}
     >
       {children}
@@ -175,149 +226,78 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
   )
 }
 
-function StatCard({ stat, index }: { stat: typeof stats[0]; index: number }) {
-  const { ref, inView } = useInView()
-  const numeric = parseInt(stat.number.replace(/\D/g, ''))
-  const count = useCountUp(numeric, inView)
-  const Icon = stat.icon
+/* ============================================================
+   PARALLAX IMAGE — subtle scroll offset
+   ============================================================ */
+
+function ParallaxImage({ src, alt, className = '', range = 60 }: { src: string; alt: string; className?: string; range?: number }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], [-range, range])
+
   return (
-    <div
-      ref={ref}
-      className="group relative bg-white/[0.04] backdrop-blur-xl border border-white/10 rounded-2xl p-5 
-                 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500 overflow-hidden"
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? 'translateY(0)' : 'translateY(30px)',
-        transition: `all 0.7s cubic-bezier(0.16,1,0.3,1) ${index * 0.1}s`,
-      }}
-    >
-      <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center mb-3">
-        <Icon size={18} className="text-blue-400" />
-      </div>
-      <div className="text-3xl font-black text-white tabular-nums">
-        {count}{stat.number.replace(/[0-9]/g, '')}
-      </div>
-      <div className="text-sm text-white/50 mt-1">{stat.label}</div>
+    <div ref={ref} className={`overflow-hidden ${className}`}>
+      <motion.img
+        style={{ y }}
+        src={src}
+        alt={alt}
+        className="w-full h-[calc(100%+120px)] object-cover -mt-[60px]"
+      />
     </div>
   )
 }
 
-function Accordion({ items }: { items: { title: string; description: string }[] }) {
+/* ============================================================
+   ACCORDION
+   ============================================================ */
+
+function ProcessAccordion() {
   const [open, setOpen] = useState<number | null>(0)
   return (
-    <div className="space-y-3">
-      {items.map((item, i) => (
-        <div key={item.title} className="border border-gray-200 rounded-2xl overflow-hidden hover:border-blue-200 transition-colors bg-white">
+    <div className="border-t border-[#0F1419]/15">
+      {processSteps.map((step, i) => (
+        <motion.div
+          key={step.title}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.4, delay: i * 0.08 }}
+          className="border-b border-[#0F1419]/15"
+        >
           <button
             onClick={() => setOpen(open === i ? null : i)}
-            className="w-full flex items-center justify-between p-5 text-left hover:bg-blue-50/50 transition-colors"
+            className="w-full py-6 flex items-start gap-6 text-left group"
           >
-            <span className="font-bold text-[#0F172A] text-sm">{item.title}</span>
-            <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
-              {open === i ? <Minus size={14} className="text-[#2563EB]" /> : <Plus size={14} className="text-[#2563EB]" />}
-            </div>
+            <span className="text-[10px] font-mono tracking-[0.3em] text-[#0EA5E9] shrink-0 pt-1.5">
+              {step.code}
+            </span>
+            <span className={`flex-1 text-xl md:text-2xl font-semibold tracking-[-0.01em] transition-colors ${open === i ? 'text-[#0F1419]' : 'text-[#0F1419]/50 group-hover:text-[#0F1419]'}`}>
+              {step.title}
+            </span>
+            <span className={`w-8 h-8 border flex items-center justify-center shrink-0 mt-0.5 transition-all duration-300 ${open === i ? 'border-[#0EA5E9] bg-[#0EA5E9] text-white rotate-180' : 'border-[#0F1419]/20 text-[#0F1419]/50 group-hover:border-[#0EA5E9] group-hover:text-[#0EA5E9]'}`}>
+              {open === i ? <Minus size={13} /> : <Plus size={13} />}
+            </span>
           </button>
-          <div className="overflow-hidden transition-all duration-500" style={{ maxHeight: open === i ? '140px' : '0px' }}>
-            <p className="px-5 pb-5 text-sm text-gray-500 leading-relaxed">{item.description}</p>
-          </div>
-        </div>
+          <AnimatePresence initial={false}>
+            {open === i && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="overflow-hidden"
+              >
+                <p className="text-[#0F1419]/70 leading-[1.75] pl-24 pr-14 pb-6 max-w-2xl text-base">
+                  {step.description}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       ))}
-    </div>
-  )
-}
-
-/* Animated wave SVG divider — pure SVG, no CSS needed */
-function WaveDivider({ flip = false, color = '#F8FAFC' }: { flip?: boolean; color?: string }) {
-  return (
-    <div className={`relative w-full overflow-hidden leading-none ${flip ? 'rotate-180' : ''}`} style={{ height: '80px' }}>
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1440 80" preserveAspectRatio="none">
-        <path fill={color}>
-          <animate
-            attributeName="d"
-            dur="10s"
-            repeatCount="indefinite"
-            values="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z;M0,50 C240,10 480,70 720,30 C960,-10 1200,60 1440,30 L1440,80 L0,80 Z;M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
-          />
-        </path>
-      </svg>
-    </div>
-  )
-}
-
-/* Orbiting ecosystem visualization with images */
-function OrbitalEcosystem() {
-  return (
-    <div className="relative aspect-square w-full max-w-[600px] mx-auto">
-      {/* Orbit rings */}
-      <div className="absolute inset-[10%] rounded-full border border-blue-500/10" />
-      <div className="absolute inset-[22%] rounded-full border border-blue-500/15 border-dashed" />
-      <div className="absolute inset-[34%] rounded-full border border-blue-500/20" />
-
-      {/* Rotating orbit container — inline style for animation */}
-      <div
-        className="absolute inset-0"
-        style={{ animation: 'orbit-spin 40s linear infinite' }}
-      >
-        {ecosystemNodes.map((node, i) => {
-          const angle = (i * 360) / ecosystemNodes.length
-          const rad = (angle * Math.PI) / 180
-          const x = 50 + 42 * Math.cos(rad)
-          const y = 50 + 42 * Math.sin(rad)
-          const Icon = node.icon
-          return (
-            <div
-              key={node.label}
-              className="absolute"
-              style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
-            >
-              <div style={{ animation: 'orbit-spin-reverse 40s linear infinite' }}>
-                <div className="group flex flex-col items-center gap-2">
-                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl hover:scale-110 transition-transform duration-300">
-                    <img src={node.image} alt={node.label} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ backgroundColor: `${node.color}CC` }}>
-                      <Icon size={22} className="text-white" />
-                    </div>
-                  </div>
-                  <span className="text-[10px] text-white/70 font-semibold whitespace-nowrap px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-sm">
-                    {node.label}
-                  </span>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Inner rotating orbit */}
-      <div
-        className="absolute inset-[22%]"
-        style={{ animation: 'orbit-spin-reverse 25s linear infinite' }}
-      >
-        {[0, 120, 240].map((angle, i) => {
-          const rad = (angle * Math.PI) / 180
-          const x = 50 + 50 * Math.cos(rad)
-          const y = 50 + 50 * Math.sin(rad)
-          return (
-            <div
-              key={i}
-              className="absolute w-3 h-3 rounded-full bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.8)]"
-              style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
-            />
-          )
-        })}
-      </div>
-
-      {/* Center hub with T3Clar logo */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-        <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-blue-500/30 animate-ping" style={{ animationDuration: '3s' }} />
-          <div className="absolute inset-0 rounded-full bg-blue-500/20 animate-ping" style={{ animationDuration: '3s', animationDelay: '1s' }} />
-
-          <div className="relative w-24 h-24 rounded-full bg-white shadow-[0_0_60px_rgba(59,130,246,0.5)] flex items-center justify-center border-4 border-blue-500/20">
-            <img src="/T3Clarlogo.png" alt="T3Clar" className="w-14 h-14 object-contain" />
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
@@ -327,126 +307,919 @@ function OrbitalEcosystem() {
    ============================================================ */
 
 export default function AboutPage() {
-  const [activeEcosystem, setActiveEcosystem] = useState(0)
-  const [activeIndustry, setActiveIndustry] = useState(0)
-
-  useEffect(() => {
-    const t = setInterval(() => setActiveEcosystem((p) => (p + 1) % ecosystemPlatforms.length), 3500)
-    return () => clearInterval(t)
-  }, [])
-
   return (
-    <>
-      {/* Keyframes injected via plain <style> — Turbopack-safe */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-            @keyframes orbit-spin {
-              from { transform: rotate(0deg); }
-              to { transform: rotate(360deg); }
-            }
-            @keyframes orbit-spin-reverse {
-              from { transform: rotate(360deg); }
-              to { transform: rotate(0deg); }
-            }
-            @keyframes marquee-scroll {
-              from { transform: translateX(0); }
-              to { transform: translateX(-33.333%); }
-            }
-          `,
-        }}
-      />
+    <div className="bg-[#FBF9F5] text-[#0F1419]">
 
       {/* ============================================================
-          HERO
+          HERO — Light technical cover
           ============================================================ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0A0F1E]">
-        <div className="absolute inset-0">
-          <img src="/jinja-cityscape.jpg" alt="" className="w-full h-full object-cover opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1E] via-[#0A0F1E]/95 to-[#1E3A5F]/70" />
-        </div>
-
-        <div className="absolute inset-0">
-          <div className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-600/20 blur-[120px] animate-pulse" style={{ animationDuration: '6s' }} />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-purple-600/15 blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
-        </div>
-
+      <section className="relative py-16 md:py-24 px-4 overflow-hidden">
+        {/* Faint grid */}
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.05] pointer-events-none"
           style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px',
+            backgroundImage: `linear-gradient(rgba(15,20,25,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(15,20,25,0.5) 1px, transparent 1px)`,
+            backgroundSize: '48px 48px',
           }}
         />
 
-        <svg className="absolute bottom-0 left-0 w-full h-32 pointer-events-none" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path fill="white" fillOpacity="0.03">
-            <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M0,60 C360,20 720,100 1080,60 C1260,40 1380,80 1440,60 L1440,120 L0,120 Z;M0,80 C360,40 720,120 1080,80 C1260,60 1380,100 1440,80 L1440,120 L0,120 Z;M0,60 C360,20 720,100 1080,60 C1260,40 1380,80 1440,60 L1440,120 L0,120 Z" />
-          </path>
-          <path fill="white" fillOpacity="0.05">
-            <animate attributeName="d" dur="10s" repeatCount="indefinite" values="M0,80 C300,40 600,120 900,80 C1200,40 1380,100 1440,80 L1440,120 L0,120 Z;M0,100 C300,60 600,140 900,100 C1200,60 1380,120 1440,100 L1440,120 L0,120 Z;M0,80 C300,40 600,120 900,80 C1200,40 1380,100 1440,80 L1440,120 L0,120 Z" />
-          </path>
-        </svg>
+        {/* Corner markers */}
+        {[
+          { pos: 'top-6 left-6', text: '[0,0]' },
+          { pos: 'top-6 right-6', text: '[1440,0]' },
+          { pos: 'bottom-6 left-6', text: '[0,900]' },
+          { pos: 'bottom-6 right-6', text: '[1440,900]' },
+        ].map((m) => (
+          <motion.div
+            key={m.text}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className={`absolute ${m.pos} text-[9px] font-mono tracking-[0.3em] text-[#0EA5E9]/60`}
+          >
+            {m.text}
+          </motion.div>
+        ))}
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7">
-              <Reveal>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.06] border border-white/10 backdrop-blur-sm mb-8">
-                  <MapPin size={12} className="text-blue-400" />
-                  <span className="text-white/70 text-xs font-medium tracking-wide">Based in Jinja, Uganda · Serving the world</span>
-                </div>
-              </Reveal>
+        <div className="max-w-[1400px] mx-auto relative">
 
-              <Reveal delay={0.1}>
-                <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-black leading-[0.95] tracking-tight text-white">
-                  We build the
-                  <br />
-                  <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent">
-                    digital backbone
-                  </span>
-                  <br />
-                  of tomorrow.
-                </h1>
-              </Reveal>
+          {/* Top status strip */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex items-center justify-between flex-wrap gap-4 border-b border-[#0F1419]/15 pb-4 mb-14"
+          >
+            <div className="flex items-center gap-6">
+              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] flex items-center gap-2">
+                <motion.span
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="w-1.5 h-1.5 rounded-full bg-[#65A30D]"
+                />
+                T3Clar Systems
+              </span>
+              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 hidden md:inline">
+                Profile v4.0
+              </span>
+            </div>
+            <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+              Jinja, UG · UTC+3
+            </span>
+          </motion.div>
 
-              <Reveal delay={0.2}>
-                <p className="text-white/60 text-lg leading-relaxed mt-8 max-w-xl">
-                  T3Clar is a software and technology solutions company based in Jinja, Uganda.
-                  We design, develop and implement innovative digital solutions that transform
-                  how businesses operate and grow.
-                </p>
-              </Reveal>
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-end">
 
-              <Reveal delay={0.3}>
-                <div className="flex flex-wrap items-center gap-4 mt-10">
-                  <Link
-                    href="/services"
-                    className="group inline-flex items-center gap-2 px-7 py-4 bg-white text-[#0A0F1E] rounded-full font-bold hover:bg-blue-50 transition-all duration-300 shadow-[0_0_40px_rgba(59,130,246,0.3)]"
+            {/* Left — Heading */}
+            <div className="col-span-12 md:col-span-8">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-6"
+              >
+                // Studio Profile · Index 00
+              </motion.p>
+
+              <h1 className="leading-[0.95] tracking-[-0.035em]">
+                <motion.span
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.2 }}
+                  className="block text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-[#0F1419]/60"
+                >
+                  We build
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.35 }}
+                  className="block text-[3rem] md:text-[5.5rem] lg:text-[7rem] font-black text-[#0F1419]"
+                >
+                  the digital backbone
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.5 }}
+                  className="block text-[2rem] md:text-[3.5rem] lg:text-[4.5rem] font-light italic text-[#0EA5E9]"
+                >
+                  for Africa&apos;s next decade.
+                </motion.span>
+              </h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                className="text-base md:text-lg leading-[1.75] text-[#0F1419]/70 mt-10 max-w-lg font-mono"
+              >
+                T3Clar is a software studio based in Jinja, Uganda.
+                We design, build, and ship the platforms that African businesses run on.
+              </motion.p>
+
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.85 }}
+                className="flex flex-wrap items-center gap-4 mt-12"
+              >
+                <Link
+                  href="/services"
+                  className="group inline-flex items-center gap-3 text-sm font-mono tracking-wider uppercase text-white bg-[#0EA5E9] px-6 py-3.5 hover:bg-[#0F1419] transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="opacity-80"
                   >
-                    Explore Services
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="group inline-flex items-center gap-2 px-7 py-4 rounded-full font-semibold text-white border border-white/20 hover:bg-white/5 transition-all duration-300"
-                  >
-                    <span className="relative flex items-center justify-center">
-                      <span className="absolute w-8 h-8 rounded-full bg-white/20 animate-ping" style={{ animationDuration: '2s' }} />
-                      <span className="relative w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-                        <Play size={11} className="fill-white" />
-                      </span>
-                    </span>
-                    Watch Our Story
-                  </Link>
-                </div>
-              </Reveal>
+                    &gt;
+                  </motion.span>
+                  Explore Services
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 text-sm font-mono tracking-wider uppercase text-[#0EA5E9] border border-[#0EA5E9]/40 px-6 py-3.5 hover:bg-[#0EA5E9]/10 hover:-translate-y-0.5 transition-all"
+                >
+                  Get in touch
+                  <ArrowUpRight size={14} />
+                </Link>
+              </motion.div>
             </div>
 
-            <div className="lg:col-span-5">
-              <div className="grid grid-cols-2 gap-4">
-                {stats.map((stat, i) => (
-                  <StatCard key={stat.label} stat={stat} index={i} />
+            {/* Right — Data readout */}
+            <div className="col-span-12 md:col-span-4 md:pl-8 md:border-l border-[#0F1419]/15">
+              <div className="space-y-0 border-t border-[#0F1419]/15">
+                {[
+                  { key: 'Founded', value: '2021' },
+                  { key: 'Based', value: 'Jinja, UG' },
+                  { key: 'Team', value: '20 — 30' },
+                  { key: 'Markets', value: 'UG · KE · RW' },
+                  { key: 'Focus', value: 'Software' },
+                  { key: 'Status', value: '● Operational', live: true },
+                ].map((row, i) => (
+                  <motion.div
+                    key={row.key}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
+                    className="flex items-center justify-between py-4 border-b border-[#0F1419]/15"
+                  >
+                    <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                      {row.key}
+                    </span>
+                    <span className={`text-sm font-mono tracking-wider ${row.live ? 'text-[#65A30D]' : 'text-[#0F1419]'}`}>
+                      {row.value}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Photo */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.9 }}
+                className="mt-8 aspect-[4/3] overflow-hidden border border-[#0F1419]/15 relative group"
+              >
+                <img
+                  src="/jinja-cityscape.jpg"
+                  alt="Jinja"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute top-3 left-3 text-[9px] font-mono tracking-[0.3em] uppercase text-[#0F1419] bg-[#FBF9F5]/80 backdrop-blur-sm px-2 py-1">
+                  IMG-01 · Jinja
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Bottom strip */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.1 }}
+            className="mt-14 pt-4 border-t border-[#0F1419]/15 flex items-center justify-between flex-wrap gap-4"
+          >
+            <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+              Scroll to explore · 08 sections
+            </span>
+            <motion.span
+              animate={{ y: [0, 4, 0] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+              className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]"
+            >
+              ↓ 00/08
+            </motion.span>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          PARTNER LOGOS — thin band
+          ============================================================ */}
+      <section className="bg-[#F4F2ED] border-y border-[#0F1419]/15 py-6 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-4 mb-4 flex items-center justify-between">
+          <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+            // Trusted systems · 10 partners
+          </span>
+          <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#65A30D] flex items-center gap-2">
+            <motion.span
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-1.5 h-1.5 rounded-full bg-[#65A30D]"
+            />
+            All online
+          </span>
+        </div>
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#F4F2ED] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-[#F4F2ED] z-10 pointer-events-none" />
+          <div className="flex" style={{ width: 'max-content', animation: 'marquee-scroll 50s linear infinite' }}>
+            {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
+              <div key={i} className="flex items-center gap-4 mx-8 group">
+                <span className="text-[9px] font-mono tracking-[0.3em] text-[#0F1419]/30">
+                  {String((i % partnerLogos.length) + 1).padStart(2, '0')}
+                </span>
+                <div className="w-10 h-10 border border-[#0F1419]/15 flex items-center justify-center p-1.5 bg-white group-hover:border-[#0EA5E9] transition-colors">
+                  <img src={logo.image} alt={logo.name} className="w-full h-full object-contain opacity-60 group-hover:opacity-100 transition-opacity" />
+                </div>
+                <span className="text-xs font-mono tracking-wider uppercase text-[#0F1419]/60 group-hover:text-[#0EA5E9] transition-colors whitespace-nowrap">
+                  {logo.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          § 01 — SERVICES
+          ============================================================ */}
+      <section className="py-24 md:py-32 px-4 bg-[#FBF9F5]">
+        <div className="max-w-[1400px] mx-auto">
+
+          <SpecHeader section="§ 01" title="Services" meta="09 modules · all online" />
+
+          <div className="grid grid-cols-12 gap-6 md:gap-10 mb-20 items-end">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="col-span-12 md:col-span-7"
+            >
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5">
+                // Nine disciplines, one studio
+              </p>
+              <h2 className="leading-[0.95] tracking-[-0.03em]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                  Everything you need
+                </span>
+                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                  to ship &amp; scale.
+                </span>
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="col-span-12 md:col-span-5 md:pl-8 md:border-l border-[#0F1419]/15"
+            >
+              <p className="text-base leading-[1.75] text-[#0F1419]/70">
+                From AI to video, from cloud to design — nine technical
+                modules that plug into your stack.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Services — animated rows */}
+          <div className="border-t border-[#0F1419]/20">
+            {services.map((service, i) => (
+              <motion.article
+                key={service.code}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.5, delay: i * 0.03 }}
+                className="group border-b border-[#0F1419]/15 grid grid-cols-12 gap-4 md:gap-6 py-8 md:py-10 items-center hover:bg-[#0EA5E9]/[0.03] transition-colors duration-500"
+              >
+                <div className="col-span-12 md:col-span-1">
+                  <span className="text-[10px] font-mono tracking-[0.25em] text-[#0EA5E9]">
+                    {service.code}
+                  </span>
+                </div>
+
+                <div className="col-span-12 md:col-span-4">
+                  <h3 className="text-xl md:text-2xl font-bold tracking-[-0.01em] text-[#0F1419] mb-3 group-hover:text-[#0EA5E9] transition-colors">
+                    {service.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {service.stack.map((s, si) => (
+                      <motion.span
+                        key={s}
+                        initial={{ opacity: 0, y: 5 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 + si * 0.05 }}
+                        className="text-[9px] font-mono tracking-wider uppercase text-[#0F1419]/60 border border-[#0F1419]/20 px-1.5 py-0.5 group-hover:border-[#0EA5E9]/40 transition-colors"
+                      >
+                        {s}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="col-span-12 md:col-span-4">
+                  <p className="text-base leading-[1.7] text-[#0F1419]/70">
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="col-span-12 md:col-span-3 flex items-center gap-4">
+                  <div className="relative flex-1 aspect-[16/10] overflow-hidden border border-[#0F1419]/15">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover grayscale-[55%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-[800ms]"
+                    />
+                    {/* Animated corner mark */}
+                    <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9]/80 transition-colors duration-500" />
+                    <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#0EA5E9]/0 group-hover:border-[#0EA5E9]/80 transition-colors duration-500" />
+                  </div>
+                  <ArrowUpRight
+                    size={18}
+                    className="text-[#0F1419]/30 group-hover:text-[#0EA5E9] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all shrink-0"
+                  />
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <div className="mt-10 flex items-center justify-between flex-wrap gap-4">
+            <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+              // End of module list
+            </span>
+            <Link href="/services" className="group text-xs font-mono tracking-[0.25em] uppercase text-[#0F1419] border-b border-[#0F1419] pb-1 hover:border-[#0EA5E9] hover:text-[#0EA5E9] transition-all inline-flex items-center gap-2">
+              <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+              See full catalogue
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          § 02 — PARTNERSHIP
+          ============================================================ */}
+      <section className="py-24 md:py-32 px-4 bg-[#F4F2ED]">
+        <div className="max-w-[1400px] mx-auto">
+
+          <SpecHeader section="§ 02" title="Strategic Partnership" meta="Lotina × T3Clar · Since 2023" />
+
+          <div className="grid grid-cols-12 gap-6 md:gap-10 mb-16 items-end">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="col-span-12 md:col-span-7"
+            >
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5">
+                // Two nodes, one network
+              </p>
+              <h2 className="leading-[0.95] tracking-[-0.03em]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-light italic text-[#0F1419]/60">
+                  Where capital
+                </span>
+                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                  meets code.
+                </span>
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="col-span-12 md:col-span-5 md:pl-8 md:border-l border-[#0F1419]/15"
+            >
+              <p className="text-base leading-[1.75] text-[#0F1419]/70 font-mono">
+                An ecosystem built at the intersection of strategic
+                capital and engineering. Designed for the long run.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Split panel with animated connector */}
+          <div className="relative grid grid-cols-12 border border-[#0F1419]/15 bg-white">
+
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7 }}
+              className="col-span-12 md:col-span-6 p-8 md:p-12 md:border-r border-[#0F1419]/15"
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 border border-[#65A30D]/40 bg-[#65A30D]/5 flex items-center justify-center p-2">
+                  <img src="/lotina.png" alt="Lotina" className="w-full h-full object-contain" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#65A30D] mb-1">
+                    NODE-A · Capital Engine
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-black tracking-[-0.02em] text-[#0F1419]">
+                    Lotina Investments
+                  </h3>
+                </div>
+              </div>
+
+              <p className="text-base leading-[1.75] text-[#0F1419]/70 mb-10 max-w-md">
+                Provides the capital, market access and strategic vision
+                that powers the ecosystem.
+              </p>
+
+              <div className="space-y-0 mb-10 border-t border-[#0F1419]/15">
+                {['Investment Capital', 'Market Access', 'Strategic Vision'].map((text, i) => (
+                  <motion.div
+                    key={text}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
+                    className="flex items-center gap-4 py-4 border-b border-[#0F1419]/15"
+                  >
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#65A30D]">●</span>
+                    <span className="text-sm text-[#0F1419]/80">{text}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-6 pt-4">
+                <div>
+                  <div className="text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
+                    <Counter target={2} suffix="+" />
+                  </div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 mt-3">
+                    Ventures backed
+                  </div>
+                </div>
+                <div>
+                  <div className="text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
+                    <Counter target={3} />
+                  </div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 mt-3">
+                    Markets reached
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7 }}
+              className="col-span-12 md:col-span-6 p-8 md:p-12"
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-14 h-14 border border-[#0EA5E9]/40 bg-[#0EA5E9]/5 flex items-center justify-center p-2">
+                  <img src="/T3Clarlogo.png" alt="T3Clar" className="w-full h-full object-contain" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-1">
+                    NODE-B · Technology Engine
+                  </div>
+                  <h3 className="text-2xl md:text-3xl font-black tracking-[-0.02em] text-[#0F1419]">
+                    T3Clar
+                  </h3>
+                </div>
+              </div>
+
+              <p className="text-base leading-[1.75] text-[#0F1419]/70 mb-10 max-w-md">
+                Builds the platforms, infrastructure and software that turn
+                vision into working product.
+              </p>
+
+              <div className="space-y-0 mb-10 border-t border-[#0F1419]/15">
+                {['Software Engineering', 'Cloud & AI Systems', 'Product Design'].map((text, i) => (
+                  <motion.div
+                    key={text}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
+                    className="flex items-center gap-4 py-4 border-b border-[#0F1419]/15"
+                  >
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#0EA5E9]">●</span>
+                    <span className="text-sm text-[#0F1419]/80">{text}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-6 pt-4">
+                <div>
+                  <div className="text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
+                    <Counter target={150} suffix="+" />
+                  </div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 mt-3">
+                    Projects shipped
+                  </div>
+                </div>
+                <div>
+                  <div className="text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
+                    24/7
+                  </div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 mt-3">
+                    Support coverage
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Animated center node */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block">
+              <div className="relative">
+                <motion.div
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.4, 0, 0.4] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                  className="absolute inset-0 border-2 border-[#0EA5E9]"
+                />
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, type: 'spring' }}
+                  className="relative w-16 h-16 bg-white border-2 border-[#0EA5E9] flex items-center justify-center"
+                >
+                  <motion.span
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                    className="text-[#0EA5E9] font-mono text-lg"
+                  >
+                    ×
+                  </motion.span>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Manifesto */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="mt-20 pt-10 border-t border-[#0F1419]/15 grid grid-cols-12 gap-6 md:gap-10"
+          >
+            <div className="col-span-12 md:col-span-3">
+              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                // The conviction
+              </span>
+            </div>
+            <div className="col-span-12 md:col-span-9">
+              <p className="text-2xl md:text-4xl leading-[1.25] tracking-[-0.015em] text-[#0F1419]">
+                Every platform we launch lives at the intersection of{' '}
+                <em className="text-[#65A30D] not-italic">patient capital</em> and{' '}
+                <em className="text-[#0EA5E9] not-italic">relentless engineering</em>.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          § 03 — INDUSTRIES
+          ============================================================ */}
+      <section className="py-24 md:py-32 px-4 bg-[#FBF9F5]">
+        <div className="max-w-[1400px] mx-auto">
+
+          <SpecHeader section="§ 03" title="Industries" meta="06 sectors · live" />
+
+          <div className="grid grid-cols-12 gap-6 md:gap-10 mb-20 items-end">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="col-span-12 md:col-span-7"
+            >
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5">
+                // Where our work runs
+              </p>
+              <h2 className="leading-[0.95] tracking-[-0.03em]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                  Six sectors.
+                </span>
+                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                  One continuous thread.
+                </span>
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="col-span-12 md:col-span-5 md:pl-8 md:border-l border-[#0F1419]/15"
+            >
+              <p className="text-base leading-[1.75] text-[#0F1419]/70">
+                Every sector is a system we understand deeply — and can build
+                solutions for from scratch.
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#0F1419]/15">
+            {industries.map((industry, i) => (
+              <motion.div
+                key={industry.code}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+                className="group bg-[#FBF9F5] p-8 relative overflow-hidden"
+              >
+                {/* Subtle background sweep on hover */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-[#0EA5E9]/0 via-[#0EA5E9]/0 to-[#0EA5E9]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-6">
+                    <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]">
+                      {industry.code}
+                    </span>
+                    <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-[#65A30D] flex items-center gap-2">
+                      <motion.span
+                        animate={{ opacity: [1, 0.3, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+                        className="w-1 h-1 rounded-full bg-[#65A30D]"
+                      />
+                      LIVE
+                    </span>
+                  </div>
+
+                  <div className="relative aspect-[4/3] overflow-hidden mb-6 border border-[#0F1419]/15">
+                    <img
+                      src={industry.image}
+                      alt={industry.title}
+                      className="w-full h-full object-cover grayscale-[55%] group-hover:grayscale-0 group-hover:scale-[1.06] transition-all duration-[1s]"
+                    />
+                    {/* Animated corner reveals */}
+                    <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500 delay-200" />
+                    <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500 delay-200" />
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 mb-2">
+                      {industry.title}
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-black tracking-[-0.015em] text-[#0F1419]">
+                      {industry.headline}
+                    </h3>
+                  </div>
+
+                  <p className="text-sm leading-[1.75] text-[#0F1419]/70 mb-6">
+                    {industry.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 pt-4 border-t border-[#0F1419]/15">
+                    {industry.signals.map((s, si) => (
+                      <motion.span
+                        key={s}
+                        initial={{ opacity: 0, x: -5 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 + si * 0.06 }}
+                        className="text-[9px] font-mono tracking-wider uppercase text-[#0F1419]/50"
+                      >
+                        {s}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          § 04 — VISION & MISSION
+          ============================================================ */}
+      <section className="py-24 md:py-32 px-4 bg-[#F4F2ED] border-t border-[#0F1419]/15">
+        <div className="max-w-[1400px] mx-auto">
+
+          <SpecHeader section="§ 04" title="Vision & Mission" meta="Charter · 2021" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="grid grid-cols-12 gap-6 md:gap-10 mb-20"
+          >
+            <div className="col-span-12 md:col-span-10">
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-6">
+                // Statement of intent
+              </p>
+              <p className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.02em] text-[#0F1419] font-light">
+                <span className="text-[#0EA5E9]">A connected Jinja</span> where transport, shopping, healthcare, payments and community all run on shared digital infrastructure.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Stats with counter animation */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border-t-2 border-b border-[#0F1419]/20">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.code}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`py-10 px-4 ${i !== stats.length - 1 ? 'md:border-r border-[#0F1419]/15' : ''}`}
+              >
+                <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-4">
+                  {stat.code}
+                </div>
+                <div className="text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.045em] text-[#0F1419]">
+                  <Counter target={stat.number} suffix={stat.suffix} />
+                </div>
+                <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/50 mt-4">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Mission pillars */}
+          <div className="mt-20">
+            <div className="flex items-center gap-4 mb-10">
+              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                // Three commitments
+              </span>
+              <motion.span
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="flex-1 h-px bg-[#0F1419]/15 origin-left"
+              />
+              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                MOD 01-03
+              </span>
+            </div>
+
+            <div className="grid grid-cols-12 gap-6 md:gap-10">
+              {missionPillars.map((p, i) => (
+                <motion.div
+                  key={p.code}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6, delay: i * 0.12 }}
+                  className="col-span-12 md:col-span-4"
+                >
+                  <div className="border-t-2 border-[#0EA5E9] pt-5">
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]">
+                        {p.code}
+                      </span>
+                      <motion.span
+                        animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                        className="w-1.5 h-1.5 bg-[#65A30D]"
+                      />
+                    </div>
+                    <h3 className="text-4xl md:text-5xl font-black tracking-[-0.03em] leading-none text-[#0F1419] mb-6">
+                      {p.title}
+                    </h3>
+                    <p className="text-base leading-[1.8] text-[#0F1419]/70">
+                      {p.description}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+          § 05 — WORKING TOGETHER
+          ============================================================ */}
+      <section className="py-24 md:py-32 px-4 bg-[#FBF9F5]">
+        <div className="max-w-[1400px] mx-auto">
+
+          <SpecHeader section="§ 05" title="Working Together" meta="Open · 2025" />
+
+          <div className="grid grid-cols-12 gap-6 md:gap-10 mb-16 items-end">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="col-span-12 md:col-span-8"
+            >
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5">
+                // Built for the long run
+              </p>
+              <h2 className="leading-[0.95] tracking-[-0.03em]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                  We build with,
+                </span>
+                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                  not just for.
+                </span>
+              </h2>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="col-span-12 md:col-span-4 md:pl-8 md:border-l border-[#0F1419]/15"
+            >
+              <p className="text-base leading-[1.75] text-[#0F1419]/70 font-mono">
+                Long-term relationships. Trust, innovation, shared success.
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid grid-cols-12 gap-6 md:gap-10">
+            {/* Benefits */}
+            <div className="col-span-12 md:col-span-5">
+              <div className="flex items-center justify-between pb-4 border-b border-[#0F1419]/15">
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                  // What you get
+                </span>
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]">
+                  05 items
+                </span>
+              </div>
+              <ul>
+                {benefits.map((benefit, i) => (
+                  <motion.li
+                    key={benefit.code}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.08 }}
+                    className="flex items-start gap-6 py-5 border-b border-[#0F1419]/15 group"
+                  >
+                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#65A30D] shrink-0 pt-1">
+                      {benefit.code}
+                    </span>
+                    <span className="text-base leading-[1.7] text-[#0F1419]/75 group-hover:text-[#0F1419] group-hover:translate-x-1 transition-all">
+                      {benefit.text}
+                    </span>
+                  </motion.li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Opportunities */}
+            <div className="col-span-12 md:col-span-7">
+              <div className="flex items-center justify-between pb-4 border-b border-[#0F1419]/15 mb-8">
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                  // Partnership models
+                </span>
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]">
+                  04 types
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 md:gap-6">
+                {opportunities.map((opp, i) => (
+                  <MagneticCard key={opp.code} className="group">
+                    <motion.div
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-60px' }}
+                      transition={{ duration: 0.5, delay: (i % 2) * 0.1 }}
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden mb-4 border border-[#0F1419]/15">
+                        <img
+                          src={opp.image}
+                          alt={opp.title}
+                          className="w-full h-full object-cover grayscale-[60%] group-hover:grayscale-0 group-hover:scale-[1.06] transition-all duration-700"
+                        />
+                        <div className="absolute top-3 left-3 text-[9px] font-mono tracking-[0.3em] text-[#0F1419] bg-[#FBF9F5]/85 backdrop-blur-sm px-2 py-1">
+                          {opp.code}
+                        </div>
+                      </div>
+                      <h3 className="text-base font-bold tracking-[-0.01em] text-[#0F1419] mb-2 group-hover:text-[#0EA5E9] transition-colors">
+                        {opp.title}
+                      </h3>
+                      <p className="text-sm leading-[1.65] text-[#0F1419]/60">
+                        {opp.description}
+                      </p>
+                    </motion.div>
+                  </MagneticCard>
                 ))}
               </div>
             </div>
@@ -455,815 +1228,288 @@ export default function AboutPage() {
       </section>
 
       {/* ============================================================
-          PARTNER LOGOS MARQUEE
+          § 06 — APPROACH
           ============================================================ */}
-      <section className="py-10 bg-white border-b border-gray-100 overflow-hidden">
-        <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-white z-10" />
-          <div
-            className="flex"
-            style={{ width: 'max-content', animation: 'marquee-scroll 40s linear infinite' }}
-          >
-            {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
-              <div key={i} className="flex items-center gap-4 mx-10 opacity-50 hover:opacity-100 transition-opacity">
-                <img src={logo.image} alt={logo.name} className="h-10 w-auto object-contain" />
-                <span className="text-sm font-bold text-gray-400 whitespace-nowrap">{logo.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <section className="py-24 md:py-32 px-4 bg-[#F4F2ED]">
+        <div className="max-w-[1400px] mx-auto">
 
-      {/* ============================================================
-          SERVICES — IMAGE CARDS
-          ============================================================ */}
-      <section className="relative py-24 md:py-32 px-4 bg-white overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-50/40 rounded-full blur-[140px]" />
+          <SpecHeader section="§ 06" title="Approach" meta="03 phases · iterative" />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <Reveal>
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-              <div>
-                <span className="inline-flex items-center gap-2 text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
-                  <Layers size={14} />
-                  What We Do
-                </span>
-                <h2 className="text-4xl md:text-6xl font-black text-[#0F172A] leading-[1.05] mt-4 max-w-2xl">
-                  Digital solutions for{' '}
-                  <span className="text-[#2563EB]">every need.</span>
-                </h2>
-              </div>
-              <Link href="/services" className="group inline-flex items-center gap-2 text-[#2563EB] font-semibold shrink-0">
-                View all services
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </Reveal>
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((service, i) => {
-              const Icon = service.icon
-              return (
-                <Reveal key={service.title} delay={i * 0.08}>
-                  <div className="group relative h-80 rounded-3xl overflow-hidden border border-gray-100 hover:shadow-[0_20px_60px_rgba(37,99,235,0.15)] hover:-translate-y-1 transition-all duration-500">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-[#0A0F1E]/60 to-transparent" />
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: `linear-gradient(to top, ${service.color}E6, transparent 70%)` }}
-                    />
-
-                    <div
-                      className="absolute top-5 right-5 w-12 h-12 rounded-2xl flex items-center justify-center backdrop-blur-md border border-white/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500"
-                      style={{ backgroundColor: `${service.color}CC` }}
-                    >
-                      <Icon size={22} className="text-white" />
-                    </div>
-
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
-                      <p className="text-white/70 text-sm leading-relaxed">{service.description}</p>
-
-                      <div className="flex items-center gap-2 mt-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-500">
-                        Learn more
-                        <ChevronRight size={14} />
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      <WaveDivider color="#0A0F1E" />
-
-{/* ============================================================
-    STRATEGIC PARTNERSHIP — DUAL CORE
-    ============================================================ */}
-<section className="relative py-24 md:py-32 px-4 bg-[#080B14] overflow-hidden">
-  {/* ============ AMBIENT BACKGROUND ============ */}
-  <div className="absolute inset-0">
-    {/* Subtle stars (fewer, calmer) */}
-    <svg className="absolute inset-0 w-full h-full opacity-30 pointer-events-none">
-      {[...Array(40)].map((_, i) => (
-        <circle
-          key={i}
-          cx={`${(i * 47) % 100}%`}
-          cy={`${(i * 61) % 100}%`}
-          r={((i * 5) % 10) / 10 + 0.3}
-          fill="white"
-          opacity={((i * 3) % 6) / 10 + 0.15}
-        >
-          <animate
-            attributeName="opacity"
-            values={`0.1;${((i * 7) % 8) / 10 + 0.3};0.1`}
-            dur={`${4 + (i % 5)}s`}
-            repeatCount="indefinite"
-          />
-        </circle>
-      ))}
-    </svg>
-
-    {/* Two opposing glows — purple (Lotina) and blue (T3Clar) */}
-    <div className="absolute top-1/2 left-[15%] -translate-y-1/2 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[140px]" />
-    <div className="absolute top-1/2 right-[15%] -translate-y-1/2 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[140px]" />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-pink-500/10 rounded-full blur-[120px]" />
-  </div>
-
-  {/* Grid */}
-  <div
-    className="absolute inset-0 opacity-[0.03]"
-    style={{
-      backgroundImage: `linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)`,
-      backgroundSize: '60px 60px',
-    }}
-  />
-
-  <div className="max-w-7xl mx-auto relative z-10">
-    {/* ============ HEADER ============ */}
-    <Reveal>
-      <div className="text-center mb-16">
-        <span className="inline-flex items-center gap-2 px-5 py-2 bg-white/[0.04] border border-white/10 backdrop-blur-sm rounded-full text-white/60 text-xs font-bold tracking-[0.2em] uppercase mb-6">
-          <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-          Strategic Partnership
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-        </span>
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.02] text-white max-w-4xl mx-auto">
-          Where capital{' '}
-          <span className="bg-gradient-to-r from-purple-400 via-fuchsia-400 to-blue-400 bg-clip-text text-transparent">
-            meets code
-          </span>
-        </h2>
-        <p className="text-white/40 mt-6 max-w-xl mx-auto">
-          Two forces. One orbit. An ecosystem built at the intersection of investment and engineering.
-        </p>
-      </div>
-    </Reveal>
-
-    {/* ============ DUAL CORE PANEL ============ */}
-    <Reveal delay={0.1}>
-      <div className="relative max-w-6xl mx-auto mb-20">
-        {/* Merged card */}
-        <div className="relative rounded-[40px] overflow-hidden border border-white/10 bg-white/[0.02] backdrop-blur-sm">
-          
-          {/* Top split bar — purple to blue */}
-          <div className="h-1 bg-gradient-to-r from-purple-500 via-fuchsia-500 to-blue-500" />
-
-          {/* Grid layout — 2 columns with center badge */}
-          <div className="relative grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10">
-            
-            {/* ---------- LEFT: LOTINA ---------- */}
-            <div className="relative p-8 md:p-12 group">
-              {/* Ambient purple glow */}
-              <div className="absolute -top-20 -left-20 w-80 h-80 bg-purple-600/15 rounded-full blur-[100px] pointer-events-none" />
-              
-              <div className="relative">
-                {/* Label */}
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-                  <span className="text-purple-300 text-[10px] font-bold tracking-[0.25em] uppercase">
-                    Capital Engine
-                  </span>
-                </div>
-
-                {/* Logo + name */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center p-2 shadow-lg shrink-0">
-                    <img src="/lotina.png" alt="Lotina" className="w-full h-full object-contain" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
-                      Lotina
-                    </h3>
-                    <p className="text-white/50 text-sm">Investments</p>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-white/60 text-sm leading-relaxed mb-8">
-                  Provides the capital, market access, and strategic vision that
-                  powers the ecosystem.
-                </p>
-
-                {/* Capabilities */}
-                <div className="space-y-3 mb-8">
-                  {[
-                    { icon: TrendingUp, text: 'Investment Capital' },
-                    { icon: Globe, text: 'Market Access' },
-                    { icon: Handshake, text: 'Strategic Vision' },
-                  ].map((item) => {
-                    const Icon = item.icon
-                    return (
-                      <div
-                        key={item.text}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all duration-300"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center shrink-0">
-                          <Icon size={14} className="text-purple-300" />
-                        </div>
-                        <span className="text-sm text-white/80 font-medium">{item.text}</span>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Mini stats */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-purple-500/5 border border-purple-500/20 p-4">
-                    <div className="text-2xl font-black text-purple-300">2+</div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                      Ventures
-                    </div>
-                  </div>
-                  <div className="rounded-2xl bg-purple-500/5 border border-purple-500/20 p-4">
-                    <div className="text-2xl font-black text-purple-300">3</div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                      Markets
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ---------- RIGHT: T3CLAR ---------- */}
-            <div className="relative p-8 md:p-12 group">
-              {/* Ambient blue glow */}
-              <div className="absolute -top-20 -right-20 w-80 h-80 bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
-
-              <div className="relative">
-                {/* Label */}
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                  <span className="text-blue-300 text-[10px] font-bold tracking-[0.25em] uppercase">
-                    Technology Engine
-                  </span>
-                </div>
-
-                {/* Logo + name */}
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-white flex items-center justify-center p-2 shadow-lg shrink-0">
-                    <img src="/T3Clarlogo.png" alt="T3Clar" className="w-full h-full object-contain" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
-                      T3Clar
-                    </h3>
-                    <p className="text-white/50 text-sm">Technology Solutions</p>
-                  </div>
-                </div>
-
-                {/* Description */}
-                <p className="text-white/60 text-sm leading-relaxed mb-8">
-                  Builds the platforms, infrastructure, and software that turn
-                  vision into working product.
-                </p>
-
-                {/* Capabilities */}
-                <div className="space-y-3 mb-8">
-                  {[
-                    { icon: Code, text: 'Software Engineering' },
-                    { icon: Cloud, text: 'Cloud & AI Systems' },
-                    { icon: Layers, text: 'Product Design' },
-                  ].map((item) => {
-                    const Icon = item.icon
-                    return (
-                      <div
-                        key={item.text}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/5 hover:bg-blue-500/10 hover:border-blue-500/30 transition-all duration-300"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center shrink-0">
-                          <Icon size={14} className="text-blue-300" />
-                        </div>
-                        <span className="text-sm text-white/80 font-medium">{item.text}</span>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Mini stats */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4">
-                    <div className="text-2xl font-black text-blue-300">150+</div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                      Projects
-                    </div>
-                  </div>
-                  <div className="rounded-2xl bg-blue-500/5 border border-blue-500/20 p-4">
-                    <div className="text-2xl font-black text-blue-300">24/7</div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-wider mt-1">
-                      Support
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* ---------- CENTER FUSION BADGE ---------- */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none hidden md:block">
-              <div className="relative">
-                {/* Outer pulse rings */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-purple-500/30 to-blue-500/30 animate-ping" style={{ animationDuration: '3s' }} />
-
-                {/* Badge */}
-                <div className="relative w-20 h-20 rounded-full bg-[#080B14] border-2 border-white/10 flex items-center justify-center shadow-[0_0_60px_rgba(168,85,247,0.4)]">
-                  {/* Inner gradient ring */}
-                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-blue-500 opacity-90" />
-                  <div className="absolute inset-2 rounded-full bg-[#080B14]" />
-
-                  {/* × symbol */}
-                  <span className="relative text-white font-black text-2xl">×</span>
-                </div>
-              </div>
-            </div>
-
-            {/* ---------- MOBILE DIVIDER BADGE ---------- */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 md:hidden">
-              <div className="relative w-14 h-14 rounded-full bg-[#080B14] border-2 border-white/10 flex items-center justify-center shadow-[0_0_40px_rgba(168,85,247,0.4)]">
-                <div className="absolute inset-1 rounded-full bg-gradient-to-br from-purple-500 via-fuchsia-500 to-blue-500 opacity-90" />
-                <div className="absolute inset-1.5 rounded-full bg-[#080B14]" />
-                <span className="relative text-white font-black text-lg">×</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </Reveal>
-
-    {/* ============ OUTPUT — PLATFORMS ============ */}
-    <Reveal delay={0.2}>
-      <div className="relative">
-        {/* Divider label */}
-        <div className="flex items-center gap-4 mb-12 max-w-4xl mx-auto">
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/10" />
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10">
-            <div className="w-1 h-1 rounded-full bg-pink-400 animate-pulse" />
-            <span className="text-white/50 text-[10px] font-bold tracking-[0.25em] uppercase">
-              Platforms Born From The Fusion
-            </span>
-            <div className="w-1 h-1 rounded-full bg-pink-400 animate-pulse" />
-          </div>
-          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/10" />
-        </div>
-
-        {/* Platform grid — 4 equal cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { name: 'XRide', tag: 'Mobility', color: '#2563EB', img: '/jinja-cityscape.jpg', status: 'Live' },
-            { name: 'ShopIt', tag: 'Commerce', color: '#10B981', img: '/MS.jpg', status: 'Live' },
-            { name: 'Clexarly', tag: 'Analytics', color: '#8B5CF6', img: '/SoftwareDevelopment.jpg', status: 'Live' },
-            { name: 'GripShule', tag: 'Education', color: '#F59E0B', img: '/gripshule.png', status: 'Active' },
-          ].map((platform) => (
-            <div
-              key={platform.name}
-              className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-1"
+            {/* Parallax photo */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.7 }}
+              className="col-span-12 md:col-span-6"
             >
-              {/* Image */}
-              <div className="relative aspect-square overflow-hidden">
-                <img
-                  src={platform.img}
-                  alt={platform.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              <div className="relative aspect-[4/5] overflow-hidden border border-[#0F1419]/15">
+                <ParallaxImage
+                  src="/It-soln2.jpeg"
+                  alt="T3Clar approach"
+                  className="w-full h-full"
+                  range={40}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#080B14] via-[#080B14]/40 to-transparent" />
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-500 mix-blend-overlay"
-                  style={{ background: `linear-gradient(to top, ${platform.color}, transparent)` }}
-                />
-
-                {/* Status dot */}
-                <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/20">
-                  <div
-                    className="w-1.5 h-1.5 rounded-full animate-pulse"
-                    style={{ backgroundColor: platform.color }}
-                  />
-                  <span className="text-[9px] font-bold text-white uppercase tracking-wider">
-                    {platform.status}
-                  </span>
+                <div className="absolute top-4 left-4 text-[9px] font-mono tracking-[0.3em] uppercase text-[#0F1419] bg-[#FBF9F5]/85 backdrop-blur-sm px-2 py-1">
+                  IMG-06
                 </div>
-
-                {/* Name overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1"
-                       style={{ color: platform.color }}>
-                    {platform.tag}
-                  </div>
-                  <h4 className="text-white font-black text-lg leading-tight">
-                    {platform.name}
-                  </h4>
+                <div className="absolute bottom-4 right-4 text-[9px] font-mono tracking-[0.3em] uppercase text-[#0F1419] bg-[#FBF9F5]/85 backdrop-blur-sm px-2 py-1">
+                  F.06 / STU
                 </div>
               </div>
-
-              {/* Bottom accent */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-0.5 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500"
-                style={{ backgroundColor: platform.color }}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </Reveal>
-
-    {/* ============ CLOSING LINE ============ */}
-    <Reveal delay={0.3}>
-      <div className="relative max-w-3xl mx-auto text-center mt-20">
-        <p className="text-white/60 text-lg md:text-xl leading-relaxed italic">
-          &ldquo;Every platform we launch lives at the intersection of{' '}
-          <span className="text-purple-300 font-semibold not-italic">patient capital</span> and{' '}
-          <span className="text-blue-300 font-semibold not-italic">relentless engineering</span>.
-          This is not a partnership of convenience — it&apos;s a partnership of conviction.&rdquo;
-        </p>
-
-        <div className="flex items-center justify-center gap-3 mt-8">
-          <div className="w-12 h-px bg-gradient-to-r from-transparent to-purple-400" />
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.04] border border-white/10">
-            <img src="/lotina.png" alt="Lotina" className="w-5 h-5 object-contain" />
-            <span className="text-white/40 text-[10px] font-bold tracking-wider">×</span>
-            <img src="/T3Clarlogo.png" alt="T3Clar" className="w-5 h-5 object-contain" />
-          </div>
-          <div className="w-12 h-px bg-gradient-to-l from-transparent to-blue-400" />
-        </div>
-      </div>
-    </Reveal>
-  </div>
-</section>
-      {/* ============================================================
-          INDUSTRIES — IMAGE CARDS
-          ============================================================ */}
-      <section className="py-24 md:py-32 px-4 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto">
-          <Reveal>
-            <div className="text-center mb-16">
-              <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
-                Collaborating Across Industries
-              </span>
-              <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] leading-tight mt-4 max-w-2xl mx-auto">
-                Building solutions together across{' '}
-                <span className="text-[#2563EB]">multiple sectors.</span>
-              </h2>
-            </div>
-          </Reveal>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {industries.map((industry, i) => {
-              const Icon = industry.icon
-              return (
-                <Reveal key={industry.title} delay={i * 0.08}>
-                  <div className="group relative h-72 rounded-3xl overflow-hidden cursor-pointer hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] transition-all duration-500">
-                    <img
-                      src={industry.image}
-                      alt={industry.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-[#0A0F1E]/40 to-transparent" />
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-90 transition-opacity duration-500"
-                      style={{ background: `linear-gradient(to top, ${industry.color}, ${industry.color}80 40%, transparent)` }}
-                    />
-
-                    <div className="absolute top-5 left-5 w-14 h-14 rounded-2xl flex items-center justify-center bg-white/15 backdrop-blur-md border border-white/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                      <Icon size={24} className="text-white" />
-                    </div>
-
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <h3 className="text-2xl font-black text-white mb-2">{industry.title}</h3>
-                      <p className="text-white/70 text-sm leading-relaxed max-w-xs">{industry.description}</p>
-
-                      <div className="flex items-center gap-2 mt-4 text-sm font-semibold text-white opacity-0 group-hover:opacity-100 translate-y-3 group-hover:translate-y-0 transition-all duration-500">
-                        Explore
-                        <ArrowRight size={14} />
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================
-          VISION
-          ============================================================ */}
-      <section className="relative py-24 md:py-32 px-4 overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto">
-          <Reveal>
-            <div className="relative rounded-[40px] overflow-hidden">
-              <div className="absolute inset-0">
-                <img src="/jinja-cityscape.jpg" alt="Jinja" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1E]/95 via-[#0A0F1E]/85 to-[#1E3A5F]/80" />
+              <div className="mt-3 flex items-center justify-between text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                <span>Method, not magic</span>
+                <span>Jinja · UG</span>
               </div>
+            </motion.div>
 
-              <div
-                className="absolute inset-0 opacity-[0.05]"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px)`,
-                  backgroundSize: '50px 50px',
-                }}
-              />
+            {/* Content */}
+            <div className="col-span-12 md:col-span-6 md:pt-6">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5"
+              >
+                // Sequenced delivery
+              </motion.p>
 
-              <div className="relative z-10 grid lg:grid-cols-2 gap-12 p-10 md:p-16 lg:p-20 items-center">
-                <div>
-                  <span className="text-blue-400 text-xs font-bold tracking-[0.25em] uppercase">
-                    Our Vision
-                  </span>
-                  <h2 className="text-4xl md:text-5xl font-black text-white leading-tight mt-4">
-                    Building Jinja&apos;s digital{' '}
-                    <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">
-                      future.
-                    </span>
-                  </h2>
-                  <p className="text-white/60 leading-relaxed mt-6">
-                    We envision a connected Jinja where transportation, shopping, healthcare,
-                    payments, businesses and communities work together through smart digital
-                    infrastructure.
-                  </p>
-                  <p className="text-white/60 leading-relaxed mt-4">
-                    Our goal is to build a technology ecosystem that simplifies everyday life
-                    and unlocks endless opportunities for growth across the region.
-                  </p>
-
-                  <div className="grid grid-cols-3 gap-4 mt-10">
-                    {[
-                      { value: '24/7', label: 'Support' },
-                      { value: '99.9%', label: 'Uptime' },
-                      { value: '3', label: 'Countries' },
-                    ].map((s) => (
-                      <div key={s.label} className="border-l-2 border-blue-400/40 pl-4">
-                        <div className="text-2xl font-black text-white">{s.value}</div>
-                        <div className="text-xs text-white/50 mt-1">{s.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="scale-90 md:scale-100">
-                  <OrbitalEcosystem />
-                </div>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================
-          MISSION
-          ============================================================ */}
-      <section className="relative py-24 md:py-32 px-4 bg-white overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-blue-50/60 to-transparent rounded-full blur-[120px]" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <Reveal>
-            <div className="text-center mb-16">
-              <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
-                Our Mission
-              </span>
-              <h2 className="text-4xl md:text-5xl font-black text-[#0F172A] mt-4 max-w-2xl mx-auto leading-tight">
-                Creating technology that{' '}
-                <span className="text-[#2563EB]">empowers.</span>
-              </h2>
-              <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-                Our mission is to design, develop and deliver innovative digital solutions
-                that empower businesses, improve services and create lasting value for communities.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {missionPillars.map((pillar, i) => {
-              const Icon = pillar.icon
-              return (
-                <Reveal key={pillar.title} delay={i * 0.1}>
-                  <div className="group relative bg-white rounded-3xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100 hover:shadow-[0_20px_60px_rgba(37,99,235,0.1)] hover:-translate-y-1 transition-all duration-500">
-                    <div className="relative h-48 overflow-hidden">
-                      <img src={pillar.image} alt={pillar.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                      <div className={`absolute inset-0 bg-gradient-to-br ${pillar.gradient} opacity-80`} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E]/40 to-transparent" />
-
-                      <div className="absolute top-4 right-5 text-5xl font-black text-white/30">
-                        {pillar.number}
-                      </div>
-
-                      <div className="absolute bottom-5 left-6 w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                        <Icon size={24} className="text-white" />
-                      </div>
-                    </div>
-
-                    <div className="p-7">
-                      <h3 className="text-xl font-bold text-[#0F172A] mb-3">{pillar.title}</h3>
-                      <p className="text-gray-500 text-sm leading-relaxed">{pillar.description}</p>
-                      <div className="w-0 h-0.5 rounded-full mt-5 group-hover:w-12 transition-all duration-500" style={{ backgroundColor: pillar.color }} />
-                    </div>
-                  </div>
-                </Reveal>
-              )
-            })}
-          </div>
-
-          <Reveal delay={0.4}>
-            <p className="text-center text-gray-400 text-xs mt-12">
-              Built on trust. Driven by purpose. Delivered with excellence.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================
-          WHY PARTNER + OPPORTUNITIES
-          ============================================================ */}
-      <section className="py-24 md:py-32 px-4 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8">
-            <Reveal>
-              <div className="relative rounded-3xl overflow-hidden h-full min-h-[500px]">
-                <img src="/44.jpg" alt="Team" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0A0F1E]/95 via-[#0A0F1E]/85 to-[#2563EB]/40" />
-
-                <div className="relative z-10 p-8 md:p-12">
-                  <span className="text-blue-400 text-xs font-bold tracking-[0.25em] uppercase">
-                    Why Partner With T3Clar
-                  </span>
-                  <h2 className="text-3xl md:text-4xl font-black text-white leading-tight mt-4">
-                    Growing together. Succeeding{' '}
-                    <span className="text-blue-400">together.</span>
-                  </h2>
-                  <p className="text-white/60 text-sm leading-relaxed mt-4">
-                    We believe in long-term relationships built on trust, innovation and shared success.
-                  </p>
-
-                  <div className="space-y-3 mt-8">
-                    {benefits.map((benefit) => (
-                      <div key={benefit} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
-                        <div className="w-6 h-6 bg-blue-500/30 rounded-full flex items-center justify-center shrink-0">
-                          <Check size={13} className="text-blue-300" />
-                        </div>
-                        <span className="text-sm text-white/80">{benefit}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              {opportunities.map((opp, i) => {
-                const Icon = opp.icon
-                return (
-                  <Reveal key={opp.title} delay={i * 0.08}>
-                    <div className="group relative h-full min-h-[240px] rounded-3xl overflow-hidden hover:shadow-[0_20px_60px_rgba(37,99,235,0.15)] hover:-translate-y-1 transition-all duration-500 cursor-pointer">
-                      <img src={opp.image} alt={opp.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E] via-[#0A0F1E]/70 to-transparent" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#2563EB]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                      <div className="relative z-10 p-6 h-full flex flex-col justify-end">
-                        <div className="w-10 h-10 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500">
-                          <Icon size={18} className="text-white" />
-                        </div>
-                        <h3 className="text-white font-bold text-base mb-1">{opp.title}</h3>
-                        <p className="text-white/60 text-xs leading-relaxed">{opp.description}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============================================================
-          APPROACH
-          ============================================================ */}
-      <section className="py-24 md:py-32 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <Reveal>
-              <div className="relative">
-                <div className="relative rounded-3xl overflow-hidden aspect-[4/5]">
-                  <img src="/It-soln2.jpeg" alt="T3Clar team" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E]/60 via-transparent to-transparent" />
-                </div>
-
-                <div className="absolute -bottom-6 -right-6 bg-white rounded-3xl p-6 shadow-[0_20px_60px_rgba(0,0,0,0.1)] border border-gray-100 max-w-[240px]">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
-                      <Award size={18} className="text-[#2563EB]" />
-                    </div>
-                    <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Recognition</span>
-                  </div>
-                  <div className="text-3xl font-black text-[#2563EB]">98%</div>
-                  <div className="text-xs text-gray-400 mt-1">Client satisfaction rate</div>
-                </div>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <div>
-                <span className="text-[#2563EB] text-xs font-bold tracking-[0.25em] uppercase">
-                  Our Approach
+              <motion.h2
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="leading-[0.95] tracking-[-0.03em] mb-8"
+              >
+                <span className="block text-[2rem] md:text-[3rem] font-light text-[#0F1419]/60">
+                  People. Process.
                 </span>
-                <h2 className="text-3xl md:text-4xl font-black text-[#0F172A] leading-tight mt-4">
-                  People. Process.{' '}
-                  <span className="text-[#2563EB]">Technology.</span>
-                </h2>
-                <p className="text-gray-600 leading-relaxed mt-4">
-                  We combine the right people, efficient processes and modern technology to build
-                  solutions that are scalable, secure and future-ready.
-                </p>
+                <span className="block text-[2.5rem] md:text-[4rem] font-black text-[#0F1419]">
+                  Then technology.
+                </span>
+              </motion.h2>
 
-                <div className="mt-8">
-                  <Accordion items={[
-                    { title: 'Discovery & Strategy', description: 'We start by understanding your business, your users and your goals — then map out a clear path forward.' },
-                    { title: 'Design & Engineering', description: 'Our team designs and builds with precision, using modern tools and proven methodologies.' },
-                    { title: 'Launch & Scale', description: 'We deploy, monitor and iterate — ensuring your solution grows with your business.' },
-                  ]} />
-                </div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-base leading-[1.8] text-[#0F1419]/70 mb-10 max-w-lg"
+              >
+                We combine the right people, efficient processes and modern
+                technology to build solutions that are scalable, secure and future-ready.
+              </motion.p>
+
+              <ProcessAccordion />
+
+              {/* Recognition stats */}
+              <div className="mt-12 pt-8 border-t border-[#0F1419]/15 grid grid-cols-2 gap-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-3">
+                    METRIC-01
+                  </div>
+                  <div className="text-4xl md:text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
+                    <Counter target={98} suffix="%" />
+                  </div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/50 mt-3">
+                    Client satisfaction
+                  </div>
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-3">
+                    METRIC-02
+                  </div>
+                  <div className="text-4xl md:text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
+                    <Counter target={4.9} />
+                  </div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/50 mt-3">
+                    Average rating
+                  </div>
+                </motion.div>
               </div>
-            </Reveal>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ============================================================
-          TESTIMONIAL
+          § 07 — TESTIMONIAL
           ============================================================ */}
-      <section className="py-16 px-4 bg-[#F8FAFC]">
-        <div className="max-w-5xl mx-auto">
-          <Reveal>
-            <div className="relative bg-white rounded-3xl p-10 md:p-16 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-gray-100 overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full blur-[80px]" />
+      <section className="py-24 md:py-32 px-4 bg-[#FBF9F5] border-t border-[#0F1419]/15">
+        <div className="max-w-[1200px] mx-auto">
 
-              <Quote size={48} className="text-[#2563EB]/20 absolute top-8 left-8" />
-              <div className="relative z-10 text-center">
-                <p className="text-gray-700 text-xl md:text-2xl leading-relaxed italic max-w-3xl mx-auto">
-                  &ldquo;T3Clar is a valuable technology partner. Their innovation, reliability and
-                  commitment to excellence make collaboration easy and impactful.&rdquo;
-                </p>
-                <div className="flex items-center justify-center gap-4 mt-8">
-                  <div className="w-14 h-14 rounded-2xl bg-white border border-gray-200 flex items-center justify-center p-2 shadow-sm">
-                    <img src="/44.jpg" alt="Stanbic" className="w-full h-full object-contain" />
-                  </div>
-                  <div className="text-left">
-                    <div className="font-bold text-[#0F172A]">Meddy A.</div>
-                    <div className="text-sm text-gray-500">CEO, Meddy Furniture Uganda</div>
-                  </div>
-                </div>
+          <SpecHeader section="§ 07" title="In Their Words" meta="Reference · Meddy Furniture" />
+
+          <motion.blockquote
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="grid grid-cols-12 gap-6 md:gap-10"
+          >
+            <div className="col-span-12 md:col-span-3">
+              <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-4">
+                TEST-01
+              </div>
+              <motion.div
+                initial={{ scale: 0.8, rotate: -5 }}
+                whileInView={{ scale: 1, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, type: 'spring' }}
+                className="w-16 h-16 overflow-hidden border border-[#0F1419]/15 bg-white p-1.5 mb-4"
+              >
+                <img src="/meddy.png" alt="Meddy Furniture" className="w-full h-full object-contain" />
+              </motion.div>
+              <div className="text-xs font-mono tracking-[0.25em] uppercase text-[#0F1419]/50">
+                Meddy Furniture<br />Kampala, UG
               </div>
             </div>
-          </Reveal>
+
+            <div className="col-span-12 md:col-span-9">
+              <p className="text-2xl md:text-4xl lg:text-5xl leading-[1.15] tracking-[-0.02em] text-[#0F1419] mb-10">
+                &ldquo;T3Clar is a valuable technology partner. Their <em className="text-[#0EA5E9] not-italic">innovation</em>, <em className="text-[#0EA5E9] not-italic">reliability</em> and <em className="text-[#0EA5E9] not-italic">commitment to excellence</em> make collaboration easy and impactful.&rdquo;
+              </p>
+
+              <footer className="pt-6 border-t border-[#0F1419]/15 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <div className="text-sm font-bold text-[#0F1419]">Meddy A.</div>
+                  <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/50 mt-1">
+                    CEO · Meddy Furniture
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#65A30D] flex items-center gap-2">
+                  <motion.span
+                    animate={{ opacity: [1, 0.3, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-1.5 h-1.5 rounded-full bg-[#65A30D]"
+                  />
+                  Verified client
+                </span>
+              </footer>
+            </div>
+          </motion.blockquote>
         </div>
       </section>
 
       {/* ============================================================
-          CTA — FINAL
+          § 08 — CTA
           ============================================================ */}
-      <section className="py-24 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <Reveal>
-            <div className="relative bg-gradient-to-br from-[#0A0F1E] via-[#1E3A5F] to-[#2563EB] rounded-[40px] p-10 md:p-16 lg:p-20 overflow-hidden">
-              <svg className="absolute bottom-0 left-0 w-full h-40 opacity-20" viewBox="0 0 1440 160" preserveAspectRatio="none">
-                <path fill="white" fillOpacity="0.4">
-                  <animate attributeName="d" dur="8s" repeatCount="indefinite" values="M0,80 C360,40 720,120 1080,80 C1260,60 1380,100 1440,80 L1440,160 L0,160 Z;M0,100 C360,60 720,140 1080,100 C1260,80 1380,120 1440,100 L1440,160 L0,160 Z;M0,80 C360,40 720,120 1080,80 C1260,60 1380,100 1440,80 L1440,160 L0,160 Z" />
-                </path>
-                <path fill="white" fillOpacity="0.2">
-                  <animate attributeName="d" dur="12s" repeatCount="indefinite" values="M0,100 C300,60 600,140 900,100 C1200,60 1380,120 1440,100 L1440,160 L0,160 Z;M0,120 C300,80 600,160 900,120 C1200,80 1380,140 1440,120 L1440,160 L0,160 Z;M0,100 C300,60 600,140 900,100 C1200,60 1380,120 1440,100 L1440,160 L0,160 Z" />
-                </path>
-              </svg>
+      <section className="py-24 md:py-32 px-4 bg-[#F4F2ED] border-t border-[#0F1419]/15 relative overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage: `linear-gradient(rgba(15,20,25,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(15,20,25,0.5) 1px, transparent 1px)`,
+            backgroundSize: '48px 48px',
+          }}
+        />
 
-              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="flex items-center gap-5">
-                  <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-3xl flex items-center justify-center shrink-0 border border-white/20 p-3">
-                    <img src="/T3Clarlogo.png" alt="T3Clar" className="w-full h-full object-contain" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl md:text-4xl font-black text-white">
-                      Ready to partner with us?
-                    </h2>
-                    <p className="text-blue-100/70 mt-1">
-                      Let&apos;s connect, collaborate and create impact.
-                    </p>
-                  </div>
-                </div>
+        <div className="max-w-[1400px] mx-auto relative">
 
-                <Link
-                  href="/contact"
-                  className="group relative z-10 inline-flex items-center gap-2 px-8 py-4 bg-white text-[#2563EB] rounded-full font-bold hover:bg-blue-50 transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.2)] shrink-0"
-                >
-                  Become a Partner
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+          <SpecHeader section="§ 08" title="Correspondence" meta="Response · 24h" />
+
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-end">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="col-span-12 md:col-span-7"
+            >
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-5">
+                // Initiating contact
+              </p>
+              <h2 className="leading-[0.95] tracking-[-0.03em]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                  Let&apos;s build
+                </span>
+                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                  something lasting.
+                </span>
+              </h2>
+              <p className="text-base md:text-lg leading-[1.75] text-[#0F1419]/70 mt-8 max-w-lg font-mono">
+                If you have a project in mind — or just want to talk through an idea — write to us.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="col-span-12 md:col-span-5 md:pl-8 md:border-l border-[#0F1419]/15"
+            >
+              <div className="space-y-0 border-t border-[#0F1419]/15">
+                {[
+                  { key: 'Email', value: 'hello@t3clar.com', href: 'mailto:hello@t3clar.com' },
+                  { key: 'Studio', value: 'Jinja · UG · EA' },
+                  { key: 'Hours', value: 'Mon — Fri · 09:00–18:00' },
+                  { key: 'Response', value: '< 24 hours', live: true },
+                ].map((row, i) => (
+                  <motion.div
+                    key={row.key}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+                    className="flex items-center justify-between py-4 border-b border-[#0F1419]/15"
+                  >
+                    <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+                      {row.key}
+                    </span>
+                    {row.href ? (
+                      <a href={row.href} className="text-sm font-mono text-[#0EA5E9] hover:text-[#65A30D] transition-colors">
+                        {row.value}
+                      </a>
+                    ) : (
+                      <span className={`text-sm font-mono ${row.live ? 'text-[#65A30D]' : 'text-[#0F1419]'}`}>
+                        {row.value}
+                      </span>
+                    )}
+                  </motion.div>
+                ))}
               </div>
+
+              <Link href="/contact" className="group inline-flex items-center gap-2 text-xs font-mono tracking-[0.25em] uppercase text-[#0EA5E9] border-b border-[#0EA5E9] pb-1 hover:text-[#65A30D] hover:border-[#65A30D] transition-all mt-8">
+                <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Open a conversation
+              </Link>
+            </motion.div>
+          </div>
+
+          <div className="mt-20 pt-6 border-t border-[#0F1419]/15 flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3">
+              <motion.span
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-2 h-2 bg-[#65A30D]"
+              />
+              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/60">
+                Available for new work
+              </span>
             </div>
-          </Reveal>
+            <div className="flex items-center gap-6 text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
+              <span>Jinja, UG</span>
+              <span>·</span>
+              <span>Est. 2021</span>
+              <span>·</span>
+              <span>v4.0</span>
+            </div>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
