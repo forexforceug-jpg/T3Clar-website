@@ -111,7 +111,7 @@ export default function Ecosystem() {
                 )
               })}
 
-              {/* Platform cards */}
+              {/* Platform circular avatars */}
               {platforms.map((platform, index) => {
                 const rad = (platform.angle * Math.PI) / 180
                 const x = 50 + ORBIT_RADIUS * Math.sin(rad)
@@ -124,7 +124,7 @@ export default function Ecosystem() {
                     className="absolute z-20"
                     style={{ left: `${x}%`, top: `${y}%`, transform: 'translate(-50%, -50%)' }}
                   >
-                    {/* Counter-rotation to keep cards upright */}
+                    {/* Counter-rotation to keep avatars upright */}
                     <div
                       style={{
                         animation: 'orbit-spin-reverse 70s linear infinite',
@@ -133,28 +133,57 @@ export default function Ecosystem() {
                         height: 'fit-content',
                       }}
                     >
-                      <div className="group cursor-pointer">
-                        <div
-                          className="relative w-[110px] h-[74px] md:w-[140px] md:h-[94px] overflow-hidden shadow-[0_8px_30px_rgba(10,15,31,0.08)] 
-                                   group-hover:shadow-[0_16px_50px_rgba(14,165,233,0.25)] transition-all duration-500 border bg-[#FAF8F4] group-hover:scale-110"
-                          style={{ borderColor: `${platform.color}50` }}
-                        >
-                          <img src={platform.image} alt={platform.name} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1F]/85 via-[#0A0F1F]/30 to-transparent" />
-                          <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: platform.color }} />
+                      <div className="group cursor-pointer flex flex-col items-center">
+                        {/* Circular image */}
+                        <div className="relative">
                           <div
-                            className="absolute top-1.5 right-1.5 px-1.5 py-0.5 text-[7px] font-mono tracking-wider uppercase text-white border border-white/30"
-                            style={{ backgroundColor: `${platform.color}DD` }}
+                            className="relative w-[80px] h-[80px] md:w-[105px] md:h-[105px] rounded-full overflow-hidden 
+                                     border-2 transition-all duration-500 bg-[#FAF8F4]
+                                     shadow-[0_8px_30px_rgba(10,15,31,0.10)] 
+                                     group-hover:shadow-[0_16px_50px_rgba(14,165,233,0.28)] 
+                                     group-hover:scale-110"
+                            style={{ borderColor: `${platform.color}60` }}
                           >
-                            {platform.tag}
-                          </div>
-                          <div className="absolute bottom-0 left-0 right-0 p-2">
-                            <div className="text-[11px] md:text-xs font-black leading-tight truncate"
-                                 style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                              <span style={{ color: platform.color }}>{platform.nameParts.colored}</span>
-                              <span className="text-white">{platform.nameParts.white}</span>
+                            <img
+                              src={platform.image}
+                              alt={platform.name}
+                              className="w-full h-full object-cover"
+                            />
+
+                            {/* Dark tint for legibility */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1F]/60 via-transparent to-transparent" />
+
+                            {/* Tag badge */}
+                            <div
+                              className="absolute bottom-1 left-1/2 -translate-x-1/2 px-1.5 py-0.5 
+                                       text-[6px] md:text-[7px] font-mono tracking-wider uppercase text-white 
+                                       border border-white/40 backdrop-blur-sm whitespace-nowrap"
+                              style={{ backgroundColor: `${platform.color}DD` }}
+                            >
+                              {platform.tag}
                             </div>
                           </div>
+
+                          {/* Icon badge — small circle at top-right */}
+                          <div
+                            className="absolute -top-1 -right-1 w-6 h-6 md:w-7 md:h-7 rounded-full 
+                                     border-2 border-[#FAF8F4] flex items-center justify-center
+                                     shadow-[0_4px_12px_rgba(10,15,31,0.15)]
+                                     group-hover:scale-110 transition-transform duration-500"
+                            style={{ backgroundColor: platform.color }}
+                          >
+                            <Icon size={11} className="text-white" strokeWidth={2.4} />
+                          </div>
+                        </div>
+
+                        {/* Name beneath circle */}
+                        <div
+                          className="mt-2 md:mt-2.5 text-[10px] md:text-xs font-black leading-tight 
+                                   whitespace-nowrap text-center tracking-tight"
+                          style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
+                        >
+                          <span style={{ color: platform.color }}>{platform.nameParts.colored}</span>
+                          <span className="text-[#0A0F1F]">{platform.nameParts.white}</span>
                         </div>
                       </div>
                     </div>
@@ -196,11 +225,20 @@ export default function Ecosystem() {
               const Icon = p.icon
               return (
                 <div key={p.name} className="flex items-center gap-3 p-3 bg-white border border-[#1A1F2E]/15">
+                  {/* Circular image */}
                   <div
-                    className="w-10 h-10 flex items-center justify-center shrink-0 border"
-                    style={{ backgroundColor: `${p.color}15`, borderColor: `${p.color}40` }}
+                    className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 border-2"
+                    style={{ borderColor: `${p.color}60` }}
                   >
-                    <Icon size={16} style={{ color: p.color }} />
+                    <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1F]/50 to-transparent" />
+                    {/* Icon badge */}
+                    <div
+                      className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full border border-white flex items-center justify-center"
+                      style={{ backgroundColor: p.color }}
+                    >
+                      <Icon size={8} className="text-white" strokeWidth={2.5} />
+                    </div>
                   </div>
                   <div className="min-w-0">
                     <div className="text-sm font-black leading-tight truncate text-[#0A0F1F]"

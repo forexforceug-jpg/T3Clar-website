@@ -24,9 +24,14 @@ const projects = [
   { number: '01', title: 'XRide', category: 'Mobile Application', code: 'MOBILE APP', subtitle: 'Smart Transportation Platform', description: 'A smart transport solution connecting passengers with reliable drivers across Jinja through real-time tracking, cashless payments and improved ride experience.', image: '/MS.jpg', status: 'Live', year: '2024' },
   { number: '02', title: 'ShopIt', category: 'E-Commerce', code: 'E-COMMERCE', subtitle: 'Shopping & Delivery Ecosystem', description: 'An all-in-one marketplace for restaurants, pharmacies, shops and local businesses offering fast, reliable and secure deliveries.', image: '/shopit.png', status: 'Live', year: '2024' },
   { number: '03', title: 'Clexarly', category: 'Web Platform', code: 'WEB APPLICATION', subtitle: 'Digital Growth & Business Solutions', description: 'Helping businesses grow through marketing tools, analytics, automation and customer engagement solutions.', image: '/clxry.png', status: 'Live', year: '2023' },
-  { number: '04', title: 'Business Management System', category: 'Web Application', code: 'WEB APPLICATION', subtitle: 'Custom Management Solutions', description: 'Custom business management systems designed to streamline operations, improve productivity and drive growth.', image: '/SoftwareDevelopment.jpg', status: 'Active', year: '2024' },
-  { number: '05', title: 'Payment Gateway Integration', category: 'Systems & Platforms', code: 'SYSTEMS & PLATFORMS', subtitle: 'Secure Payment Solutions', description: 'Secure and seamless payment solutions supporting multiple payment methods and real-time settlement.', image: '/CloudInfrastructure.webp', status: 'Live', year: '2023' },
-  { number: '06', title: 'Cloud Infrastructure', category: 'Infrastructure', code: 'INFRASTRUCTURE', subtitle: 'Scalable Cloud Architecture', description: 'Scalable, secure and reliable cloud infrastructure designed to support business growth and innovation.', image: '/It-soln2.jpeg', status: 'Enterprise', year: '2024' },
+  { number: '04', title: 'Munolink', category: 'E-Commerce', code: 'E-COMMERCE', subtitle: 'E-commerce Platform', description: 'Seamless shopping platform connecting curated products with trusted sellers. Fast checkout, order tracking and a smooth customer experience.', image: '/muno.png', status: 'Live', year: '2023' },
+  { number: '05', title: 'GripShule', category: 'Web Platform', code: 'WEB APPLICATION', subtitle: 'School Management Platform', description: 'Complete school management system — attendance tracking, grade management, fee collection and parent communication in one place.', image: '/gripshule.png', status: 'Live', year: '2024' },
+  { number: '06', title: 'Business Management System', category: 'Web Application', code: 'WEB APPLICATION', subtitle: 'Custom Management Solutions', description: 'Custom business management systems designed to streamline operations, improve productivity and drive growth.', image: '/SoftwareDevelopment.jpg', status: 'Active', year: '2024' },
+  { number: '07', title: 'Payment Gateway Integration', category: 'Systems & Platforms', code: 'SYSTEMS & PLATFORMS', subtitle: 'Secure Payment Solutions', description: 'Secure and seamless payment solutions supporting multiple payment methods and real-time settlement.', image: '/CloudInfrastructure.webp', status: 'Live', year: '2023' },
+  { number: '08', title: 'Lotina Investments Platform', category: 'Systems & Platforms', code: 'SYSTEMS & PLATFORMS', subtitle: 'Investment & Portfolio Management', description: 'Digital investment platform supporting portfolio tracking, capital deployment and strategic partnership operations.', image: '/lotina.png', status: 'Live', year: '2023' },
+  { number: '09', title: 'Cloud Infrastructure', category: 'Infrastructure', code: 'INFRASTRUCTURE', subtitle: 'Scalable Cloud Architecture', description: 'Scalable, secure and reliable cloud infrastructure designed to support business growth and innovation.', image: '/It-soln2.jpeg', status: 'Enterprise', year: '2024' },
+  { number: '11', title: 'GoViral Marketing Suite', category: 'Systems & Platforms', code: 'SYSTEMS & PLATFORMS', subtitle: 'Marketing Automation', description: 'Marketing automation platform helping brands run multi-channel campaigns with analytics, scheduling and audience segmentation.', image: '/goviral.ico', status: 'Live', year: '2023' },
+  { number: '12', title: 'Fork & Go Delivery', category: 'Mobile Application', code: 'MOBILE APP', subtitle: 'Food Delivery Platform', description: 'On-demand food delivery app connecting restaurants with hungry customers. Real-time tracking, cashless payments and driver routing.', image: '/Fork and Go.png', status: 'Live', year: '2024' },
 ]
 
 const labsProjects = [
@@ -264,7 +269,7 @@ export default function ProjectsPage() {
                 § Work · Portfolio
               </span>
               <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/40 hidden md:inline">
-                Six live · Three in lab
+                Twelve live · Three in lab
               </span>
             </div>
             <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/40">
@@ -388,7 +393,7 @@ export default function ProjectsPage() {
       </section>
 
       {/* ============================================================
-          FILTER + PROJECTS — Editorial register
+          FILTER + PROJECTS — Editorial register with sticky filter
           ============================================================ */}
       <section id="projects-grid" className="relative py-24 md:py-32 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-[#F4F1EA]" />
@@ -445,28 +450,38 @@ export default function ProjectsPage() {
             </motion.div>
           </div>
 
-          {/* Filter row */}
-          <div className="flex flex-wrap gap-x-6 gap-y-3 mb-16 pb-6 border-b border-[#0A0F1F]/15">
-            {categories.map((cat, i) => {
-              const isActive = activeCategory === cat.key
-              return (
-                <motion.button
-                  key={cat.key}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  onClick={() => setActiveCategory(cat.key)}
-                  className={`text-xs font-mono tracking-[0.25em] uppercase transition-all duration-300 pb-1 border-b-2 ${
-                    isActive
-                      ? 'text-[#0A0F1F] border-[#0EA5E9]'
-                      : 'text-[#0A0F1F]/40 border-transparent hover:text-[#0A0F1F]'
-                  }`}
-                >
-                  {cat.label}
-                </motion.button>
-              )
-            })}
+          {/* ───── STICKY FILTER BAR ───── */}
+          <div className="sticky top-14 md:top-16 z-30 -mx-4 px-4 py-4 bg-[#F4F1EA]/95 backdrop-blur-md border-b border-[#0A0F1F]/15 mb-16">
+            <div className="flex flex-wrap gap-x-6 gap-y-3">
+              {categories.map((cat, i) => {
+                const isActive = activeCategory === cat.key
+                const count = cat.key === 'all'
+                  ? projects.length
+                  : projects.filter((p) => p.code === cat.key).length
+                return (
+                  <motion.button
+                    key={cat.key}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.05 }}
+                    onClick={() => setActiveCategory(cat.key)}
+                    className={`group inline-flex items-baseline gap-2 text-xs font-mono tracking-[0.25em] uppercase transition-all duration-300 pb-1 border-b-2 ${
+                      isActive
+                        ? 'text-[#0A0F1F] border-[#0EA5E9]'
+                        : 'text-[#0A0F1F]/40 border-transparent hover:text-[#0A0F1F]'
+                    }`}
+                  >
+                    {cat.label}
+                    <span className={`text-[9px] tabular-nums transition-colors ${
+                      isActive ? 'text-[#0EA5E9]' : 'text-[#0A0F1F]/30'
+                    }`}>
+                      {String(count).padStart(2, '0')}
+                    </span>
+                  </motion.button>
+                )
+              })}
+            </div>
           </div>
 
           {/* Projects — editorial rows */}
@@ -492,7 +507,7 @@ export default function ProjectsPage() {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
-                    transition={{ duration: 0.6, delay: i * 0.05 }}
+                    transition={{ duration: 0.6, delay: i * 0.04 }}
                     className="group border-t border-[#0A0F1F]/15 py-14 md:py-20"
                   >
                     <div className="grid grid-cols-12 gap-8 lg:gap-16 items-start">
@@ -559,7 +574,6 @@ export default function ProjectsPage() {
                             alt={project.title}
                             className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[900ms]"
                           />
-                          {/* Corner reveals */}
                           <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500" />
                           <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500 delay-100" />
                         </div>

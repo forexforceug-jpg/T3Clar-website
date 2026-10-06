@@ -70,7 +70,7 @@ function SpecHeader({ section, title, meta }: { section: string; title: string; 
             initial={{ opacity: 0, x: -10 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.4 }}
-            className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/80"
+            className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9]"
           >
             {section}
           </motion.span>
@@ -101,7 +101,7 @@ function SpecHeader({ section, title, meta }: { section: string; title: string; 
               initial={{ scaleY: 0 }}
               animate={inView ? { scaleY: 1 } : {}}
               transition={{ duration: 0.3, delay: i * 0.03 }}
-              className="w-px h-2 bg-[#0A0F1F]/80/50 origin-bottom"
+              className="w-px h-2 bg-[#0EA5E9]/50 origin-bottom"
             />
           ))}
         </div>
@@ -211,9 +211,26 @@ export default function ServicesPage() {
     <div className="bg-[#FBF9F5] text-[#0A0F1F]">
 
       {/* ============================================================
-          HERO — fits one screen
+          HERO — background image, one screen
           ============================================================ */}
       <section className="relative min-h-screen pt-14 md:pt-16 px-4 overflow-hidden flex flex-col">
+
+        {/* ═══════════ BACKGROUND IMAGE ═══════════ */}
+        <div className="absolute inset-0 top-14 md:top-16">
+          <img
+            src="/heroimage.jpg"
+            alt="Modern technology studio"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Warm tint */}
+          <div className="absolute inset-0 bg-[#0A0F1F]/8 mix-blend-multiply" />
+          {/* Directional scrim — heavy left, light right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FBF9F5] via-[#FBF9F5]/85 via-50% to-[#FBF9F5]/15" />
+          {/* Top + bottom fades for section blending */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#FBF9F5] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#FBF9F5] to-transparent" />
+        </div>
+
         {/* Ambient glows */}
         <div
           className="absolute -top-40 -left-40 w-[900px] h-[900px] pointer-events-none"
@@ -228,9 +245,9 @@ export default function ServicesPage() {
           }}
         />
 
-        {/* Faint dotted grid */}
+        {/* Faint dotted grid — sits on top of the image but very subtle */}
         <div
-          className="absolute inset-0 opacity-[0.035] pointer-events-none"
+          className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
             backgroundImage: `radial-gradient(circle, #0A0F1F 1px, transparent 1px)`,
             backgroundSize: '32px 32px',
@@ -247,26 +264,26 @@ export default function ServicesPage() {
             className="flex items-center justify-between flex-wrap gap-4 border-b border-[#0A0F1F]/15 pb-3 mb-6"
           >
             <div className="flex items-center gap-6">
-              <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/80">
+              <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9]">
                 § Services · T3Clar
               </span>
-              <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/40 hidden md:inline">
+              <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/50 hidden md:inline">
                 Ten disciplines · One studio
               </span>
             </div>
-            <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/40">
+            <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0A0F1F]/50">
               Updated · 2025
             </span>
           </motion.div>
 
-          {/* Main grid */}
+          {/* Main grid — text left, empty space right for image visibility */}
           <div className="grid grid-cols-12 gap-6 md:gap-10 items-center flex-1">
             <div className="col-span-12 lg:col-span-7">
               <motion.span
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-[10px] font-mono tracking-[0.4em] uppercase text-[#0A0F1F]/80 block mb-4"
+                className="text-[10px] font-mono tracking-[0.4em] uppercase text-[#0EA5E9] block mb-4"
               >
                 What We Build
               </motion.span>
@@ -276,7 +293,7 @@ export default function ServicesPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.2 }}
-                  className="block text-[1.75rem] md:text-[2.5rem] lg:text-[3rem] font-light text-[#0A0F1F]/50"
+                  className="block text-[1.75rem] md:text-[2.5rem] lg:text-[3rem] font-light text-[#0A0F1F]/60"
                   style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
                 >
                   Technology solutions
@@ -285,10 +302,10 @@ export default function ServicesPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.35 }}
-                  className="block text-[2.25rem] md:text-[3.5rem] lg:text-[4.25rem] font-black text-[#0A0F1F]/85 mt-1"
+                  className="block text-[2.25rem] md:text-[3.5rem] lg:text-[4.25rem] font-black text-[#0A0F1F]/90 mt-1"
                 >
                   designed for{' '}
-                  <span className="text-[#0A0F1F]/80">impact.</span>
+                  <span className="text-[#0EA5E9]">impact.</span>
                 </motion.span>
               </h1>
 
@@ -296,7 +313,7 @@ export default function ServicesPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="text-sm md:text-base leading-[1.7] text-[#1A1F2E]/70 mt-6 max-w-lg"
+                className="text-sm md:text-base leading-[1.7] text-[#1A1F2E]/75 mt-6 max-w-lg"
                 style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
               >
                 We design, develop and deliver powerful digital solutions that help
@@ -311,14 +328,14 @@ export default function ServicesPage() {
               >
                 <Link
                   href="#services-grid"
-                  className="group inline-flex items-center gap-2 text-xs md:text-sm font-medium text-white bg-[#0A0F1F] px-5 py-3 hover:bg-[#0A0F1F]/80 transition-all duration-300 hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-2 text-xs md:text-sm font-medium text-white bg-[#0A0F1F] px-5 py-3 hover:bg-[#0EA5E9] transition-all duration-300 hover:-translate-y-0.5"
                 >
                   Explore Services
                   <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center gap-2 text-xs md:text-sm font-medium text-[#0A0F1F] border-b-2 border-[#0A0F1F] pb-1 hover:text-[#0A0F1F]/80 hover:border-[#0A0F1F]/80 transition-all"
+                  className="group inline-flex items-center gap-2 text-xs md:text-sm font-medium text-[#0A0F1F] border-b-2 border-[#0A0F1F] pb-1 hover:text-[#0EA5E9] hover:border-[#0EA5E9] transition-all"
                 >
                   Talk to us
                   <ArrowUpRight size={13} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -326,27 +343,8 @@ export default function ServicesPage() {
               </motion.div>
             </div>
 
-            <div className="col-span-12 lg:col-span-5">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="relative aspect-[16/10] overflow-hidden"
-              >
-                <img src="/heroimage.jpg" alt="Modern technology studio" className="w-full h-full object-cover" />
-                <div className="absolute top-4 left-4 text-[9px] font-mono tracking-[0.3em] uppercase text-white bg-[#0A0F1F]/60 backdrop-blur-sm px-2 py-1">
-                  Fig. 01
-                </div>
-              </motion.div>
-              <div className="mt-3 flex items-start justify-between gap-4">
-                <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/50">
-                  Studio · 2025
-                </span>
-                <span className="text-[9px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/50">
-                  Jinja, Uganda
-                </span>
-              </div>
-            </div>
+            {/* Empty column — lets the background image breathe */}
+            <div className="hidden lg:block lg:col-span-5" />
           </div>
 
           {/* Stats bar */}
@@ -354,7 +352,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1 }}
-            className="mt-6 pt-5 border-t border-dashed border-[#0A0F1F]/20 grid grid-cols-1 md:grid-cols-3 gap-6"
+            className="mt-6 pt-5 border-t border-dashed border-[#0A0F1F]/25 grid grid-cols-1 md:grid-cols-3 gap-6"
           >
             {[
               { value: 150, suffix: '+', label: 'Projects delivered' },
@@ -370,7 +368,7 @@ export default function ServicesPage() {
                 <div className="text-3xl md:text-4xl font-black text-[#0A0F1F] tracking-[-0.03em] leading-none">
                   <Counter target={s.value} suffix={s.suffix} />
                 </div>
-                <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/50 mt-2">
+                <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/55 mt-2">
                   {s.label}
                 </div>
               </motion.div>
@@ -380,7 +378,7 @@ export default function ServicesPage() {
       </section>
 
       {/* ============================================================
-          SERVICES — Numbered catalogue with magnetic cards
+          SERVICES
           ============================================================ */}
       <section id="services-grid" className="relative py-24 md:py-32 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-[#F4F1EA]" />
@@ -412,7 +410,7 @@ export default function ServicesPage() {
                   Comprehensive services
                 </span>
                 <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0A0F1F]/80 mt-1">
-                  for <span className="text-[#0A0F1F]/80">modern businesses.</span>
+                  for <span className="text-[#0EA5E9]">modern businesses.</span>
                 </span>
               </h2>
             </motion.div>
@@ -450,15 +448,15 @@ export default function ServicesPage() {
                         alt={service.title}
                         className="w-full h-full object-cover grayscale-[40%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[900ms]"
                       />
-                      <div className="absolute top-4 left-4 w-10 h-10 bg-[#FBF9F5]/95 backdrop-blur-sm flex items-center justify-center group-hover:bg-[#0A0F1F]/80 transition-colors duration-500">
+                      <div className="absolute top-4 left-4 w-10 h-10 bg-[#FBF9F5]/95 backdrop-blur-sm flex items-center justify-center group-hover:bg-[#0EA5E9] transition-colors duration-500">
                         <Icon size={16} className="text-[#0A0F1F] group-hover:text-white transition-colors duration-500" strokeWidth={2} />
                       </div>
-                      <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#0A0F1F]/80/0 group-hover:border-[#0A0F1F]/80 transition-colors duration-500" />
-                      <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-[#0A0F1F]/80/0 group-hover:border-[#0A0F1F]/80 transition-colors duration-500 delay-100" />
+                      <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500" />
+                      <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500 delay-100" />
                     </div>
 
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[10px] font-mono tracking-[0.3em] text-[#0A0F1F]/80">
+                      <span className="text-[10px] font-mono tracking-[0.3em] text-[#0EA5E9]">
                         {service.number}
                       </span>
                       <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/40">
@@ -466,7 +464,7 @@ export default function ServicesPage() {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-[#0A0F1F]/85 leading-snug mb-2 group-hover:text-[#0A0F1F]/80 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-[#0A0F1F]/85 leading-snug mb-2 group-hover:text-[#0EA5E9] transition-colors duration-300">
                       {service.title}
                     </h3>
 
@@ -481,7 +479,7 @@ export default function ServicesPage() {
                       {service.stack.map((s) => (
                         <span
                           key={s}
-                          className="text-[9px] font-mono tracking-wider uppercase text-[#0A0F1F]/50 border border-[#0A0F1F]/15 px-1.5 py-0.5 group-hover:border-[#0A0F1F]/80/40 transition-colors duration-300"
+                          className="text-[9px] font-mono tracking-wider uppercase text-[#0A0F1F]/50 border border-[#0A0F1F]/15 px-1.5 py-0.5 group-hover:border-[#0EA5E9]/40 transition-colors duration-300"
                         >
                           {s}
                         </span>
@@ -490,7 +488,7 @@ export default function ServicesPage() {
 
                     <Link
                       href="/contact"
-                      className="group/link inline-flex items-center gap-2 text-xs font-mono tracking-[0.25em] uppercase text-[#0A0F1F] border-b border-[#0A0F1F] pb-1 hover:border-[#0A0F1F]/80 hover:text-[#0A0F1F]/80 transition-all"
+                      className="group/link inline-flex items-center gap-2 text-xs font-mono tracking-[0.25em] uppercase text-[#0A0F1F] border-b border-[#0A0F1F] pb-1 hover:border-[#0EA5E9] hover:text-[#0EA5E9] transition-all"
                     >
                       Discuss
                       <ArrowUpRight size={11} className="group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
@@ -535,7 +533,7 @@ export default function ServicesPage() {
                   A proven process from
                 </span>
                 <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0A0F1F]/80 mt-1">
-                  <span className="text-[#0A0F1F]/80">idea to launch.</span>
+                  <span className="text-[#0EA5E9]">idea to launch.</span>
                 </span>
               </h2>
             </motion.div>
@@ -579,14 +577,14 @@ export default function ServicesPage() {
                     <motion.span
                       animate={{ scale: [1, 1.3, 1], opacity: [0.4, 1, 0.4] }}
                       transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
-                      className="absolute w-6 h-6 rounded-full bg-[#0A0F1F]/80/20"
+                      className="absolute w-6 h-6 rounded-full bg-[#0EA5E9]/20"
                     />
-                    <span className="relative w-3 h-3 rounded-full bg-[#0A0F1F]/80" />
+                    <span className="relative w-3 h-3 rounded-full bg-[#0EA5E9]" />
                   </div>
 
                   <div className="pt-16 lg:pt-0">
                     <div className="flex items-baseline justify-between mb-4 pb-3 border-b border-[#0A0F1F]/12">
-                      <span className="text-[10px] font-mono tracking-[0.3em] text-[#0A0F1F]/80">
+                      <span className="text-[10px] font-mono tracking-[0.3em] text-[#0EA5E9]">
                         PHASE · {step.number}
                       </span>
                       <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0A0F1F]/30">
@@ -672,7 +670,7 @@ export default function ServicesPage() {
                   Quality. Innovation.
                 </span>
                 <span className="block text-[2.25rem] md:text-[3rem] font-black text-[#0A0F1F]/80 mt-1">
-                  <span className="text-[#0A0F1F]/80">Reliability.</span>
+                  <span className="text-[#0EA5E9]">Reliability.</span>
                 </span>
               </motion.h2>
 
@@ -701,8 +699,8 @@ export default function ServicesPage() {
                       className="group pb-6 border-b border-[#0A0F1F]/15"
                     >
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-full border border-[#0A0F1F]/20 flex items-center justify-center group-hover:border-[#0A0F1F]/80 group-hover:bg-[#0A0F1F]/80/10 transition-all duration-300">
-                          <Icon size={16} className="text-[#0A0F1F] group-hover:text-[#0A0F1F]/80 transition-colors duration-300" strokeWidth={2} />
+                        <div className="w-10 h-10 rounded-full border border-[#0A0F1F]/20 flex items-center justify-center group-hover:border-[#0EA5E9] group-hover:bg-[#0EA5E9]/10 transition-all duration-300">
+                          <Icon size={16} className="text-[#0A0F1F] group-hover:text-[#0EA5E9] transition-colors duration-300" strokeWidth={2} />
                         </div>
                         <h3 className="text-base font-bold text-[#0A0F1F]/85">{item.title}</h3>
                       </div>
@@ -773,7 +771,7 @@ export default function ServicesPage() {
                   Have a project
                 </span>
                 <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0A0F1F]/80 mt-1">
-                  in <span className="text-[#0A0F1F]/80">mind?</span>
+                  in <span className="text-[#0EA5E9]">mind?</span>
                 </span>
               </h2>
               <p
@@ -799,7 +797,7 @@ export default function ServicesPage() {
                   </div>
                   <a
                     href="mailto:hello@t3clar.com"
-                    className="text-base md:text-lg font-semibold text-[#0A0F1F] border-b-2 border-transparent hover:border-[#0A0F1F]/80 hover:text-[#0A0F1F]/80 transition-all duration-300"
+                    className="text-base md:text-lg font-semibold text-[#0A0F1F] border-b-2 border-transparent hover:border-[#0EA5E9] hover:text-[#0EA5E9] transition-all duration-300"
                   >
                     hello@t3clar.com
                   </a>
@@ -824,7 +822,7 @@ export default function ServicesPage() {
 
               <Link
                 href="/contact"
-                className="group inline-flex items-center gap-2 text-xs font-mono tracking-[0.25em] uppercase text-[#0A0F1F] border-b border-[#0A0F1F] pb-1 hover:border-[#0A0F1F]/80 hover:text-[#0A0F1F]/80 transition-all"
+                className="group inline-flex items-center gap-2 text-xs font-mono tracking-[0.25em] uppercase text-[#0A0F1F] border-b border-[#0A0F1F] pb-1 hover:border-[#0EA5E9] hover:text-[#0EA5E9] transition-all"
               >
                 <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                 Start your project
