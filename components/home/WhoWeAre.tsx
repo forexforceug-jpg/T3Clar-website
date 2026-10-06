@@ -6,11 +6,11 @@ import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 
 const paragraphs = [
-  `Too many good businesses get held back by software that wasn't made for them — clunky, expensive, and disconnected from how they actually work. We said no to that.`,
+  `Too many good businesses get held back by software that wasn't made for them; clunky, expensive, and disconnected from how they actually work. We said no to that.`,
   `So we build software that fits. We sit with our clients, we learn their workflows, and we ship platforms that make their teams faster, their customers happier, and their numbers better.`,
-  `From Jinja to Kampala, from small shops to national banks — we've now powered hundreds of projects that live in the real world. Every platform is a small vote of confidence that Africa can build for Africa.`,
-  `But our real ambition is bigger than any single product. We're building the digital foundation of East Africa — the layer of tools, platforms and partners that will let the next thousand businesses thrive.`,
-  `If you're building something and you're not sure who to trust with it — write back. That's what this is for.`,
+  `From Jinja to Kampala, from small shops to national banks. We've now powered hundreds of projects that live in the real world. Every platform is a small vote of confidence that Africa can build for Africa.`,
+  `But our real ambition is bigger than any single product. We're building the digital foundation of East Africa, the layer of tools, platforms and partners that will let the next thousand businesses thrive.`,
+  `If you're building something and you're not sure who to trust with it, write back. That's what this is for.`,
 ]
 
 export default function WhoWeAre() {
