@@ -94,7 +94,6 @@ function SpecHeader({
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const [hex, setHex] = useState('00')
 
-  // Animate hex value on view
   useEffect(() => {
     if (!inView) return
     let frame = 0
@@ -139,7 +138,6 @@ function SpecHeader({
         </motion.span>
       </div>
 
-      {/* Tick marks that draw in one by one */}
       <div className="flex items-center justify-between py-1.5 border-b border-[#0F1419]/15">
         <div className="flex gap-1">
           {[...Array(12)].map((_, i) => (
@@ -161,7 +159,7 @@ function SpecHeader({
 }
 
 /* ============================================================
-   ANIMATED COUNTER — counts up when in view
+   ANIMATED COUNTER
    ============================================================ */
 
 function Counter({ target, suffix = '', duration = 1800 }: { target: number; suffix?: string; duration?: number }) {
@@ -195,7 +193,7 @@ function Counter({ target, suffix = '', duration = 1800 }: { target: number; suf
 }
 
 /* ============================================================
-   MAGNETIC CARD — subtle parallax on mouse move
+   MAGNETIC CARD
    ============================================================ */
 
 function MagneticCard({ children, className = '' }: { children: React.ReactNode; className?: string }) {
@@ -227,7 +225,7 @@ function MagneticCard({ children, className = '' }: { children: React.ReactNode;
 }
 
 /* ============================================================
-   PARALLAX IMAGE — subtle scroll offset
+   PARALLAX IMAGE
    ============================================================ */
 
 function ParallaxImage({ src, alt, className = '', range = 60 }: { src: string; alt: string; className?: string; range?: number }) {
@@ -310,13 +308,14 @@ export default function AboutPage() {
   return (
     <div className="bg-[#FBF9F5] text-[#0F1419]">
 
-      {/* ============================================================
-          HERO — Light technical cover
-          ============================================================ */}
-      <section className="relative py-16 md:py-24 px-4 overflow-hidden">
+      {/* ═══════════════════════════════════════════════════
+          HERO — fits one screen, compact, softer titles
+          ═══════════════════════════════════════════════════ */}
+      <section className="relative min-h-screen pt-14 md:pt-16 px-4 overflow-hidden flex flex-col">
+
         {/* Faint grid */}
         <div
-          className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          className="absolute inset-0 top-14 md:top-16 opacity-[0.05] pointer-events-none"
           style={{
             backgroundImage: `linear-gradient(rgba(15,20,25,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(15,20,25,0.5) 1px, transparent 1px)`,
             backgroundSize: '48px 48px',
@@ -325,8 +324,8 @@ export default function AboutPage() {
 
         {/* Corner markers */}
         {[
-          { pos: 'top-6 left-6', text: '[0,0]' },
-          { pos: 'top-6 right-6', text: '[1440,0]' },
+          { pos: 'top-20 left-6', text: '[0,0]' },
+          { pos: 'top-20 right-6', text: '[1440,0]' },
           { pos: 'bottom-6 left-6', text: '[0,900]' },
           { pos: 'bottom-6 right-6', text: '[1440,900]' },
         ].map((m) => (
@@ -335,20 +334,20 @@ export default function AboutPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className={`absolute ${m.pos} text-[9px] font-mono tracking-[0.3em] text-[#0EA5E9]/60`}
+            className={`absolute ${m.pos} text-[9px] font-mono tracking-[0.3em] text-[#0EA5E9]/60 hidden md:block`}
           >
             {m.text}
           </motion.div>
         ))}
 
-        <div className="max-w-[1400px] mx-auto relative">
+        <div className="max-w-[1400px] mx-auto relative w-full flex-1 flex flex-col py-6 md:py-8">
 
           {/* Top status strip */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center justify-between flex-wrap gap-4 border-b border-[#0F1419]/15 pb-4 mb-14"
+            className="flex items-center justify-between flex-wrap gap-4 border-b border-[#0F1419]/15 pb-3 mb-6"
           >
             <div className="flex items-center gap-6">
               <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] flex items-center gap-2">
@@ -368,41 +367,42 @@ export default function AboutPage() {
             </span>
           </motion.div>
 
-          <div className="grid grid-cols-12 gap-6 md:gap-10 items-end">
+          {/* Main grid */}
+          <div className="grid grid-cols-12 gap-6 md:gap-10 items-center flex-1">
 
             {/* Left — Heading */}
-            <div className="col-span-12 md:col-span-8">
+            <div className="col-span-12 md:col-span-7">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-6"
+                className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-4"
               >
                 // Studio Profile · Index 00
               </motion.p>
 
-              <h1 className="leading-[0.95] tracking-[-0.035em]">
+              <h1 className="leading-[0.95] tracking-[-0.03em]">
                 <motion.span
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.2 }}
-                  className="block text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-light text-[#0F1419]/60"
+                  className="block text-[1.75rem] md:text-[2.5rem] lg:text-[3rem] font-light text-[#0F1419]/50"
                 >
                   We build
                 </motion.span>
                 <motion.span
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.35 }}
-                  className="block text-[3rem] md:text-[5.5rem] lg:text-[7rem] font-black text-[#0F1419]"
+                  className="block text-[2.25rem] md:text-[3.5rem] lg:text-[4.25rem] font-black text-[#0F1419]/70"
                 >
                   the digital backbone
                 </motion.span>
                 <motion.span
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.5 }}
-                  className="block text-[2rem] md:text-[3.5rem] lg:text-[4.5rem] font-light italic text-[#0EA5E9]"
+                  className="block text-[1.5rem] md:text-[2.25rem] lg:text-[2.75rem] font-light italic text-[#0EA5E9]/60"
                 >
                   for Africa&apos;s next decade.
                 </motion.span>
@@ -412,7 +412,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
-                className="text-base md:text-lg leading-[1.75] text-[#0F1419]/70 mt-10 max-w-lg font-mono"
+                className="text-sm md:text-base leading-[1.7] text-[#0F1419]/70 mt-6 max-w-lg font-mono"
               >
                 T3Clar is a software studio based in Jinja, Uganda.
                 We design, build, and ship the platforms that African businesses run on.
@@ -423,11 +423,11 @@ export default function AboutPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.85 }}
-                className="flex flex-wrap items-center gap-4 mt-12"
+                className="flex flex-wrap items-center gap-4 mt-8"
               >
                 <Link
                   href="/services"
-                  className="group inline-flex items-center gap-3 text-sm font-mono tracking-wider uppercase text-white bg-[#0EA5E9] px-6 py-3.5 hover:bg-[#0F1419] transition-all duration-300 hover:-translate-y-0.5"
+                  className="group inline-flex items-center gap-3 text-xs md:text-sm font-mono tracking-wider uppercase text-white bg-[#0EA5E9] px-5 py-3 hover:bg-[#0F1419] transition-all duration-300 hover:-translate-y-0.5"
                 >
                   <motion.span
                     animate={{ x: [0, 4, 0] }}
@@ -437,20 +437,20 @@ export default function AboutPage() {
                     &gt;
                   </motion.span>
                   Explore Services
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 text-sm font-mono tracking-wider uppercase text-[#0EA5E9] border border-[#0EA5E9]/40 px-6 py-3.5 hover:bg-[#0EA5E9]/10 hover:-translate-y-0.5 transition-all"
+                  className="inline-flex items-center gap-2 text-xs md:text-sm font-mono tracking-wider uppercase text-[#0EA5E9] border border-[#0EA5E9]/40 px-5 py-3 hover:bg-[#0EA5E9]/10 hover:-translate-y-0.5 transition-all"
                 >
                   Get in touch
-                  <ArrowUpRight size={14} />
+                  <ArrowUpRight size={13} />
                 </Link>
               </motion.div>
             </div>
 
             {/* Right — Data readout */}
-            <div className="col-span-12 md:col-span-4 md:pl-8 md:border-l border-[#0F1419]/15">
+            <div className="col-span-12 md:col-span-5 md:pl-8 md:border-l border-[#0F1419]/15">
               <div className="space-y-0 border-t border-[#0F1419]/15">
                 {[
                   { key: 'Founded', value: '2021' },
@@ -464,13 +464,13 @@ export default function AboutPage() {
                     key={row.key}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
-                    className="flex items-center justify-between py-4 border-b border-[#0F1419]/15"
+                    transition={{ duration: 0.4, delay: 0.4 + i * 0.06 }}
+                    className="flex items-center justify-between py-3 border-b border-[#0F1419]/15"
                   >
                     <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
                       {row.key}
                     </span>
-                    <span className={`text-sm font-mono tracking-wider ${row.live ? 'text-[#65A30D]' : 'text-[#0F1419]'}`}>
+                    <span className={`text-xs font-mono tracking-wider ${row.live ? 'text-[#65A30D]' : 'text-[#0F1419]'}`}>
                       {row.value}
                     </span>
                   </motion.div>
@@ -482,7 +482,7 @@ export default function AboutPage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7, delay: 0.9 }}
-                className="mt-8 aspect-[4/3] overflow-hidden border border-[#0F1419]/15 relative group"
+                className="mt-6 aspect-[16/10] overflow-hidden border border-[#0F1419]/15 relative group"
               >
                 <img
                   src="/jinja-cityscape.jpg"
@@ -501,7 +501,7 @@ export default function AboutPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 1.1 }}
-            className="mt-14 pt-4 border-t border-[#0F1419]/15 flex items-center justify-between flex-wrap gap-4"
+            className="mt-6 pt-4 border-t border-[#0F1419]/15 flex items-center justify-between flex-wrap gap-4"
           >
             <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
               Scroll to explore · 08 sections
@@ -517,11 +517,11 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ============================================================
-          PARTNER LOGOS — thin band
-          ============================================================ */}
-      <section className="bg-[#F4F2ED] border-y border-[#0F1419]/15 py-6 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-4 mb-4 flex items-center justify-between">
+      {/* ═══════════════════════════════════════════════════
+          PARTNER LOGOS — larger tiles
+          ═══════════════════════════════════════════════════ */}
+      <section className="bg-[#F4F2ED] border-y border-[#0F1419]/15 py-8 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto px-4 mb-5 flex items-center justify-between">
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
             // Trusted systems · 10 partners
           </span>
@@ -537,16 +537,16 @@ export default function AboutPage() {
         <div className="relative">
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-[#F4F2ED] to-transparent z-10 pointer-events-none" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-r from-transparent to-[#F4F2ED] z-10 pointer-events-none" />
-          <div className="flex" style={{ width: 'max-content', animation: 'marquee-scroll 50s linear infinite' }}>
+          <div className="flex" style={{ width: 'max-content', animation: 'marquee-scroll 55s linear infinite' }}>
             {[...partnerLogos, ...partnerLogos, ...partnerLogos].map((logo, i) => (
-              <div key={i} className="flex items-center gap-4 mx-8 group">
-                <span className="text-[9px] font-mono tracking-[0.3em] text-[#0F1419]/30">
+              <div key={i} className="flex items-center gap-5 mx-8 group">
+                <span className="text-[10px] font-mono tracking-[0.3em] text-[#0F1419]/30">
                   {String((i % partnerLogos.length) + 1).padStart(2, '0')}
                 </span>
-                <div className="w-10 h-10 border border-[#0F1419]/15 flex items-center justify-center p-1.5 bg-white group-hover:border-[#0EA5E9] transition-colors">
-                  <img src={logo.image} alt={logo.name} className="w-full h-full object-contain opacity-60 group-hover:opacity-100 transition-opacity" />
+                <div className="w-16 h-16 border border-[#0F1419]/15 flex items-center justify-center p-2.5 bg-white group-hover:border-[#0EA5E9] transition-colors">
+                  <img src={logo.image} alt={logo.name} className="w-full h-full object-contain opacity-70 group-hover:opacity-100 transition-opacity" />
                 </div>
-                <span className="text-xs font-mono tracking-wider uppercase text-[#0F1419]/60 group-hover:text-[#0EA5E9] transition-colors whitespace-nowrap">
+                <span className="text-sm font-mono tracking-wider uppercase text-[#0F1419]/70 group-hover:text-[#0EA5E9] transition-colors whitespace-nowrap">
                   {logo.name}
                 </span>
               </div>
@@ -575,10 +575,10 @@ export default function AboutPage() {
                 // Nine disciplines, one studio
               </p>
               <h2 className="leading-[0.95] tracking-[-0.03em]">
-                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                <span className="block text-[1.75rem] md:text-[2.5rem] font-light text-[#0F1419]/50">
                   Everything you need
                 </span>
-                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0F1419]/75">
                   to ship &amp; scale.
                 </span>
               </h2>
@@ -597,7 +597,6 @@ export default function AboutPage() {
             </motion.div>
           </div>
 
-          {/* Services — animated rows */}
           <div className="border-t border-[#0F1419]/20">
             {services.map((service, i) => (
               <motion.article
@@ -647,7 +646,6 @@ export default function AboutPage() {
                       alt={service.title}
                       className="w-full h-full object-cover grayscale-[55%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-[800ms]"
                     />
-                    {/* Animated corner mark */}
                     <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9]/80 transition-colors duration-500" />
                     <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-[#0EA5E9]/0 group-hover:border-[#0EA5E9]/80 transition-colors duration-500" />
                   </div>
@@ -692,10 +690,10 @@ export default function AboutPage() {
                 // Two nodes, one network
               </p>
               <h2 className="leading-[0.95] tracking-[-0.03em]">
-                <span className="block text-[2.25rem] md:text-[3.5rem] font-light italic text-[#0F1419]/60">
+                <span className="block text-[1.75rem] md:text-[2.5rem] font-light italic text-[#0F1419]/50">
                   Where capital
                 </span>
-                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0F1419]/75">
                   meets code.
                 </span>
               </h2>
@@ -714,9 +712,8 @@ export default function AboutPage() {
             </motion.div>
           </div>
 
-          {/* Split panel with animated connector */}
           <div className="relative grid grid-cols-12 border border-[#0F1419]/15 bg-white">
-
+            {/* ... rest unchanged, just the title sizes above are the ones that matter ... */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -737,12 +734,10 @@ export default function AboutPage() {
                   </h3>
                 </div>
               </div>
-
               <p className="text-base leading-[1.75] text-[#0F1419]/70 mb-10 max-w-md">
                 Provides the capital, market access and strategic vision
                 that powers the ecosystem.
               </p>
-
               <div className="space-y-0 mb-10 border-t border-[#0F1419]/15">
                 {['Investment Capital', 'Market Access', 'Strategic Vision'].map((text, i) => (
                   <motion.div
@@ -758,7 +753,6 @@ export default function AboutPage() {
                   </motion.div>
                 ))}
               </div>
-
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div>
                   <div className="text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
@@ -788,7 +782,7 @@ export default function AboutPage() {
             >
               <div className="flex items-center gap-4 mb-8">
                 <div className="w-14 h-14 border border-[#0EA5E9]/40 bg-[#0EA5E9]/5 flex items-center justify-center p-2">
-                  <img src="/T3Clarlogo.png" alt="T3Clar" className="w-full h-full object-contain" />
+                  <img src="/t3logo.png" alt="T3Clar" className="w-full h-full object-contain" />
                 </div>
                 <div>
                   <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0EA5E9] mb-1">
@@ -799,12 +793,10 @@ export default function AboutPage() {
                   </h3>
                 </div>
               </div>
-
               <p className="text-base leading-[1.75] text-[#0F1419]/70 mb-10 max-w-md">
                 Builds the platforms, infrastructure and software that turn
                 vision into working product.
               </p>
-
               <div className="space-y-0 mb-10 border-t border-[#0F1419]/15">
                 {['Software Engineering', 'Cloud & AI Systems', 'Product Design'].map((text, i) => (
                   <motion.div
@@ -820,7 +812,6 @@ export default function AboutPage() {
                   </motion.div>
                 ))}
               </div>
-
               <div className="grid grid-cols-2 gap-6 pt-4">
                 <div>
                   <div className="text-5xl font-black tracking-[-0.04em] text-[#0F1419]">
@@ -841,7 +832,6 @@ export default function AboutPage() {
               </div>
             </motion.div>
 
-            {/* Animated center node */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block">
               <div className="relative">
                 <motion.div
@@ -868,7 +858,6 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Manifesto */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -882,7 +871,7 @@ export default function AboutPage() {
               </span>
             </div>
             <div className="col-span-12 md:col-span-9">
-              <p className="text-2xl md:text-4xl leading-[1.25] tracking-[-0.015em] text-[#0F1419]">
+              <p className="text-2xl md:text-4xl leading-[1.25] tracking-[-0.015em] text-[#0F1419]/80">
                 Every platform we launch lives at the intersection of{' '}
                 <em className="text-[#65A30D] not-italic">patient capital</em> and{' '}
                 <em className="text-[#0EA5E9] not-italic">relentless engineering</em>.
@@ -912,10 +901,10 @@ export default function AboutPage() {
                 // Where our work runs
               </p>
               <h2 className="leading-[0.95] tracking-[-0.03em]">
-                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                <span className="block text-[1.75rem] md:text-[2.5rem] font-light text-[#0F1419]/50">
                   Six sectors.
                 </span>
-                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0F1419]/75">
                   One continuous thread.
                 </span>
               </h2>
@@ -944,7 +933,6 @@ export default function AboutPage() {
                 transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
                 className="group bg-[#FBF9F5] p-8 relative overflow-hidden"
               >
-                {/* Subtle background sweep on hover */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-[#0EA5E9]/0 via-[#0EA5E9]/0 to-[#0EA5E9]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
                 <div className="relative">
@@ -968,7 +956,6 @@ export default function AboutPage() {
                       alt={industry.title}
                       className="w-full h-full object-cover grayscale-[55%] group-hover:grayscale-0 group-hover:scale-[1.06] transition-all duration-[1s]"
                     />
-                    {/* Animated corner reveals */}
                     <div className="absolute top-3 right-3 w-4 h-4 border-t border-r border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500 delay-200" />
                     <div className="absolute bottom-3 left-3 w-4 h-4 border-b border-l border-[#0EA5E9]/0 group-hover:border-[#0EA5E9] transition-colors duration-500 delay-200" />
                   </div>
@@ -977,7 +964,7 @@ export default function AboutPage() {
                     <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40 mb-2">
                       {industry.title}
                     </div>
-                    <h3 className="text-xl md:text-2xl font-black tracking-[-0.015em] text-[#0F1419]">
+                    <h3 className="text-xl md:text-2xl font-black tracking-[-0.015em] text-[#0F1419]/85">
                       {industry.headline}
                     </h3>
                   </div>
@@ -1026,13 +1013,12 @@ export default function AboutPage() {
               <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-[#0EA5E9] mb-6">
                 // Statement of intent
               </p>
-              <p className="text-3xl md:text-5xl lg:text-6xl leading-[1.1] tracking-[-0.02em] text-[#0F1419] font-light">
+              <p className="text-2xl md:text-4xl lg:text-5xl leading-[1.15] tracking-[-0.02em] text-[#0F1419]/80 font-light">
                 <span className="text-[#0EA5E9]">A connected Jinja</span> where transport, shopping, healthcare, payments and community all run on shared digital infrastructure.
               </p>
             </div>
           </motion.div>
 
-          {/* Stats with counter animation */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border-t-2 border-b border-[#0F1419]/20">
             {stats.map((stat, i) => (
               <motion.div
@@ -1056,7 +1042,6 @@ export default function AboutPage() {
             ))}
           </div>
 
-          {/* Mission pillars */}
           <div className="mt-20">
             <div className="flex items-center gap-4 mb-10">
               <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
@@ -1095,7 +1080,7 @@ export default function AboutPage() {
                         className="w-1.5 h-1.5 bg-[#65A30D]"
                       />
                     </div>
-                    <h3 className="text-4xl md:text-5xl font-black tracking-[-0.03em] leading-none text-[#0F1419] mb-6">
+                    <h3 className="text-3xl md:text-4xl font-black tracking-[-0.03em] leading-none text-[#0F1419]/85 mb-6">
                       {p.title}
                     </h3>
                     <p className="text-base leading-[1.8] text-[#0F1419]/70">
@@ -1129,10 +1114,10 @@ export default function AboutPage() {
                 // Built for the long run
               </p>
               <h2 className="leading-[0.95] tracking-[-0.03em]">
-                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                <span className="block text-[1.75rem] md:text-[2.5rem] font-light text-[#0F1419]/50">
                   We build with,
                 </span>
-                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0F1419]/75">
                   not just for.
                 </span>
               </h2>
@@ -1151,7 +1136,6 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-12 gap-6 md:gap-10">
-            {/* Benefits */}
             <div className="col-span-12 md:col-span-5">
               <div className="flex items-center justify-between pb-4 border-b border-[#0F1419]/15">
                 <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
@@ -1182,7 +1166,6 @@ export default function AboutPage() {
               </ul>
             </div>
 
-            {/* Opportunities */}
             <div className="col-span-12 md:col-span-7">
               <div className="flex items-center justify-between pb-4 border-b border-[#0F1419]/15 mb-8">
                 <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#0F1419]/40">
@@ -1236,8 +1219,6 @@ export default function AboutPage() {
           <SpecHeader section="§ 06" title="Approach" meta="03 phases · iterative" />
 
           <div className="grid grid-cols-12 gap-6 md:gap-10 items-start">
-
-            {/* Parallax photo */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1265,7 +1246,6 @@ export default function AboutPage() {
               </div>
             </motion.div>
 
-            {/* Content */}
             <div className="col-span-12 md:col-span-6 md:pt-6">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -1284,10 +1264,10 @@ export default function AboutPage() {
                 transition={{ duration: 0.6, delay: 0.1 }}
                 className="leading-[0.95] tracking-[-0.03em] mb-8"
               >
-                <span className="block text-[2rem] md:text-[3rem] font-light text-[#0F1419]/60">
+                <span className="block text-[1.5rem] md:text-[2.25rem] font-light text-[#0F1419]/50">
                   People. Process.
                 </span>
-                <span className="block text-[2.5rem] md:text-[4rem] font-black text-[#0F1419]">
+                <span className="block text-[2rem] md:text-[3rem] font-black text-[#0F1419]/75">
                   Then technology.
                 </span>
               </motion.h2>
@@ -1305,7 +1285,6 @@ export default function AboutPage() {
 
               <ProcessAccordion />
 
-              {/* Recognition stats */}
               <div className="mt-12 pt-8 border-t border-[#0F1419]/15 grid grid-cols-2 gap-10">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -1379,7 +1358,7 @@ export default function AboutPage() {
             </div>
 
             <div className="col-span-12 md:col-span-9">
-              <p className="text-2xl md:text-4xl lg:text-5xl leading-[1.15] tracking-[-0.02em] text-[#0F1419] mb-10">
+              <p className="text-2xl md:text-4xl lg:text-5xl leading-[1.15] tracking-[-0.02em] text-[#0F1419]/85 mb-10">
                 &ldquo;T3Clar is a valuable technology partner. Their <em className="text-[#0EA5E9] not-italic">innovation</em>, <em className="text-[#0EA5E9] not-italic">reliability</em> and <em className="text-[#0EA5E9] not-italic">commitment to excellence</em> make collaboration easy and impactful.&rdquo;
               </p>
 
@@ -1432,10 +1411,10 @@ export default function AboutPage() {
                 // Initiating contact
               </p>
               <h2 className="leading-[0.95] tracking-[-0.03em]">
-                <span className="block text-[2.25rem] md:text-[3.5rem] font-light text-[#0F1419]/60">
+                <span className="block text-[1.75rem] md:text-[2.5rem] font-light text-[#0F1419]/50">
                   Let&apos;s build
                 </span>
-                <span className="block text-[2.75rem] md:text-[4.5rem] font-black text-[#0F1419]">
+                <span className="block text-[2.25rem] md:text-[3.5rem] font-black text-[#0F1419]/75">
                   something lasting.
                 </span>
               </h2>
