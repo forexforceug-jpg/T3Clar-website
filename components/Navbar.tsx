@@ -23,7 +23,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
     handleScroll()
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
@@ -31,21 +31,46 @@ export default function Navbar() {
     setMobileOpen(false)
   }, [pathname])
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
+
   return (
     <>
-      {/* Fixed nav — h-14 on mobile, h-16 on desktop (56 / 64 px) */}
+      {/* ═══════════════════════════════════════════════════════
+          NAVBAR
+          - Fixed at top, z-index 9999 (inline, un-overridable)
+          - Always has visible background (never fully transparent)
+          - Uses viewport-relative width, no max-width constraint
+          ═══════════════════════════════════════════════════════ */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 h-14 md:h-16 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 h-14 md:h-16 transition-colors duration-300 ${
           scrolled
-            ? 'bg-[#F7F3EB]/90 backdrop-blur-md border-b border-[#0A0F1F]/10'
-            : 'bg-transparent border-b border-transparent'
+            ? 'bg-[#F7F3EB]/95 backdrop-blur-md border-b border-[#0A0F1F]/10'
+            : 'bg-[#F7F3EB]/70 backdrop-blur-sm border-b border-transparent'
         }`}
+        style={{
+          zIndex: 9999,
+          width: '100vw',
+          maxWidth: '100vw',
+        }}
       >
-        <div className="max-w-[1440px] mx-auto h-full px-4 md:px-8 lg:px-10">
-          <div className="flex items-center justify-between h-full">
+        <div className="w-full h-full px-4 md:px-8 lg:px-10">
+          <div className="flex items-center justify-between h-full gap-3">
 
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2.5 group">
+            {/* ───── Logo ───── */}
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 shrink-0 min-w-0"
+            >
               <div className="relative w-8 h-8 md:w-9 md:h-9 shrink-0">
                 <Image
                   src="/t3logo.png"
@@ -55,7 +80,7 @@ export default function Navbar() {
                   priority
                 />
               </div>
-              <div className="flex flex-col leading-none">
+              <div className="flex flex-col leading-none min-w-0">
                 <span className="text-[13px] md:text-sm font-black tracking-[-0.02em] text-[#0A0F1F]">
                   T3Clar
                 </span>
@@ -65,8 +90,8 @@ export default function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-1">
+            {/* ───── Desktop Nav ───── */}
+            <div className="hidden lg:flex items-center gap-1 shrink-0">
               {navItems.map((item) => {
                 const active = pathname === item.href
                 return (
@@ -74,7 +99,9 @@ export default function Navbar() {
                     key={item.label}
                     href={item.href}
                     className={`relative px-3 py-2 text-[13px] font-medium transition-colors ${
-                      active ? 'text-[#0A0F1F]' : 'text-[#0A0F1F]/60 hover:text-[#0A0F1F]'
+                      active
+                        ? 'text-[#0A0F1F]'
+                        : 'text-[#0A0F1F]/60 hover:text-[#0A0F1F]'
                     }`}
                   >
                     {item.label}
@@ -82,7 +109,11 @@ export default function Navbar() {
                       <motion.span
                         layoutId="nav-underline"
                         className="absolute left-3 right-3 -bottom-px h-px bg-[#0A0F1F]"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 380,
+                          damping: 30,
+                        }}
                       />
                     )}
                   </Link>
@@ -101,56 +132,95 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Mobile Toggle */}
+            {/* ───── Mobile Hamburger ───── */}
             <button
-              className="lg:hidden p-2 text-[#0A0F1F] -mr-2"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Toggle menu"
+              type="button"
+              onClick={() => setMobileOpen((v) => !v)}
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              className="lg:hidden inline-flex items-center justify-center
+                       w-10 h-10
+                       shrink-0
+                       text-[#0A0F1F]
+                       hover:bg-[#0A0F1F]/5
+                       active:bg-[#0A0F1F]/10
+                       transition-colors
+                       relative"
+              style={{ zIndex: 10000 }}
             >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? (
+                <X size={22} strokeWidth={2.2} />
+              ) : (
+                <Menu size={22} strokeWidth={2.2} />
+              )}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu — rendered outside the nav so it doesn't get clipped */}
+      {/* ═══════════════════════════════════════════════════════
+          MOBILE MENU
+          ═══════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden fixed top-14 left-0 right-0 z-40 bg-[#F7F3EB] border-b border-[#0A0F1F]/10 shadow-[0_8px_30px_rgba(10,15,31,0.06)]"
-          >
-            <div className="max-w-[1440px] mx-auto px-4 py-4 space-y-1">
-              {navItems.map((item, i) => {
-                const active = pathname === item.href
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className={`flex items-baseline gap-4 px-2 py-3 text-base font-medium border-b border-[#0A0F1F]/8 last:border-b-0 ${
-                      active ? 'text-[#0A0F1F]' : 'text-[#0A0F1F]/60'
-                    }`}
-                  >
-                    <span className="text-[10px] font-mono tracking-[0.25em] text-[#0A0F1F]/30">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {item.label}
-                  </Link>
-                )
-              })}
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileOpen(false)}
+              className="lg:hidden fixed inset-0 bg-[#0A0F1F]/40"
+              style={{ zIndex: 9998 }}
+            />
 
-              <Link
-                href="/contact"
-                className="group mt-3 inline-flex items-center justify-between w-full text-sm font-medium text-[#F7F3EB] bg-[#0A0F1F] px-5 py-3.5"
-              >
-                Start a project
-                <ArrowUpRight size={14} />
-              </Link>
-            </div>
-          </motion.div>
+            {/* Panel */}
+            <motion.div
+              key="panel"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:hidden fixed top-14 left-0 right-0 bg-[#F7F3EB] border-b border-[#0A0F1F]/10 shadow-[0_8px_30px_rgba(10,15,31,0.06)]"
+              style={{
+                zIndex: 9999,
+                width: '100vw',
+                maxWidth: '100vw',
+              }}
+            >
+              <div className="w-full px-4 py-4 space-y-1">
+                {navItems.map((item, i) => {
+                  const active = pathname === item.href
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-baseline gap-4 px-2 py-3 text-base font-medium border-b border-[#0A0F1F]/8 last:border-b-0 ${
+                        active ? 'text-[#0A0F1F]' : 'text-[#0A0F1F]/60'
+                      }`}
+                    >
+                      <span className="text-[10px] font-mono tracking-[0.25em] text-[#0A0F1F]/30">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      {item.label}
+                    </Link>
+                  )
+                })}
+
+                <Link
+                  href="/contact"
+                  onClick={() => setMobileOpen(false)}
+                  className="group mt-3 inline-flex items-center justify-between w-full text-sm font-medium text-[#F7F3EB] bg-[#0A0F1F] px-5 py-3.5"
+                >
+                  Start a project
+                  <ArrowUpRight size={14} />
+                </Link>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>

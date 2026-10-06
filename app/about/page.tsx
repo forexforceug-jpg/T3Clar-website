@@ -456,7 +456,6 @@ export default function AboutPage() {
                   { key: 'Founded', value: '2021' },
                   { key: 'Based', value: 'Jinja, UG' },
                   { key: 'Team', value: '20 — 30' },
-                  { key: 'Markets', value: 'UG · KE · RW' },
                   { key: 'Focus', value: 'Software' },
                   { key: 'Status', value: '● Operational', live: true },
                 ].map((row, i) => (
