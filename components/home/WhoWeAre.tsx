@@ -99,7 +99,7 @@ export default function WhoWeAre() {
               className="text-2xl md:text-3xl text-[#0A0F1F] leading-[1.3] mb-10"
               style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
             >
-              To every ambitious business in Uganda —
+              To every ambitious business in Uganda 
             </p>
 
             {/* Body */}
